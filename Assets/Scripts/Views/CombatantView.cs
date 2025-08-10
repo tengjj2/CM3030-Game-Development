@@ -39,6 +39,13 @@ public class CombatantView : MonoBehaviour
             CurrentHealth = 0;
         }
         transform.DOShakePosition(0.2f, 0.5f);
+
+                // Update health bar
+        if (healthBarFill != null)
+        {
+            float healthPercentage = (float)CurrentHealth / MaxHealth;
+            healthBarFill.fillAmount = healthPercentage;
+        }
         UpdateHealthText();
     }
 
