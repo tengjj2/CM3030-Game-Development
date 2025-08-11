@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 5d0a7c29909c7074d81671a51bc195a0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5767941042589865407
+    second: drunk_attack_0
+  - first:
+      213: 3026970582991173827
+    second: drunk_attack_1
+  - first:
+      213: 6478988343359240327
+    second: drunk_attack_2
+  - first:
+      213: -5167881193657297925
+    second: drunk_attack_3
+  - first:
+      213: 4823255126969373035
+    second: drunk_attack_4
+  - first:
+      213: 7248057055765484042
+    second: drunk_attack_5
+  - first:
+      213: 7489085827633529091
+    second: drunk_attack_6
+  - first:
+      213: -1002672282787461843
+    second: drunk_attack_7
+  - first:
+      213: -7636319502833049474
+    second: drunk_attack_8
+  - first:
+      213: -1505668816744142897
+    second: drunk_attack_9
+  - first:
+      213: 5518127102185668109
+    second: drunk_attack_10
+  - first:
+      213: 4442540485433870912
+    second: drunk_attack_11
+  - first:
+      213: 1394318267794359263
+    second: drunk_attack_12
+  - first:
+      213: 2951694082558759911
+    second: drunk_attack_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: drunk_attack_0
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 4
+        width: 31
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14ae80f7e2824ffa0800000000000000
+      internalID: -5767941042589865407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_1
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 4
+        width: 40
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c8feb825b5f10a20800000000000000
+      internalID: 3026970582991173827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_2
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 48
+        width: 21
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 788f2d5329df9e950800000000000000
+      internalID: 6478988343359240327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_3
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 4
+        width: 47
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf392aa5f6ff748b0800000000000000
+      internalID: -5167881193657297925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_4
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 53
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b615718bbf4afe240800000000000000
+      internalID: 4823255126969373035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_5
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 4
+        width: 38
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a025aa88d75469460800000000000000
+      internalID: 7248057055765484042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_6
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 4
+        width: 38
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3014280a1e39ee760800000000000000
+      internalID: 7489085827633529091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_7
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 36
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d25c2560fdac512f0800000000000000
+      internalID: -1002672282787461843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_8
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 30
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e70af320fd7560690800000000000000
+      internalID: -7636319502833049474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_9
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 29
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc72594403aca1be0800000000000000
+      internalID: -1505668816744142897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_10
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 26
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0e7b37fc53549c40800000000000000
+      internalID: 5518127102185668109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_11
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 19
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04ac39ea80317ad30800000000000000
+      internalID: 4442540485433870912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_12
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 13
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd388bfb31d995310800000000000000
+      internalID: 1394318267794359263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drunk_attack_13
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 13
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e3998c112686f820800000000000000
+      internalID: 2951694082558759911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      drunk_attack_0: -5767941042589865407
+      drunk_attack_1: 3026970582991173827
+      drunk_attack_10: 5518127102185668109
+      drunk_attack_11: 4442540485433870912
+      drunk_attack_12: 1394318267794359263
+      drunk_attack_13: 2951694082558759911
+      drunk_attack_2: 6478988343359240327
+      drunk_attack_3: -5167881193657297925
+      drunk_attack_4: 4823255126969373035
+      drunk_attack_5: 7248057055765484042
+      drunk_attack_6: 7489085827633529091
+      drunk_attack_7: -1002672282787461843
+      drunk_attack_8: -7636319502833049474
+      drunk_attack_9: -1505668816744142897
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
