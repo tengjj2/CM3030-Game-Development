@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthText: {fileID: 1402390463366617311}
   spriteRenderer: {fileID: 7859462268922527946}
+  healthBarFill: {fileID: 0}
 --- !u!1001 &7368151036713051169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -8902044802361073846, guid: aefef0d8f2fff174d965acc3b0e1d949, type: 3}
+    - target: {fileID: 2697321577550512917, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.45
+      objectReference: {fileID: 0}
     - target: {fileID: 7584939598069885181, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
       propertyPath: m_Name
       value: CombatantViewBase
