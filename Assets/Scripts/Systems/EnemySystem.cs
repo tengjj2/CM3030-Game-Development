@@ -44,8 +44,10 @@ public class EnemySystem : Singleton<EnemySystem>
     private IEnumerator AttackPlayerPerformer(AttackPlayerGA attackPlayerGA)
     {
         EnemyView attacker = attackPlayerGA.Attacker;
-        Tween tween = attacker.transform.DOMoveX(attacker.transform.position.x - 1f, 0.15f);
+        attacker.PlayAttackAnimation();
+        Tween tween = attacker.transform.DOMoveX(attacker.transform.position.x - 0.5f, 0.15f);
         yield return tween.WaitForCompletion();
+        yield return new WaitForSeconds(0.3f);
         attacker.transform.DOMoveX(attacker.transform.position.x + 1f, 0.25f);
         DealDamageGA dealDamageGA = new(attacker.AttackPower, new() { PlayerSystem.Instance.PlayerView });
         ActionSystem.Instance.AddReaction(dealDamageGA);

@@ -12,7 +12,8 @@ public class EnemyBoardView : MonoBehaviour
         Transform slot = slots[slotIndex];
         Vector3 startPos = slot.position + new Vector3(4f, 0, 0);
         EnemyView enemyView = EnemyViewCreator.Instance.CreateEnemyView(enemyData, startPos, slot.rotation);
-        enemyView.transform.parent = slot;
+        // enemyView.transform.parent = slot;
+        enemyView.transform.SetParent(slot, false);
         Tween tween = enemyView.transform.DOMove(slot.position, 0.5f);
         yield return tween.WaitForCompletion();
         EnemyViews.Add(enemyView);

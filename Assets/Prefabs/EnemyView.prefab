@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5002093696662641904}
   - component: {fileID: 7989541195698707497}
   - component: {fileID: 721492765175375860}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Healthbarcontainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 4339075030231452572}
   - component: {fileID: 7681613971510315100}
   - component: {fileID: 5643685230770056685}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Healthbarfill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 7376856323976714993}
   - component: {fileID: 60234867563797434}
   - component: {fileID: 7215098280412978575}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,6 +440,7 @@ GameObject:
   - component: {fileID: 4127125365651190020}
   - component: {fileID: 4841824020612655291}
   - component: {fileID: 2822588083796566424}
+  - component: {fileID: 6213372201521588520}
   m_Layer: 7
   m_Name: EnemyView
   m_TagString: Untagged
@@ -456,8 +457,8 @@ Transform:
   m_GameObject: {fileID: 6888787280925708406}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 4.0377, y: -0.0283, z: 0}
+  m_LocalScale: {x: 1.2514, y: 0.9282405, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6601064971100517972}
@@ -477,9 +478,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 7798217355946357559}
-  spriteRenderer: {fileID: 1323201387355286306}
   healthBarFill: {fileID: 5643685230770056685}
+  spriteRenderer: {fileID: 1323201387355286306}
+  animator: {fileID: 0}
   attackText: {fileID: 7350834659343706479}
+  worldCanvas: {fileID: 0}
+  useAnimator: 0
 --- !u!65 &2822588083796566424
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -501,6 +505,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.6, y: 4, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &6213372201521588520
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888787280925708406}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1805505535737204681
 PrefabInstance:
   m_ObjectHideFlags: 0
