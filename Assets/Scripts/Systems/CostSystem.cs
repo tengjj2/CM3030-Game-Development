@@ -11,14 +11,14 @@ public class CostSystem : Singleton<CostSystem>
     {
         ActionSystem.AttachPerformer<SpendCostGA>(SpendCostPerformer);
         ActionSystem.AttachPerformer<RefillCostGA>(RefillCostPerformer);
-        ActionSystem.SubscribePerformer<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
+        //ActionSystem.SubscribePerformer<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
 
     void OnDisable()
     {
         ActionSystem.DetachPerformer<SpendCostGA>();
         ActionSystem.DetachPerformer<RefillCostGA>();
-        ActionSystem.UnsubscribePerformer<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
+        //ActionSystem.UnsubscribePerformer<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
 
     public bool HasEnoughCost(int cost)

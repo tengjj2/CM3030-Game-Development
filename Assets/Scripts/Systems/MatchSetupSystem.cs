@@ -10,7 +10,8 @@ public class MatchSetupSystem : MonoBehaviour
         PlayerSystem.Instance.Setup(playerData);
         EnemySystem.Instance.Setup(enemyDatas);
         CardSystem.Instance.Setup(playerData.Deck);
-        DrawCardsGA drawCardsGA = new(5);
-        ActionSystem.Instance.Perform(drawCardsGA);
+        //DrawCardsGA drawCardsGA = new(5);
+        //ActionSystem.Instance.Perform(drawCardsGA);
+        //TurnSystem.Instance.BeginMatch();
     }
 }
