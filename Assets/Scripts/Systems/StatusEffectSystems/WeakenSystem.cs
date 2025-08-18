@@ -12,19 +12,23 @@ public class WeakenSystem : MonoBehaviour
     {
         ActionSystem.DetachPerformer<ApplyWeakenGA>();
     }
-    private IEnumerator ApplyWeakenPerformer(ApplyWeakenGA applyWeakenGA)
-    {
+    private IEnumerator ApplyWeakenPerformer(ApplyWeakenGA ga)
+{
+    var caster = ga.Caster;
+    var target = ga.Target;
+    int add = Mathf.Max(0, ga.BaseAmount);
 
-        CombatantView target = applyWeakenGA.Target;
-        var caster = applyWeakenGA.Caster;
-        
-        Tween tween = caster.transform.DOMoveX(caster.transform.position.x - 1f, 0.15f);
-        yield return tween.WaitForCompletion();
-        caster.transform.DOMoveX(caster.transform.position.x + 1f, 0.25f);
+    if (SafeCombatant.AbortIfDead(caster, "Weaken(start)")) yield break;
+    if (SafeCombatant.AbortIfDead(target, "Weaken(target)")) yield break;
 
-        int stacksToAdd =  applyWeakenGA.BaseAmount;
-        target.AddStatusEffect(StatusEffectType.WEAKEN, stacksToAdd);
-        Instantiate(weakenVFX, target.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1f);
-    }
+    yield return CombatAnim.StepForwardAndBackIfAlive(caster);
+
+    if (SafeCombatant.AbortIfDead(caster, "Weaken(after tween)")) yield break;
+    if (SafeCombatant.AbortIfDead(target, "Weaken(after tween)")) yield break;
+
+    int before = target.GetStatusEffectStacks(StatusEffectType.WEAKEN);
+    target.AddStatusEffect(StatusEffectType.WEAKEN, add);
+    int after  = target.GetStatusEffectStacks(StatusEffectType.WEAKEN);
+    Debug.Log($"[Weaken] {target.name} WEAKEN +{add} ({before}→{after})");
+}
 }

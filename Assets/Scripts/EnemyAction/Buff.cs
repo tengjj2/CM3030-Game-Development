@@ -12,16 +12,24 @@ public class BuffAction : EnemyAction
     [SerializeField] private Sprite defenceIcon;
     [SerializeField] private Sprite burnIcon;
     [SerializeField] private Sprite poisonIcon;
+    [SerializeField] private Sprite energyLossIcon;
+    [SerializeField] private Sprite barrierIcon;
+    [SerializeField] private Sprite thornsIcon;
+    [SerializeField] private Sprite confuseIcon;
 
     public override Sprite IntentSprite => BuffType switch
     {
         StatusEffectType.STRENGTH => strengthIcon,
-        StatusEffectType.WEAKEN   => weakenIcon,
-        StatusEffectType.FRAIL    => frailIcon,
-        StatusEffectType.DEFENCE  => defenceIcon,
-        StatusEffectType.BURN     => burnIcon,
-        StatusEffectType.POISON   => poisonIcon,
-        _                         => null
+        StatusEffectType.WEAKEN => weakenIcon,
+        StatusEffectType.FRAIL => frailIcon,
+        StatusEffectType.DEFENCE => defenceIcon,
+        StatusEffectType.BURN => burnIcon,
+        StatusEffectType.POISON => poisonIcon,
+        StatusEffectType.ENERGYLOSS => energyLossIcon,
+        StatusEffectType.BARRIER => barrierIcon,
+        StatusEffectType.THORNS => thornsIcon,
+        StatusEffectType.CONFUSE => confuseIcon,
+        _ => null
     };
 
     public override int? GetIntentValue(EnemyView self) => BuffStacks;
@@ -37,6 +45,7 @@ public class BuffAction : EnemyAction
 
     public override void Enqueue(EnemyView self)
     {
+        if (!SafeCombatant.IsAlive(self)) return;
         var targets = ResolveTargets(self, TargetMode, SpecificEnemyIndex);
         if (targets == null || targets.Count == 0 || BuffStacks <= 0) return;
 
@@ -89,7 +98,21 @@ public class BuffAction : EnemyAction
                 Debug.Log($"[BuffAction] BURN +{stacks} → {target.name}");
                 break;
 
-            // Add cases here for any new statuses you introduce
+            case StatusEffectType.ENERGYLOSS:
+                ActionSystem.Instance.AddReaction(new ApplyEnergyLossGA(target, caster, stacks)); // enemy debuff to player
+                break;
+
+            case StatusEffectType.BARRIER:
+                ActionSystem.Instance.AddReaction(new ApplyBarrierGA(caster, caster, stacks)); // enemy debuff to player
+                break;
+            case StatusEffectType.THORNS:
+                ActionSystem.Instance.AddReaction(new ApplyThornsGA(target, caster, stacks));
+                Debug.Log($"[BuffAction] THORNS +{stacks} → {target.name}");
+                break;
+            case StatusEffectType.CONFUSE:
+                ActionSystem.Instance.AddReaction(new ApplyConfuseGA(target, caster, stacks));
+                Debug.Log($"[BuffAction] CONFUSE +{stacks} → {target.name}");
+                break;
             default:
                 Debug.LogWarning($"[BuffAction] No Apply…GA mapped for {type}");
                 break;

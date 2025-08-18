@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+
 
 public class EnemySystem : Singleton<EnemySystem>
 {
@@ -33,58 +33,82 @@ public class EnemySystem : Singleton<EnemySystem>
             StartCoroutine(enemyBoardView.AddEnemy(data, i, (enemyView) =>
             {
                 // Let EnemyView.Setup handle AI load/init/intent UI
-                enemyView.Setup(data);
+                //enemyView.Setup(data);
             }));
         }
     }
     private IEnumerator EnemyTurnPerformer(EnemyTurnGA _)
     {
         var snapshot = new List<EnemyView>(enemyBoardView.EnemyViews);
-        Debug.Log($"[EnemyTurn] Enemies acting: {snapshot.Count}");
 
         foreach (var enemy in snapshot)
         {
             if (enemy == null || enemy.CurrentHealth <= 0) continue;
-            Debug.Log($"[EnemyTurn] {enemy.name} start");
 
-            // Start-of-turn ticks
-            ActionSystem.Instance.AddReaction(new TickStatusesGA(enemy, TickPhase.StartOfTurn, true));
+            // START tick
+            ActionSystem.Instance.AddReaction(new TickStatusesGA(enemy, TickPhase.StartOfTurn, isOwnersTurn: true));
 
-            // Do the chosen action
-            var chosen = enemy.AI?.ConsumePlanned(enemy);
-            if (chosen?.action != null)
+            bool wasted = false;
+            int confuse = enemy.GetStatusEffectStacks(StatusEffectType.CONFUSE);
+            if (confuse > 0 && Random.value < 0.5f)
             {
-                Debug.Log($"[EnemyTurn] {enemy.name} doing {chosen.action.name}");
-                chosen.action.Enqueue(enemy);
-            }
-            else
-            {
-                Debug.LogWarning($"[EnemyTurn] {enemy.name} had no action to perform");
+                wasted = true;
+                Debug.Log($"[Confuse] {enemy.name} wastes their turn");
+                // little “confused” anim
+                yield return enemy.PlayConfusedAnimation();
             }
 
-            // End-of-turn ticks & cooldowns
-            ActionSystem.Instance.AddReaction(new TickStatusesGA(enemy, TickPhase.EndOfTurn, true));
+            if (!wasted)
+            {
+                var chosen = enemy.AI?.ConsumePlanned(enemy);
+                if (chosen?.action != null)
+                    chosen.action.Enqueue(enemy);
+                else
+                    Debug.LogWarning($"[EnemyTurn] {enemy.name} had no action to perform");
+            }
+
+            // END tick – always happens (even if wasted)
+            ActionSystem.Instance.AddReaction(new TickStatusesGA(enemy, TickPhase.EndOfTurn, isOwnersTurn: true));
+
             enemy.AI?.TickEndOfTurn();
-
-            // Plan the NEXT intent (and update UI ONCE via EnemyView)
-            if (enemy.CurrentHealth > 0)
-                enemy.PlanNextIntent();   // <-- This already calls UpdateIntentUI internally
-            // REMOVE: enemy.UpdateIntentUI(enemy.AI?.NextPlanned);
+            if (enemy.CurrentHealth > 0) enemy.PlanNextIntent();
+            enemy.UpdateIntentUI(enemy.AI?.NextPlanned);
         }
-
         yield return null;
     }
 
-    private IEnumerator AttackPlayerPerformer(AttackPlayerGA attackPlayerGA)
-    {
-        Debug.Log($"[AttackPlayerGA] performer for {attackPlayerGA.Attacker.name} (source={attackPlayerGA.DebugSource ?? "unknown"})");
-        EnemyView attacker = attackPlayerGA.Attacker;
-        Tween tween = attacker.transform.DOMoveX(attacker.transform.position.x - 1f, 0.15f);
-        yield return tween.WaitForCompletion();
-        attacker.transform.DOMoveX(attacker.transform.position.x + 1f, 0.25f);
-        DealDamageGA dealDamageGA = new(attacker.AttackPower, new() { PlayerSystem.Instance.PlayerView }, attackPlayerGA.Caster);
-        ActionSystem.Instance.AddReaction(dealDamageGA);
-    }
+    private IEnumerator AttackPlayerPerformer(AttackPlayerGA ga)
+{
+    var attacker = ga.Attacker;
+    if (SafeCombatant.AbortIfDead(attacker, "Attack(start)")) yield break;
+
+    var player = PlayerSystem.Instance != null ? PlayerSystem.Instance.PlayerView : null;
+    if (!SafeCombatant.IsAlive(player)) yield break;
+
+    // Cache start position in case attacker moves/dies mid-flow
+    var t = attacker.transform;
+    float startX = t.position.x;
+
+    // Step forward
+    Tween fwd = t.DOMoveX(startX - 1f, 0.15f);
+    yield return fwd.WaitForCompletion();
+
+    // Re-check after tween (enemy might have died to a reaction)
+    if (SafeCombatant.AbortIfDead(attacker, "Attack(after fwd)")) yield break;
+    if (!SafeCombatant.IsAlive(player)) yield break;
+
+    // Step back (don’t block if you prefer overlap; here we wait for cleanliness)
+    Tween back = t.DOMoveX(startX, 0.25f);
+    yield return back.WaitForCompletion();
+
+    // Final safety before enqueuing damage
+    if (SafeCombatant.AbortIfDead(attacker, "Attack(before damage)")) yield break;
+    if (!SafeCombatant.IsAlive(player)) yield break;
+
+    // Enqueue damage
+    var deal = new DealDamageGA(attacker.AttackPower, new() { player }, ga.Caster);
+    ActionSystem.Instance.AddReaction(deal);
+}
 
 
     private IEnumerator KillEnemyPerformer(KillEnemyGA killEnemyGA)

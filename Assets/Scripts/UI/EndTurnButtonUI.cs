@@ -3,17 +3,38 @@ using UnityEngine.UI;
 
 public class EndTurnButtonUI : MonoBehaviour
 {
-    [SerializeField] private Button button; // optional, assign in Inspector
+    [SerializeField] private Button button;
+
+    private void Awake()
+    {
+        if (button == null) button = GetComponent<Button>();
+    }
+
+    private void OnEnable()
+    {
+        if (TurnSystem.Instance != null)
+        {
+            TurnSystem.Instance.OnPhaseChanged += HandlePhaseChanged;
+            HandlePhaseChanged(TurnSystem.Instance.CurrentPhase); // set initial state
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (TurnSystem.Instance != null)
+            TurnSystem.Instance.OnPhaseChanged -= HandlePhaseChanged;
+    }
+
+    private void HandlePhaseChanged(TurnSystem.Phase p)
+    {
+        if (button != null)
+            button.interactable = (p == TurnSystem.Phase.Player);
+    }
 
     public void OnClick()
     {
-        // (Optional) prevent double-clicks while enemy turn runs
-        if (button) button.interactable = false;
-
-        // Hand off to TurnSystem; it will Perform(new EnemyTurnGA())
-        TurnSystem.Instance.EndPlayerTurn();
+        // Extra guard even if interactable somehow missed an update
+        if (TurnSystem.Instance != null && TurnSystem.Instance.CanEndTurn)
+            TurnSystem.Instance.EndPlayerTurn();
     }
-
-    // (Optional) call this from TurnSystem when player turn starts again
-    public void EnableButton() { if (button) button.interactable = true; }
 }

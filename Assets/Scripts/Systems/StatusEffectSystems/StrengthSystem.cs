@@ -14,22 +14,29 @@ public class StrengthSystem : MonoBehaviour
     {
         ActionSystem.DetachPerformer<ApplyStrengthGA>();
     }
-    private IEnumerator ApplyStrengthPerformer(ApplyStrengthGA applyStrengthGA)
+    private IEnumerator ApplyStrengthPerformer(ApplyStrengthGA ga)
     {
-        
-        CombatantView target = applyStrengthGA.Target;
-        var caster = applyStrengthGA.Caster;
-        
-        Tween tween = caster.transform.DOMoveX(caster.transform.position.x - 1f, 0.15f);
-        yield return tween.WaitForCompletion();
-        caster.transform.DOMoveX(caster.transform.position.x + 1f, 0.25f);
+        var caster = ga.Caster;
+        var target = ga.Target;
+        int add = Mathf.Max(0, ga.BaseAmount);
 
-        int stacksToAdd =  applyStrengthGA.BaseAmount;
-        target.AddStatusEffect(StatusEffectType.STRENGTH, stacksToAdd);
-        Instantiate(strengthVFX, target.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1f);
-        /*
-        target.RemoveStatusEffect(StatusEffectType.STRENGTH, 1);
-        yield return new WaitForSeconds(1f);*/
+        // Bail if caster/target died or were destroyed before we run
+        if (SafeCombatant.AbortIfDead(caster, "Strength(before tween)")) yield break;
+        if (SafeCombatant.AbortIfDead(target, "Strength(target check)")) yield break;
+
+        // Optional motion; use the shared helper
+        yield return CombatAnim.StepForwardAndBackIfAlive(caster);
+
+        // Re-check after the tween (something else could have killed them)
+        if (SafeCombatant.AbortIfDead(caster, "Strength(after tween)")) yield break;
+        if (SafeCombatant.AbortIfDead(target, "Strength(after tween)")) yield break;
+
+        int before = target.GetStatusEffectStacks(StatusEffectType.STRENGTH);
+        target.AddStatusEffect(StatusEffectType.STRENGTH, add);
+        int after  = target.GetStatusEffectStacks(StatusEffectType.STRENGTH);
+        if (strengthVFX && SafeCombatant.IsValid(target))
+            Instantiate(strengthVFX, target.transform.position, Quaternion.identity);
+
+        Debug.Log($"[StrengthSystem] {target.name} STRENGTH +{add} ({before}→{after})");
     }
 }

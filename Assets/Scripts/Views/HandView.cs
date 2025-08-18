@@ -12,7 +12,77 @@ public class HandView : MonoBehaviour
     //[SerializeField] private float zStackOffset = 0.01f;
     [SerializeField] private float tweenDuration = 0.15f;
 
+    public static HandView Instance { get; private set; }
+
     private List<CardView> cards = new();
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private bool selecting = false;
+    private int needCount = 0;
+    private string currentPrompt = "";
+    private List<Card> chosenBuffer;
+    private HashSet<CardView> selectable = new();
+
+    // Call by DiscardChoiceSystem
+    public IEnumerator SelectCardsFromHand(int count, List<Card> outChosen, string prompt = "")
+    {
+        if (count <= 0) yield break;
+        selecting = true;
+        needCount = count;
+        currentPrompt = prompt;
+        chosenBuffer = new List<Card>();
+
+        // Enable selection visuals + click handlers
+        foreach (var cv in cards)
+        {
+            if (cv == null) continue;
+            selectable.Add(cv);
+            cv.SetSelectionEnabled(true, OnCardClickedWhileSelecting);
+        }
+
+        // Optional: show your own prompt UI here if you have one
+        Debug.Log($"[HandView] {currentPrompt}");
+
+        // Wait until player has chosen enough
+        while (selecting)
+            yield return null;
+
+        // Copy out the selection
+        outChosen.Clear();
+        outChosen.AddRange(chosenBuffer);
+        chosenBuffer = null;
+        currentPrompt = "";
+
+        // Clean up
+        foreach (var cv in selectable)
+        {
+            if (cv == null || cv.Equals(null)) continue;
+            cv.SetSelectionEnabled(false, null);
+            // ensure no leftover pulse/hover tweens
+            cv.transform.KillTweensRecursive();
+        }
+        selectable.Clear();
+    }
+
+    private void OnCardClickedWhileSelecting(CardView cv)
+    {
+        if (!selecting || cv == null || !selectable.Contains(cv)) return;
+
+        // Toggle selection or just accept one-shot picks.
+        // For discard we’ll do immediate pick until we have enough.
+        if (!chosenBuffer.Contains(cv.Card))
+            chosenBuffer.Add(cv.Card);
+
+        // Visual feedback (optional)
+        cv.PulseSelected();
+
+        if (chosenBuffer.Count >= needCount)
+            selecting = false;
+    }
 
     public IEnumerator AddCard(CardView cardView)
     {
@@ -25,6 +95,8 @@ public class HandView : MonoBehaviour
     {
         CardView cv = GetCardView(card);
         if (cv == null) return null;
+
+        CardViewHoverSystem.Instance.Hide();
 
         cards.Remove(cv);
         StartCoroutine(UpdateCardPositions(tweenDuration));

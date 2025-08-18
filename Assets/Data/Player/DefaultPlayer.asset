@@ -15,14 +15,14 @@ MonoBehaviour:
   <Image>k__BackingField: {fileID: -8902044802361073846, guid: aefef0d8f2fff174d965acc3b0e1d949, type: 3}
   <Health>k__BackingField: 40
   <Deck>k__BackingField:
-  - {fileID: 11400000, guid: 10dfeb922dbbe794d94191f65c67556e, type: 2}
-  - {fileID: 11400000, guid: 1d4c9264d340ce14a9121eed0d74006f, type: 2}
-  - {fileID: 11400000, guid: 1871d1c6361e51148adc79b1e3c24c7e, type: 2}
-  - {fileID: 11400000, guid: 8c82cab0f1c84ef44a77bedcf921193d, type: 2}
-  - {fileID: 11400000, guid: 7db105318d4b20146aa853b19207867c, type: 2}
-  - {fileID: 11400000, guid: dad6be9d5f64afd4ea6994fa359a820c, type: 2}
-  - {fileID: 11400000, guid: 01da19211770cb642bacdd36083e6c3b, type: 2}
-  - {fileID: 11400000, guid: cc13fa4f09be9ea4ab861673809df538, type: 2}
-  - {fileID: 11400000, guid: 1824787b029094349859383168ae06b6, type: 2}
-  - {fileID: 11400000, guid: d0fc2bfb059c96c4aa16459b3757dcc1, type: 2}
   - {fileID: 11400000, guid: 98af450e7c74b5a4b8fa4bab5139fc3e, type: 2}
+  - {fileID: 11400000, guid: 98af450e7c74b5a4b8fa4bab5139fc3e, type: 2}
+  - {fileID: 11400000, guid: 6c8d97ded40762e408bdccedd6526127, type: 2}
+  - {fileID: 11400000, guid: 3508efad71b66d5498286e323a034acb, type: 2}
+  - {fileID: 11400000, guid: 7db105318d4b20146aa853b19207867c, type: 2}
+  - {fileID: 11400000, guid: 6c8d97ded40762e408bdccedd6526127, type: 2}
+  - {fileID: 11400000, guid: 3a5ece52a69a6c24eaed14fac5eb3ca9, type: 2}
+  - {fileID: 11400000, guid: 6c8d97ded40762e408bdccedd6526127, type: 2}
+  - {fileID: 11400000, guid: b87d7fd1f5167c54399f43bdcb36a1ae, type: 2}
+  - {fileID: 11400000, guid: 3508efad71b66d5498286e323a034acb, type: 2}
+  - {fileID: 11400000, guid: 005a2f6fa20ca9744a828544b8a9b0db, type: 2}

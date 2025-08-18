@@ -13,18 +13,23 @@ public class DefenceSystem : MonoBehaviour
     {
         ActionSystem.DetachPerformer<ApplyDefenceGA>();
     }
-    private IEnumerator ApplyDefencePerformer(ApplyDefenceGA applyDefenceGA)
+    private IEnumerator ApplyDefencePerformer(ApplyDefenceGA ga)
     {
-        CombatantView target = applyDefenceGA.Target;
-        var caster = applyDefenceGA.Caster;
-        
-        Tween tween = caster.transform.DOMoveX(caster.transform.position.x - 1f, 0.15f);
-        yield return tween.WaitForCompletion();
-        caster.transform.DOMoveX(caster.transform.position.x + 1f, 0.25f);
+        var caster = ga.Caster;
+        var target = ga.Target;
+        int add = Mathf.Max(0, ga.BaseAmount);
 
-        int stacksToAdd =  applyDefenceGA.BaseAmount;
-        target.AddStatusEffect(StatusEffectType.DEFENCE, stacksToAdd);
-        Instantiate(defenceVFX, target.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1f);
+        if (SafeCombatant.AbortIfDead(caster, "Defence(start)")) yield break;
+        if (SafeCombatant.AbortIfDead(target, "Defence(target)")) yield break;
+
+        yield return CombatAnim.StepForwardAndBackIfAlive(caster);
+
+        if (SafeCombatant.AbortIfDead(caster, "Defence(after tween)")) yield break;
+        if (SafeCombatant.AbortIfDead(target, "Defence(after tween)")) yield break;
+
+        int before = target.GetStatusEffectStacks(StatusEffectType.DEFENCE);
+        target.AddStatusEffect(StatusEffectType.DEFENCE, add);
+        int after  = target.GetStatusEffectStacks(StatusEffectType.DEFENCE);
+        Debug.Log($"[Defence] {target.name} DEFENCE +{add} ({before}→{after})");
     }
 }

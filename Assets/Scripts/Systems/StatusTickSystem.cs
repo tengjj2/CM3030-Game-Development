@@ -21,26 +21,39 @@ public class StatusTickSystem : Singleton<StatusTickSystem>
         // ----- START-OF-TURN effects -----
         if (tickStatusesGA.Phase == TickPhase.StartOfTurn)
         {
+            var unit = tickStatusesGA.Target;
+            if (unit == PlayerSystem.Instance.PlayerView)
+            {
+                int loss = unit.GetStatusEffectStacks(StatusEffectType.ENERGYLOSS);
+                if (loss > 0)
+                {
+                    // reduce AFTER refill (TurnSystem queues Refill before this Tick)
+                    ActionSystem.Instance.AddReaction(new ModifyCostGA(-loss));
+                    unit.RemoveStatusEffect(StatusEffectType.ENERGYLOSS, loss);
+                    Debug.Log($"[Tick] ENERGYLOSS applied: -{loss}");
+                }
+            }
+
             // POISON: apply at start (if this matches your design)
             int poisonStacks = self.GetStatusEffectStacks(StatusEffectType.POISON);
             if (poisonStacks > 0)
             {
                 ActionSystem.Instance.AddReaction(new DealDamageGA(poisonStacks, new() { self }, self));
-                self.RemoveStatusEffect(StatusEffectType.POISON, poisonStacks);
+                self.RemoveStatusEffect(StatusEffectType.POISON, 1);
                 Debug.Log($"[Tick] POISON {tickStatusesGA.Target.name} takes {tickStatusesGA} at START");
             }
-            /*
-            else if (poisonStacks == 1)
-            {
-                ActionSystem.Instance.AddReaction(new DealDamageGA(poisonStacks, new() { self }, self));
-                self.RemoveStatusEffect(StatusEffectType.POISON, poisonStacks);
-            }*/
 
             int blockStacks = self.GetStatusEffectStacks(StatusEffectType.BLOCK);
             if (blockStacks > 0)
             {
                 ActionSystem.Instance.AddReaction(new ApplyBlockGA(self, self, blockStacks));
                 self.RemoveStatusEffect(StatusEffectType.BLOCK, blockStacks);
+            }
+
+            int thornStacks = self.GetStatusEffectStacks(StatusEffectType.THORNS);
+            if (thornStacks > 0)
+            {
+                self.RemoveStatusEffect(StatusEffectType.THORNS, thornStacks);
             }
             
             Decay(self, StatusEffectType.DEFENCE, 1);
@@ -51,23 +64,41 @@ public class StatusTickSystem : Singleton<StatusTickSystem>
 
         // ----- END-OF-TURN effects -----
         if (tickStatusesGA.Phase == TickPhase.EndOfTurn)
-        {
-            // BURN: apply AFTER end turn click (end of owner's turn)
-        int burnStacks = self.GetStatusEffectStacks(StatusEffectType.BURN);
-        if (burnStacks > 0)
-        {
-            ActionSystem.Instance.AddReaction(new DealDamageGA(burnStacks, new() { self }, self));
-            // optional: decay burn per proc
-            self.RemoveStatusEffect(StatusEffectType.BURN, burnStacks);
-        }
+        {  
+            CostSystem.Instance.ClearOverflow();
+            var unit = tickStatusesGA.Target;
+            int gainVis = unit.GetStatusEffectStacks(StatusEffectType.ENERGYGAIN);
+            if (gainVis > 0)
+            {
+                unit.RemoveStatusEffect(StatusEffectType.ENERGYGAIN, gainVis);
+                Debug.Log($"[Tick] ENERGYGAIN cleared (visual): -{gainVis}");
+            }
+                // BURN: apply AFTER end turn click (end of owner's turn)
+            int burnStacks = self.GetStatusEffectStacks(StatusEffectType.BURN);
+            if (burnStacks > 0)
+            {
+                ActionSystem.Instance.AddReaction(new DealDamageGA(burnStacks, new() { self }, self));
+                // optional: decay burn per proc
+                self.RemoveStatusEffect(StatusEffectType.BURN, burnStacks);
+            }
 
-            // Decays at the END of the owner’s turn (common pattern)
             if (tickStatusesGA.IsOwnersTurn)
             {
-                Decay(self, StatusEffectType.WEAKEN, 1);
-                Decay(self, StatusEffectType.FRAIL, 1);
-                //Decay(self, StatusEffectType.DEFENCE, 1);
-                Decay(self, StatusEffectType.STRENGTH, 1);
+                // CONFUSE: remove ALL stacks at end of the owner's turn
+                int confuse = unit.GetStatusEffectStacks(StatusEffectType.CONFUSE);
+                if (confuse > 0)
+                {
+                    unit.RemoveStatusEffect(StatusEffectType.CONFUSE, confuse);
+
+                    // If it's an enemy, refresh intent UI (back to real intent)
+                    if (unit is EnemyView ev) ev.RefreshIntentUI();
+                }
+
+                // Keep your other end-of-turn decays as-is
+                Decay(unit, StatusEffectType.WEAKEN, 1);
+                Decay(unit, StatusEffectType.FRAIL, 1);
+                Decay(unit, StatusEffectType.STRENGTH, 1);
+                // Decay(unit, StatusEffectType.DEFENCE, 1);
             }
         }
 

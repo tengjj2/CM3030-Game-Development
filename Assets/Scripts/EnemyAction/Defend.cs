@@ -13,6 +13,7 @@ public class BlockAction : EnemyAction
 
     public override void Enqueue(EnemyView self)
     {
+        if (!SafeCombatant.IsAlive(self)) return;
         self.GainBlock(amount, self);
     }
 }

@@ -17,11 +17,16 @@ MonoBehaviour:
   <AttackPower>k__BackingField: 5
   moveset:
   - action: {fileID: 11400000, guid: abea8a25fdb950f42909af26bebde56b, type: 2}
+    weight: 2
+    cooldownTurns: 0
+    maxUses: 10
+    conditions: []
+  - action: {fileID: 11400000, guid: cf16bd4b5a2606a408412cc5c7fae58d, type: 2}
     weight: 1
     cooldownTurns: 0
     maxUses: 10
     conditions: []
-  - action: {fileID: 11400000, guid: 842029e0ad69cd54f83e4dc5aee2d3e7, type: 2}
+  - action: {fileID: 11400000, guid: 7916fe801e447e4448632de09bed9883, type: 2}
     weight: 1
     cooldownTurns: 0
     maxUses: 10

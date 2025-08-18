@@ -53,6 +53,16 @@ public class CombatantView : MonoBehaviour
     {
         int remainingDamage = Mathf.Max(0, damageAmount);
 
+        // --- BARRIER: consume 1 stack to negate this instance entirely ---
+        int barrier = GetStatusEffectStacks(StatusEffectType.BARRIER);
+        if (barrier > 0)
+        {
+            RemoveStatusEffect(StatusEffectType.BARRIER, 1);
+            // optional: tiny “parry” shake or flash
+            transform.DOShakePosition(0.15f, 0.2f);
+            return; // damage fully negated
+        }
+
         int currentBlock = GetStatusEffectStacks(StatusEffectType.BLOCK);
         if (currentBlock > 0)
         {
@@ -103,6 +113,23 @@ public class CombatantView : MonoBehaviour
 
             statusEffectsUI.UpdateStatusEffecctUI(type, GetStatusEffectStacks(type));
         }
+    }
+
+    public void Heal(int amount)
+    {
+        if (amount <= 0) return;
+        CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
+
+        // Optional feedback
+        transform.DOPunchScale(Vector3.one * 0.05f, 0.15f, 8, 0.8f);
+
+        // Update health bar/text as you already do
+        if (healthBarFill != null)
+        {
+            float pct = (float)CurrentHealth / MaxHealth;
+            healthBarFill.fillAmount = pct;
+        }
+        RefreshHealthUI();
     }
 
     public int GetStatusEffectStacks(StatusEffectType type)

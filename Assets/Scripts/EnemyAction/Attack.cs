@@ -10,6 +10,7 @@ public class AttackAction : EnemyAction
     public int amount = 8;
     public override void Enqueue(EnemyView self)
     {
+        if (!SafeCombatant.IsAlive(self)) return;
         // Drives the lunge anim → damage GA via your EnemySystem performers
         ActionSystem.Instance.AddReaction(new AttackPlayerGA(self));
         Debug.Log($"[AttackAction] Enqueued AttackPlayerGA for {self.name}");
