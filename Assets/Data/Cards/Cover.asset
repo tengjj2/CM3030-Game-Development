@@ -16,3 +16,23 @@ MonoBehaviour:
   <Cost>k__BackingField: 1
   <Description>k__BackingField: Gain 5 Block
   <Image>k__BackingField: {fileID: 7780264574027006942, guid: 26325c592f95a184396a7bcfb634a3b2, type: 3}
+  <ManualTargetEffect>k__BackingField:
+    rid: -2
+  <OtherEffects>k__BackingField:
+  - <TargetMode>k__BackingField:
+      rid: 1048756250816806992
+    <Effect>k__BackingField:
+      rid: 1048756250816806993
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1048756250816806992
+      type: {class: PlayerTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756250816806993
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 0
+        stackCount: 5

@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af1f6f6e80e30c4ab885f6564820599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthText: {fileID: 1402390463366617311}
+  healthText: {fileID: 0}
   spriteRenderer: {fileID: 7859462268922527946}
   healthBarFill: {fileID: 0}
+  statusEffectsUI: {fileID: 0}
 --- !u!1001 &7368151036713051169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109,21 +110,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8631493396897178974, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5.8785
-      objectReference: {fileID: 0}
-    - target: {fileID: 8631493396897178974, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.0164995
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 8631493396897178974, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.123
-      objectReference: {fileID: 0}
-    - target: {fileID: 8631493396897178974, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0065
-      objectReference: {fileID: 0}
+    - target: {fileID: 8770430398861796716, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+      propertyPath: blockSprite
+      value: 
+      objectReference: {fileID: 5865670524570963042, guid: c51983646042c924caa7a452c51ccd6e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -134,17 +127,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8515588310110648572, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
   m_PrefabInstance: {fileID: 7368151036713051169}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1402390463366617311 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8446119460404329726, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
-  m_PrefabInstance: {fileID: 7368151036713051169}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &7859462268922527946 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 815860849389577451, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}

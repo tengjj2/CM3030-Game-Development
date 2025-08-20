@@ -1,101 +1,149 @@
-// using DG.Tweening;
-// using TMPro;
-// using Unity.VisualScripting;
-// using UnityEngine;
-// using UnityEngine.UI;
-
-// public class CombatantView : MonoBehaviour
-// {
-//     [SerializeField] private TMP_Text healthText;
-//     [SerializeField] private SpriteRenderer spriteRenderer;
-//     [SerializeField] private Image healthBarFill;
-//     public int MaxHealth { get; private set; }
-//     public int CurrentHealth { get; private set; }
-
-//     protected void SetupBase(int health, Sprite image)
-//     {
-//         MaxHealth = CurrentHealth = health;
-//         spriteRenderer.sprite = image;
-//         UpdateHealthText();
-//     }
-
-//     private void UpdateHealthText()
-//     {
-//         healthText.text = "HP: " + CurrentHealth;
-
-//         // Update health bar
-//         if (healthBarFill != null)
-//         {
-//             float healthPercentage = (float)CurrentHealth / MaxHealth;
-//             healthBarFill.fillAmount = healthPercentage;
-//         }
-//     }
-
-//     public void Damage(int damageAmount)
-//     {
-//         CurrentHealth -= damageAmount;
-//         if (CurrentHealth < 0)
-//         {
-//             CurrentHealth = 0;
-//         }
-//         transform.DOShakePosition(0.2f, 0.5f);
-
-//                 // Update health bar
-//         if (healthBarFill != null)
-//         {
-//             float healthPercentage = (float)CurrentHealth / MaxHealth;
-//             healthBarFill.fillAmount = healthPercentage;
-//         }
-//         UpdateHealthText();
-//     }
-// }
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class CombatantView : MonoBehaviour
+public class CombatantView : MonoBehaviour
 {
-    [Header("UI References")]
-    [SerializeField] protected TMP_Text healthText;
-    [SerializeField] protected Image healthBarFill;
-    
+    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Image healthBarFill;
+    [SerializeField] private StatusEffectsUI statusEffectsUI;
+
     public int MaxHealth { get; private set; }
     public int CurrentHealth { get; private set; }
 
-    protected virtual void SetupBase(int health)
+    private readonly Dictionary<StatusEffectType, int> statusEffects = new();
+
+    // ---------- Lifecycle / setup ----------
+    protected void SetupBase(int health, Sprite image)
     {
         MaxHealth = CurrentHealth = health;
-        UpdateHealthDisplay();
+        spriteRenderer.sprite = image;
+        RefreshHealthUI();
     }
 
-    protected void UpdateHealthDisplay()
+    // ---------- Public helpers ----------
+    /// <summary>
+    /// Convenience wrapper to enqueue a GainBlockGA for this unit.
+    /// Keeps block *math* inside BlockSystem/performer, not this view.
+    /// </summary>
+    public void GainBlock(int baseAmount, CombatantView caster = null)
     {
-        // Update health text
-        if (healthText != null)
+        // default: self-cast block
+        caster ??= this;
+        ActionSystem.Instance.AddReaction(new ApplyBlockGA(this, caster, baseAmount));
+    }
+
+    /// <summary>
+    /// Direct HP setter for systems that already decided the final HP.
+    /// Preserves view responsibility for UI updates/animation.
+    /// </summary>
+    public void SetHealth(int newValue)
+    {
+        CurrentHealth = Mathf.Clamp(newValue, 0, MaxHealth);
+        transform.DOShakePosition(0.2f, 0.5f);
+        RefreshHealthUI();
+    }
+
+    // ---------- Damage application (consumes BLOCK, then HP) ----------
+    public void Damage(int damageAmount)
+    {
+        int remainingDamage = Mathf.Max(0, damageAmount);
+
+        // --- BARRIER: consume 1 stack to negate this instance entirely ---
+        int barrier = GetStatusEffectStacks(StatusEffectType.BARRIER);
+        if (barrier > 0)
         {
-            healthText.text = $"{CurrentHealth}/{MaxHealth}";
+            RemoveStatusEffect(StatusEffectType.BARRIER, 1);
+            // optional: tiny “parry” shake or flash
+            transform.DOShakePosition(0.15f, 0.2f);
+            return; // damage fully negated
         }
 
-        // Update health bar
+        int currentBlock = GetStatusEffectStacks(StatusEffectType.BLOCK);
+        if (currentBlock > 0)
+        {
+            if (currentBlock >= remainingDamage) // block fully absorbs
+            {
+                RemoveStatusEffect(StatusEffectType.BLOCK, remainingDamage);
+                remainingDamage = 0;
+            }
+            else // partial absorb
+            {
+                RemoveStatusEffect(StatusEffectType.BLOCK, currentBlock);
+                remainingDamage -= currentBlock;
+            }
+        }
+
+        if (remainingDamage > 0)
+        {
+            CurrentHealth -= remainingDamage;
+            if (CurrentHealth < 0) CurrentHealth = 0;
+        }
+
+        transform.DOShakePosition(0.2f, 0.5f);
+        RefreshHealthUI();
+    }
+
+    // ---------- Status effects ----------
+    public void AddStatusEffect(StatusEffectType type, int stackCount)
+    {
+        if (stackCount <= 0) return;
+
+        if (statusEffects.ContainsKey(type))
+            statusEffects[type] += stackCount;
+        else
+            statusEffects.Add(type, stackCount);
+
+        statusEffectsUI.UpdateStatusEffecctUI(type, GetStatusEffectStacks(type));
+    }
+
+    public void RemoveStatusEffect(StatusEffectType type, int stackCount)
+    {
+        if (stackCount <= 0) return;
+
+        if (statusEffects.ContainsKey(type))
+        {
+            statusEffects[type] -= stackCount;
+            if (statusEffects[type] <= 0)
+                statusEffects.Remove(type);
+
+            statusEffectsUI.UpdateStatusEffecctUI(type, GetStatusEffectStacks(type));
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        if (amount <= 0) return;
+        CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
+
+        // Optional feedback
+        transform.DOPunchScale(Vector3.one * 0.05f, 0.15f, 8, 0.8f);
+
+        // Update health bar/text as you already do
         if (healthBarFill != null)
         {
-            float healthPercentage = (float)CurrentHealth / MaxHealth;
-            healthBarFill.fillAmount = healthPercentage;
+            float pct = (float)CurrentHealth / MaxHealth;
+            healthBarFill.fillAmount = pct;
         }
+        RefreshHealthUI();
     }
 
-    public virtual void Damage(int damageAmount)
+    public int GetStatusEffectStacks(StatusEffectType type)
     {
-        CurrentHealth = Mathf.Max(0, CurrentHealth - damageAmount);
-        
-        // Visual feedback
-        transform.DOShakePosition(0.2f, 0.5f, 10, 90, false, true);
-        
-        UpdateHealthDisplay();
+        return statusEffects.TryGetValue(type, out var stacks) ? stacks : 0;
     }
-    public bool IsDead()
+
+    // ---------- UI ----------
+    private void RefreshHealthUI()
     {
-        return CurrentHealth <= 0;
+        if (healthText != null)
+            healthText.text = CurrentHealth+ " / " + MaxHealth;
+
+        if (healthBarFill != null && MaxHealth > 0)
+            healthBarFill.fillAmount = (float)CurrentHealth / MaxHealth;
     }
 }

@@ -14,7 +14,7 @@ TagManager:
   - UI
   - DropArea
   - EnemyView
-  - 
+  - Cards
   - 
   - 
   - 
@@ -41,9 +41,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: UI
-    uniqueID: 3515572979
     locked: 0
   m_RenderingLayers:
   - Default
