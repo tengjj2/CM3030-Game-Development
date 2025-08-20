@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using DG.Tweening;
+using System;
 
 public class CardView : MonoBehaviour
 {
@@ -11,9 +13,48 @@ public class CardView : MonoBehaviour
     [SerializeField] private SpriteRenderer cardImageBackground;   // Fixed size background sprite
     [SerializeField] private GameObject wrapper;
     [SerializeField] private LayerMask dropLayer;
+
     public Card Card { get; private set; }
     public Vector3 dragStartPosition;
     public Quaternion dragStartRotation;
+
+    // -------- Selection mode (for choose/discard, etc.) --------
+    private bool selectionEnabled = false;
+    private Action<CardView> selectionCallback;
+
+    private void OnDisable()  { transform.KillTweensRecursive(); }
+    private void OnDestroy()  { transform.KillTweensRecursive(); }
+
+    public void SetSelectionEnabled(bool enabled, Action<CardView> onClick)
+    {
+        selectionEnabled = enabled;
+        selectionCallback = enabled ? onClick : null;
+
+        // Kill all tweens on this card & children before changing visuals
+        transform.KillTweensRecursive();
+
+        // During selection, don't animate scale (hover preview provides clarity)
+        if (!enabled)
+        {
+            if (gameObject.activeInHierarchy) transform.DOScale(1f, 0.12f);
+            else transform.localScale = Vector3.one;
+        }
+        // If you want a tiny cue when entering selection, you could tint/outline instead of scaling.
+    }
+
+    /// <summary>Small feedback when selected by click (suppressed during selection to avoid tween overlap).</summary>
+    public void PulseSelected()
+    {
+        if (selectionEnabled) return; // avoid extra tweens in selection mode
+        transform.KillTweensRecursive();
+        if (!gameObject.activeInHierarchy) return;
+
+        var s = DOTween.Sequence();
+        s.Append(transform.DOScale(1.12f, 0.08f));
+        s.Append(transform.DOScale(1.05f, 0.08f));
+    }
+
+    // -----------------------------------------------------------
 
     public void Setup(Card card)
     {
@@ -31,10 +72,7 @@ public class CardView : MonoBehaviour
         FitCardImageToBackground();
 
         if (cardImageBackground != null)
-        {
-            // Hide background sprite once card image is set
-            cardImageBackground.enabled = false;
-        }
+            cardImageBackground.enabled = false; // hide placeholder bg after setting art
     }
 
     private void FitCardImageToBackground()
@@ -71,14 +109,16 @@ public class CardView : MonoBehaviour
     public void ResetCardImageScale()
     {
         if (cardImage != null)
-        {
             cardImage.transform.localScale = Vector3.one;
-        }
     }
+
     void OnMouseEnter()
     {
         if (!Interactions.Instance.PlayerCanHover()) return;
-        wrapper.SetActive(false);
+
+        // Keep wrapper visible during selection so layout doesn't jump
+        if (!selectionEnabled) wrapper.SetActive(false);
+
         Vector3 pos = new(transform.position.x, -2, 0);
         CardViewHoverSystem.Instance.Show(Card, pos);
     }
@@ -86,13 +126,25 @@ public class CardView : MonoBehaviour
     void OnMouseExit()
     {
         if (!Interactions.Instance.PlayerCanHover()) return;
+
         CardViewHoverSystem.Instance.Hide();
-        wrapper.SetActive(true);
+
+        if (!selectionEnabled) wrapper.SetActive(true);
     }
 
     void OnMouseDown()
     {
+        // Selection mode takes priority over normal interactions
+        if (selectionEnabled)
+        {
+            // When choosing card, immediately hide hover so it doesn't linger
+            CardViewHoverSystem.Instance.Hide();
+            selectionCallback?.Invoke(this);
+            return;
+        }
+
         if (!Interactions.Instance.PlayerCanInteract()) return;
+
         if (Card.ManualTargetEffect != null)
         {
             ManualTargetSystem.Instance.StartTargeting(transform.position);
@@ -111,29 +163,32 @@ public class CardView : MonoBehaviour
 
     void OnMouseDrag()
     {
+        if (selectionEnabled) return; // no dragging during selection
         if (!Interactions.Instance.PlayerCanInteract()) return;
         if (Card.ManualTargetEffect != null) return;
+
         transform.position = MouseUtil.GetMousePositionInWorldSpace(-1);
     }
 
     void OnMouseUp()
     {
+        if (selectionEnabled) return; // click already handled in OnMouseDown
         if (!Interactions.Instance.PlayerCanInteract()) return;
+
         if (Card.ManualTargetEffect != null)
         {
             EnemyView target = ManualTargetSystem.Instance.EndTargeting(MouseUtil.GetMousePositionInWorldSpace(-1));
             if (target != null && CostSystem.Instance.HasEnoughCost(Card.Cost))
             {
-                PlayCardGA playCardGA = new(Card, target);
-                ActionSystem.Instance.Perform(playCardGA);
+                ActionSystem.Instance.Perform(new PlayCardGA(Card, target));
             }
         }
         else
         {
-            if (CostSystem.Instance.HasEnoughCost(Card.Cost) && Physics.Raycast(transform.position, Vector3.forward, out RaycastHit hit, 10f, dropLayer))
+            if (CostSystem.Instance.HasEnoughCost(Card.Cost) &&
+                Physics.Raycast(transform.position, Vector3.forward, out RaycastHit hit, 10f, dropLayer))
             {
-                PlayCardGA playCardGA = new(Card);
-                ActionSystem.Instance.Perform(playCardGA);
+                ActionSystem.Instance.Perform(new PlayCardGA(Card));
             }
             else
             {

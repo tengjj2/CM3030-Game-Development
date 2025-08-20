@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
+  m_Name: Disarm
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Disarm
+  <Cost>k__BackingField: 1
+  <Description>k__BackingField: Inflict 1 Weaken on 1 Enemy
+  <Image>k__BackingField: {fileID: 1955997550836171500, guid: 1adb0c8605cd3e24eae7a8d6fe662962, type: 3}
+  <ManualTargetEffect>k__BackingField:
+    rid: 1048756273093017681
+  <OtherEffects>k__BackingField: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 1048756273093017681
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 4
+        stackCount: 1

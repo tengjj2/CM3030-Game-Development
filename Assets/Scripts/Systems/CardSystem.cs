@@ -18,8 +18,6 @@ public class CardSystem : Singleton<CardSystem>
         ActionSystem.AttachPerformer<DrawCardsGA>(DrawCardsPerformer);
         ActionSystem.AttachPerformer<DiscardAllCardsGA>(DiscardAllCardsPerformer);
         ActionSystem.AttachPerformer<PlayCardGA>(PlayCardPerformer);
-        ActionSystem.SubscribePerformer<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
-        ActionSystem.SubscribePerformer<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
 
     void OnDisable()
@@ -27,8 +25,6 @@ public class CardSystem : Singleton<CardSystem>
         ActionSystem.DetachPerformer<DrawCardsGA>();
         ActionSystem.DetachPerformer<DiscardAllCardsGA>();
         ActionSystem.DetachPerformer<PlayCardGA>();
-        ActionSystem.UnsubscribePerformer<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
-        ActionSystem.UnsubscribePerformer<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
 
     public void Setup(List<CardData> deckData)
@@ -76,16 +72,23 @@ public class CardSystem : Singleton<CardSystem>
         yield return DiscardCard(cardView);
         SpendCostGA spendCostGA = new(playCardGA.Card.Cost);
         ActionSystem.Instance.AddReaction(spendCostGA);
+        // Manual-target effect
         if (playCardGA.Card.ManualTargetEffect != null)
         {
-            PerformEffectGA performEffectGA = new(playCardGA.Card.ManualTargetEffect, new() { playCardGA.ManualTarget });
-            ActionSystem.Instance.AddReaction(performEffectGA);
+            var caster = PlayerSystem.Instance.PlayerView;
+            var pe = new PerformEffectGA(playCardGA.Card.ManualTargetEffect,
+                                        new() { playCardGA.ManualTarget },
+                                        caster);                        // pass caster
+            ActionSystem.Instance.AddReaction(pe);
         }
+
+        // Other effects
         foreach (var effectWrapper in playCardGA.Card.OtherEffects)
         {
+            var caster = PlayerSystem.Instance.PlayerView;
             List<CombatantView> targets = effectWrapper.TargetMode.GetTargets();
-            PerformEffectGA performEffectGA = new(effectWrapper.Effect, targets);
-            ActionSystem.Instance.AddReaction(performEffectGA);
+            var pe = new PerformEffectGA(effectWrapper.Effect, targets, caster); // pass caster
+            ActionSystem.Instance.AddReaction(pe);
         }
     }
 
@@ -118,10 +121,36 @@ public class CardSystem : Singleton<CardSystem>
 
     private IEnumerator DiscardCard(CardView cardView)
     {
+        if (cardView == null || cardView.Equals(null)) yield break;
+
+        // Hide hover mirror so it can’t keep a scale tween alive
+        if (CardViewHoverSystem.Instance != null)
+            CardViewHoverSystem.Instance.Hide();
+
+        // Kill ALL tweens on this card and children before animating/destroying
+        cardView.transform.KillTweensRecursive();
+
         discardPile.Add(cardView.Card);
-        cardView.transform.DOScale(Vector3.zero, 0.15f);
-        Tween tween = cardView.transform.DOMove(discardPilePoint.position, 0.15f);
+
+        // Animate out (these are new tweens on the same transform)
+        var t = cardView.transform;
+        t.DOScale(Vector3.zero, 0.15f);
+        var tween = t.DOMove(discardPilePoint.position, 0.15f);
         yield return tween.WaitForCompletion();
+
+        // Kill again just in case any late tweens were started (e.g., selection ping)
+        t.KillTweensRecursive();
         Destroy(cardView.gameObject);
     }
+
+    public IReadOnlyList<Card> HandReadOnly => hand;
+
+    // Discard a specific card that is currently in hand.
+    public IEnumerator DiscardFromHand(Card card)
+    {
+        if (!hand.Contains(card)) yield break;
+        hand.Remove(card);
+        CardView cardView = handView.RemoveCard(card);
+        yield return DiscardCard(cardView); // you already have this private method
+}
 }
