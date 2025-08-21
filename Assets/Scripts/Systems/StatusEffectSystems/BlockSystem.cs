@@ -14,26 +14,27 @@ public class BlockSystem : MonoBehaviour
     {
         ActionSystem.DetachPerformer<ApplyBlockGA>();
     }
-    private IEnumerator ApplyBlockPerformer(ApplyBlockGA applyBlockGA)
+    private IEnumerator ApplyBlockPerformer(ApplyBlockGA ga)
     {
-        
-        var caster = applyBlockGA.Caster;
+        var caster = ga.Caster;
+        var target = ga.Target;
+        int add = Mathf.Max(0, ga.BaseAmount);
+        if (add <= 0) yield break;
 
-        Tween tween = caster.transform.DOMoveX(caster.transform.position.x - 1f, 0.15f);
-        yield return tween.WaitForCompletion();
-        caster.transform.DOMoveX(caster.transform.position.x + 1f, 0.25f);
+        if (SafeCombatant.AbortIfDead(caster, "Block(start)")) yield break;
+        if (SafeCombatant.AbortIfDead(target, "Block(target)")) yield break;
 
-        CombatantView target = applyBlockGA.Target;
-        Instantiate(blockVFX, target.transform.position, Quaternion.identity);
-        int blockStacks = target.GetStatusEffectStacks(StatusEffectType.BLOCK);
-        //target.RemoveStatusEffect(StatusEffectType.BLOCK, blockStacks);
-        yield return new WaitForSeconds(1f);
-        
-        /*
-        int before = applyBlockGA.Target.GetStatusEffectStacks(StatusEffectType.BLOCK);
-        applyBlockGA.Target.AddStatusEffect(StatusEffectType.BLOCK, applyBlockGA.BaseAmount);  // or finalAmount
-        int after  = applyBlockGA.Target.GetStatusEffectStacks(StatusEffectType.BLOCK);
-        Debug.Log($"[BlockSystem] {applyBlockGA.Target.name} BLOCK +{applyBlockGA.BaseAmount} ({before}→{after})");
-        yield return null;*/
+        // Small step anim for feedback (uses your helper)
+        yield return CombatAnim.StepForwardAndBackIfAlive(caster);
+
+        if (SafeCombatant.AbortIfDead(caster, "Block(after tween)")) yield break;
+        if (SafeCombatant.AbortIfDead(target, "Block(after tween)")) yield break;
+
+        int before = target.GetStatusEffectStacks(StatusEffectType.BLOCK);
+        target.AddStatusEffect(StatusEffectType.BLOCK, add);
+        int after = target.GetStatusEffectStacks(StatusEffectType.BLOCK);
+
+        if (blockVFX) Instantiate(blockVFX, target.transform.position, Quaternion.identity);
+        Debug.Log($"[BlockSystem] {target.name} BLOCK +{add} ({before}→{after})");
     }
 }

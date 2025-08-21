@@ -15,7 +15,7 @@ TagManager:
   - DropArea
   - EnemyView
   - Cards
-  - 
+  - TurnTransition
   - 
   - 
   - 
@@ -41,6 +41,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: World
+    uniqueID: 3740004245
+    locked: 0
+  - name: UI
+    uniqueID: 3157172559
     locked: 0
   m_RenderingLayers:
   - Default

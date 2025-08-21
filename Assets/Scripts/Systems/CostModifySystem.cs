@@ -39,7 +39,7 @@ public class ModifyCostSystem : MonoBehaviour
         }
 
         // Apply delta to current energy via CostSystem (clamped there)
-        //CostSystem.Instance.ApplyDelta(ga.Delta);
+        CostSystem.Instance.ApplyDeltaAllowOverflow(ga.Delta);
         yield return null;
     }
 }

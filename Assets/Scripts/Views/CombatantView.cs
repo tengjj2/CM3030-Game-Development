@@ -13,7 +13,7 @@ public class CombatantView : MonoBehaviour
     [SerializeField] private StatusEffectsUI statusEffectsUI;
 
     public int MaxHealth { get; private set; }
-    public int CurrentHealth { get; private set; }
+    public int CurrentHealth { get; set; }
 
     private readonly Dictionary<StatusEffectType, int> statusEffects = new();
 
@@ -138,12 +138,27 @@ public class CombatantView : MonoBehaviour
     }
 
     // ---------- UI ----------
-    private void RefreshHealthUI()
+    public void RefreshHealthUI()
     {
         if (healthText != null)
-            healthText.text = CurrentHealth+ " / " + MaxHealth;
+            healthText.text = CurrentHealth + " / " + MaxHealth;
 
         if (healthBarFill != null && MaxHealth > 0)
             healthBarFill.fillAmount = (float)CurrentHealth / MaxHealth;
+    }
+    
+    public void IncreaseMaxHealth(int amount, bool healBySameAmount = true)
+    {
+        if (amount == 0) { RefreshHealthUI(); return; }
+
+        int newMax = Mathf.Max(1, MaxHealth + amount);
+        MaxHealth = newMax;
+
+        if (healBySameAmount)
+            CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
+        else
+            CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
+
+        RefreshHealthUI();
     }
 }

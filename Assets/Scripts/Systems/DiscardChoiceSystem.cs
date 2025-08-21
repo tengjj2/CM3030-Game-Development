@@ -16,17 +16,22 @@ public class DiscardChoiceSystem : MonoBehaviour
 
     private IEnumerator Performer(ForceDiscardGA ga)
     {
-        // If no cards in hand, nothing to do
+        // Always clear any stale UI before starting
+        DiscardPromptUI.Instance?.HideImmediate();
+
         var hand = CardSystem.Instance.HandReadOnly;
         if (hand.Count == 0) yield break;
 
         int want = Mathf.Min(ga.Count, hand.Count);
-        // Ask the HandView to enter selection mode, await player choice(s)
-        var chosen = new List<Card>();
-        yield return HandView.Instance.SelectCardsFromHand(want, chosen, prompt: (want == 1 ? "Choose a card to discard" : $"Choose {want} cards to discard"));
+        string msg = want == 1 ? "Choose a card to discard" : $"Choose {want} cards to discard";
+        DiscardPromptUI.Instance?.Show(msg);
 
-        // Discard chosen
+        var chosen = new List<Card>();
+        yield return HandView.Instance.SelectCardsFromHand(want, chosen, prompt: msg);
+
         foreach (var card in chosen)
             yield return CardSystem.Instance.DiscardFromHand(card);
+
+        DiscardPromptUI.Instance?.Hide();
     }
 }

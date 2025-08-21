@@ -38,10 +38,29 @@ public class DamageSystem : Singleton<DamageSystem>
                 if (target is EnemyView enemyView)
                 {
                     ActionSystem.Instance.AddReaction(new KillEnemyGA(enemyView));
+                    // After resolving an enemy death, check if all are dead → Victory
+                    if (EnemySystem.Instance != null)
+                    {
+                        bool anyAlive = false;
+                        var list = EnemySystem.Instance.Enemies; // assume you expose a List<EnemyView> Enemies
+                        if (list != null)
+                        {
+                            for (int i = 0; i < list.Count; i++)
+                            {
+                                var e = list[i];
+                                if (e != null && e.CurrentHealth > 0) { anyAlive = true; break; }
+                            }
+                        }
+                        if (!anyAlive)
+                        {
+                            ActionSystem.Instance.AddReaction(new CombatVictoryGA());
+                        }
+                    }
                 }
                 else
                 {
                     // player death logic
+                    ActionSystem.Instance.AddReaction(new CombatDefeatGA());
                 }
             }
 

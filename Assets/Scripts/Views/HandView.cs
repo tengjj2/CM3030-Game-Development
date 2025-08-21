@@ -13,7 +13,8 @@ public class HandView : MonoBehaviour
     [SerializeField] private float tweenDuration = 0.15f;
 
     public static HandView Instance { get; private set; }
-
+    public bool IsSelecting { get; private set; }
+    public event System.Action<bool> OnSelectingChanged;
     private List<CardView> cards = new();
 
     private void Awake()
@@ -28,15 +29,27 @@ public class HandView : MonoBehaviour
     private HashSet<CardView> selectable = new();
 
     // Call by DiscardChoiceSystem
+    // HandView.cs (inside SelectCardsFromHand)
     public IEnumerator SelectCardsFromHand(int count, List<Card> outChosen, string prompt = "")
     {
         if (count <= 0) yield break;
+
+        // --- begin selection ---
+        IsSelecting = true;
+        OnSelectingChanged?.Invoke(true);
+
         selecting = true;
         needCount = count;
         currentPrompt = prompt;
         chosenBuffer = new List<Card>();
 
-        // Enable selection visuals + click handlers
+        // Show discard prompt UI
+        DiscardPromptUI.Instance?.Show(string.IsNullOrEmpty(prompt)
+            ? (count == 1 ? "Choose a card to discard" : $"Choose {count} cards to discard")
+            : prompt);
+
+        // Enable selection visuals + handlers
+        selectable.Clear();
         foreach (var cv in cards)
         {
             if (cv == null) continue;
@@ -44,29 +57,41 @@ public class HandView : MonoBehaviour
             cv.SetSelectionEnabled(true, OnCardClickedWhileSelecting);
         }
 
-        // Optional: show your own prompt UI here if you have one
-        Debug.Log($"[HandView] {currentPrompt}");
-
-        // Wait until player has chosen enough
-        while (selecting)
-            yield return null;
-
-        // Copy out the selection
-        outChosen.Clear();
-        outChosen.AddRange(chosenBuffer);
-        chosenBuffer = null;
-        currentPrompt = "";
-
-        // Clean up
-        foreach (var cv in selectable)
+        try
         {
-            if (cv == null || cv.Equals(null)) continue;
-            cv.SetSelectionEnabled(false, null);
-            // ensure no leftover pulse/hover tweens
-            cv.transform.KillTweensRecursive();
+            // Wait until player has chosen enough
+            while (selecting)
+                yield return null;
+
+            // Copy out the selection
+            outChosen.Clear();
+            outChosen.AddRange(chosenBuffer);
         }
-        selectable.Clear();
+        finally
+        {
+            // --- end selection (ALWAYS runs) ---
+            DiscardPromptUI.Instance?.Hide();
+
+            foreach (var cv in selectable)
+            {
+                if (cv == null || cv.Equals(null)) continue;
+                cv.SetSelectionEnabled(false, null);
+                cv.transform.KillTweensRecursive();
+            }
+            selectable.Clear();
+            choosingDoneCleanup();
+        }
+
+        void choosingDoneCleanup()
+        {
+            chosenBuffer = null;
+            currentPrompt = "";
+            selecting = false;
+            IsSelecting = false;
+            OnSelectingChanged?.Invoke(false);
+        }
     }
+
 
     private void OnCardClickedWhileSelecting(CardView cv)
     {
@@ -116,7 +141,7 @@ public class HandView : MonoBehaviour
         float firstCardPosition = 0.5f - (cards.Count - 1) * cardSpacing / 2;
         Spline spline = splineContainer.Spline;
 
-       for (int i = 0; i < cards.Count; i++)
+        for (int i = 0; i < cards.Count; i++)
         {
             float p = firstCardPosition + i * cardSpacing;
             Vector3 splinePosition = spline.EvaluatePosition(p);
@@ -128,4 +153,24 @@ public class HandView : MonoBehaviour
         }
         yield return new WaitForSeconds(duration);
     }
+
+    public void CancelSelectionMode()
+    {
+        selecting = false;
+        needCount = 0;
+        currentPrompt = "";
+        chosenBuffer = null;
+
+        foreach (var cv in selectable)
+        {
+            if (cv == null || cv.Equals(null)) continue;
+            cv.SetSelectionEnabled(false, null);
+            cv.transform.KillTweensRecursive();
+        }
+        selectable.Clear();
+
+        // Also hide any hover mirror
+        CardViewHoverSystem.Instance?.Hide();
+    }
+
 }

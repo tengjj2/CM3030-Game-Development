@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3576167218047903406}
-  - component: {fileID: 4865845881410638313}
   - component: {fileID: 4906169743852255321}
   m_Layer: 0
   m_Name: Burn
@@ -39,22 +38,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4865845881410638313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17554541560030150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 6340638170812485186}
-  effectIcon: {fileID: 69658094200731918}
 --- !u!114 &4906169743852255321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +420,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8450889205152381165}
-  - component: {fileID: 3483162733947795267}
   - component: {fileID: 211652632973180242}
   m_Layer: 0
   m_Name: Defence
@@ -467,22 +449,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3483162733947795267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 240042787248694304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 4128843828953022814}
-  effectIcon: {fileID: 666778340878040994}
 --- !u!114 &211652632973180242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,7 +484,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4892681252272340849}
-  - component: {fileID: 5072192187937895443}
   - component: {fileID: 3154269939352558002}
   - component: {fileID: 6489747069732072942}
   m_Layer: 0
@@ -549,22 +514,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5072192187937895443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291973227141360487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 991183554212788531}
-  effectIcon: {fileID: 6493076011680066603}
 --- !u!222 &3154269939352558002
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -608,7 +557,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9939990116147583}
-  - component: {fileID: 5956394653459000025}
   - component: {fileID: 2255929069758716742}
   m_Layer: 0
   m_Name: Thorns
@@ -638,22 +586,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5956394653459000025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388317081566428683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 2422420943318233544}
-  effectIcon: {fileID: 7394582729619381992}
 --- !u!114 &2255929069758716742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1476,7 +1408,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2152108977073022114}
-  - component: {fileID: 7421964942084090777}
   - component: {fileID: 6332092716573235820}
   m_Layer: 0
   m_Name: Discard
@@ -1506,22 +1437,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7421964942084090777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1667749080010351129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 1392683920918155983}
-  effectIcon: {fileID: 1871368465264965938}
 --- !u!114 &6332092716573235820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1557,7 +1472,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1047028150054583308}
-  - component: {fileID: 2848660254597908768}
   - component: {fileID: 1258320924326386696}
   m_Layer: 0
   m_Name: Block
@@ -1587,22 +1501,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2848660254597908768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717321404776566598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 3002025062147694105}
-  effectIcon: {fileID: 2434925495265587645}
 --- !u!114 &1258320924326386696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1638,7 +1536,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981360138934202116}
-  - component: {fileID: 4941929426804563347}
   m_Layer: 0
   m_Name: PlayArrow
   m_TagString: Untagged
@@ -1665,26 +1562,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4941929426804563347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826306925876682529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb222c061ef70b64cae016ead6d21580, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 4815184260686380142, guid: 918093e254bf3fb49bee72eb3382061a, type: 3}
-  dotPrefab: {fileID: 3156157906235518846, guid: a68259e685a528b4996d24c81e91e503, type: 3}
-  poolSize: 50
-  spacing: 50
-  arrowAngleAdjustment: 0
-  dotsToSkip: 1
-  baseScreenWidth: 1920
-  spacingScale: 0
 --- !u!1 &2166820276453414861
 GameObject:
   m_ObjectHideFlags: 0
@@ -1769,9 +1646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8078944093618743852}
-  - component: {fileID: 7608956247880301043}
   - component: {fileID: 3464999951753312550}
-  - component: {fileID: 2039233974809106682}
   m_Layer: 0
   m_Name: CardPrefab
   m_TagString: Untagged
@@ -1799,41 +1674,6 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: 175}
   m_SizeDelta: {x: 250, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7608956247880301043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2266796446000597662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89dc81b0601cae94a93ccfbff0e13f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  nameText: {fileID: 1640635529395108119}
-  costText: {fileID: 1002947338720390335}
-  descriptionText: {fileID: 4088060708753442759}
-  cardImage: {fileID: 8949554633689354050}
-  cardArtImage: {fileID: 1325907092374483207}
-  damageEffectUI: {fileID: 5072192187937895443}
-  blockEffectUI: {fileID: 2848660254597908768}
-  healEffectUI: {fileID: 2782299769828279789}
-  energyGainEffectUI: {fileID: 2365793001638235507}
-  energyLossEffectUI: {fileID: 7222538587793386307}
-  strengthEffectUI: {fileID: 8936700196528540677}
-  weakenEffectUI: {fileID: 2035151691783708455}
-  defenceEffectUI: {fileID: 3483162733947795267}
-  thornsEffectUI: {fileID: 5956394653459000025}
-  poisonEffectUI: {fileID: 1232582147471885564}
-  burnEffectUI: {fileID: 4865845881410638313}
-  exhaustionEffectUI: {fileID: 9092605269635044915}
-  confusionEffectUI: {fileID: 47355158862400558}
-  barrierEffectUI: {fileID: 7229523309301199146}
-  frailEffectUI: {fileID: 5519518009613879670}
-  drawEffectUI: {fileID: 5627251323862018219}
-  discardEffectUI: {fileID: 7421964942084090777}
 --- !u!61 &3464999951753312550
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1880,23 +1720,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 250, y: 350}
   m_EdgeRadius: 0
---- !u!114 &2039233974809106682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2266796446000597662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 179dd0471fe3cbe4292cd496655c4380, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectScale: 1.1
-  cardPlay: {x: 0, y: 0}
-  playPosition: {x: 0, y: 0, z: 0}
-  glowEffect: {fileID: 3448820990002028416}
-  playArrow: {fileID: 1826306925876682529}
 --- !u!1 &2302242058180638760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,7 +1729,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1983502640111767721}
-  - component: {fileID: 7222538587793386307}
   - component: {fileID: 1755017549560378515}
   m_Layer: 0
   m_Name: EnergyLoss
@@ -1936,22 +1758,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7222538587793386307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2302242058180638760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 1122424115283706409}
-  effectIcon: {fileID: 6989915184530167599}
 --- !u!114 &1755017549560378515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1987,7 +1793,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5942765146520872860}
-  - component: {fileID: 5627251323862018219}
   - component: {fileID: 2972989230470328647}
   m_Layer: 0
   m_Name: Draw
@@ -2017,22 +1822,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5627251323862018219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2344511735847588871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 4624185329823775933}
-  effectIcon: {fileID: 5288101028164953120}
 --- !u!114 &2972989230470328647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2551,7 +2340,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4771926652463423389}
-  - component: {fileID: 7229523309301199146}
   - component: {fileID: 7110294446239091999}
   m_Layer: 0
   m_Name: Barrier
@@ -2581,22 +2369,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7229523309301199146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2897881188917024514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 4451579950891783237}
-  effectIcon: {fileID: 2614904287742157809}
 --- !u!114 &7110294446239091999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2843,7 +2615,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8833070345946354995}
-  - component: {fileID: 2782299769828279789}
   - component: {fileID: 8067156969380257413}
   m_Layer: 0
   m_Name: Heal
@@ -2873,22 +2644,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2782299769828279789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3652514912794580542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 5462704873901043014}
-  effectIcon: {fileID: 1619649325213619684}
 --- !u!114 &8067156969380257413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3110,7 +2865,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8667354372246894027}
-  - component: {fileID: 9092605269635044915}
   - component: {fileID: 6234103472879194402}
   m_Layer: 0
   m_Name: Exhaust
@@ -3140,22 +2894,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9092605269635044915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4080349416249095833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 4741622085285092864}
-  effectIcon: {fileID: 5067742818377389095}
 --- !u!114 &6234103472879194402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4004,7 +3742,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2734338909243881696}
-  - component: {fileID: 5519518009613879670}
   - component: {fileID: 7006234506581394518}
   m_Layer: 0
   m_Name: Frail
@@ -4034,22 +3771,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5519518009613879670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4838916290633695032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 6532750924351099158}
-  effectIcon: {fileID: 7204290456979798652}
 --- !u!114 &7006234506581394518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4221,7 +3942,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2132323710118551434}
-  - component: {fileID: 2365793001638235507}
   - component: {fileID: 8304137811006916277}
   m_Layer: 0
   m_Name: EnergyGain
@@ -4251,22 +3971,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2365793001638235507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5143135168004643657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 4538694356914261241}
-  effectIcon: {fileID: 8203830389932822006}
 --- !u!114 &8304137811006916277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4377,7 +4081,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8639447161669949003}
-  - component: {fileID: 47355158862400558}
   - component: {fileID: 4766095585800978159}
   m_Layer: 0
   m_Name: Confusion
@@ -4407,22 +4110,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &47355158862400558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5428968468193587518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 2792073344323712429}
-  effectIcon: {fileID: 9203334490691486852}
 --- !u!114 &4766095585800978159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4770,7 +4457,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6076596100036761992}
-  - component: {fileID: 1232582147471885564}
   - component: {fileID: 4003832934583880948}
   m_Layer: 0
   m_Name: Poison
@@ -4800,22 +4486,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1232582147471885564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277598083095403187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 7808885067324051437}
-  effectIcon: {fileID: 2595556390389439684}
 --- !u!114 &4003832934583880948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5384,7 +5054,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8310603104969903783}
-  - component: {fileID: 2035151691783708455}
   - component: {fileID: 1029505730761159961}
   m_Layer: 0
   m_Name: Weaken
@@ -5414,22 +5083,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2035151691783708455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7317708233881962742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 8250319326769254621}
-  effectIcon: {fileID: 9207141232387347284}
 --- !u!114 &1029505730761159961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5465,7 +5118,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 372453449654616991}
-  - component: {fileID: 8936700196528540677}
   - component: {fileID: 4182436722198947951}
   m_Layer: 0
   m_Name: Strength
@@ -5495,22 +5147,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8936700196528540677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8249641209030562309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894b7115c1446814eadc56890155d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
-  effectType: 0
-  valueText: {fileID: 5715864296638629533}
-  effectIcon: {fileID: 3806605700532484198}
 --- !u!114 &4182436722198947951
 MonoBehaviour:
   m_ObjectHideFlags: 0
