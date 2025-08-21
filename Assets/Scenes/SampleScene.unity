@@ -721,6 +721,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyLossVFX: {fileID: 0}
+--- !u!114 &434433977 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1410246384226154727, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+  m_PrefabInstance: {fileID: 1293150438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &456154581
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cfdc49cbef4ec47ab79e2c6f0cda39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyViewPrefab: {fileID: 4841824020612655291, guid: a4c77c3265b07da43af6de5d4396043f, type: 3}
+  enemyViewPrefab: {fileID: 2308411304617364348, guid: b662c0d2913784eebb6d7122beeaa857, type: 3}
 --- !u!1 &494330857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,6 +1993,17 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &1007650984 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4183818373872445331, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+  m_PrefabInstance: {fileID: 1293150438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8336edbb5f691324fa5b1870b6237d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1010530982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,10 +2473,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 1644716429}
     m_Modifications:
     - target: {fileID: 815860849389577451, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
-      propertyPath: m_Size.x
-      value: 0.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 815860849389577451, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -8902044802361073846, guid: aefef0d8f2fff174d965acc3b0e1d949, type: 3}
@@ -2858,7 +2876,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.23, y: 0.17}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3066,6 +3084,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 603490105}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1500386950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6572751892961353675, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+  m_PrefabInstance: {fileID: 1293150438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1505282326
 GameObject:
   m_ObjectHideFlags: 0
@@ -3928,11 +3957,11 @@ PrefabInstance:
     - target: {fileID: 2349070586979411604, guid: 77c8f20bda084f6408468c8e06027044, type: 3}
       propertyPath: healthText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1500386950}
     - target: {fileID: 2349070586979411604, guid: 77c8f20bda084f6408468c8e06027044, type: 3}
       propertyPath: healthBarFill
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 434433977}
     - target: {fileID: 2349070586979411604, guid: 77c8f20bda084f6408468c8e06027044, type: 3}
       propertyPath: spriteRenderer
       value: 
@@ -3940,7 +3969,7 @@ PrefabInstance:
     - target: {fileID: 2349070586979411604, guid: 77c8f20bda084f6408468c8e06027044, type: 3}
       propertyPath: statusEffectsUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1007650984}
     - target: {fileID: 2349070586979411604, guid: 77c8f20bda084f6408468c8e06027044, type: 3}
       propertyPath: healthBarContainer
       value: 

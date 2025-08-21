@@ -10,6 +10,7 @@ public class EnemyView : CombatantView
     [SerializeField] private Transform intentAnchor;    // optional: if you need a world anchor
     [SerializeField] private TMP_Text attackText;
     [SerializeField] private GameObject confuseVFXPrefab;
+    [SerializeField] private Animator animator;
 
     [Header("Intent Icons")]
     [SerializeField] private Sprite confuseIntentSprite;          // <-- assign a '?' icon in prefab
@@ -90,6 +91,8 @@ public class EnemyView : CombatantView
     private bool _setupDone;
     public void Setup(EnemyData enemyData)
     {
+        if (animator != null)
+            animator.Play("idle");
         if (_setupDone) { Debug.LogWarning($"[EnemyView] Setup called twice on {name}"); return; }
         _setupDone = true;
 
@@ -108,5 +111,11 @@ public class EnemyView : CombatantView
         {
             Debug.LogWarning($"[EnemyView] {name} has no EnemyAI component.");
         }
+    }
+
+    public void PlayAttackAnimation()
+    {
+        if (animator != null)
+            animator.Play("attack");
     }
 }
