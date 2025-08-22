@@ -87,12 +87,13 @@ public class EnemySystem : Singleton<EnemySystem>
 
         attacker.PlayAttackAnimation();
 
+
         // Cache start position in case attacker moves/dies mid-flow
         var t = attacker.transform;
         float startX = t.position.x;
 
         // Step forward
-        Tween fwd = t.DOMoveX(startX - 1f, 0.15f);
+        Tween fwd = t.DOMoveX(startX - 1f, 0.3f);
         yield return fwd.WaitForCompletion();
 
         // Re-check after tween (enemy might have died to a reaction)
@@ -100,7 +101,7 @@ public class EnemySystem : Singleton<EnemySystem>
         if (!SafeCombatant.IsAlive(player)) yield break;
 
         // Step back (don’t block if you prefer overlap; here we wait for cleanliness)
-        Tween back = t.DOMoveX(startX, 0.25f);
+        Tween back = t.DOMoveX(startX, 0.3f);
         yield return back.WaitForCompletion();
 
         // Final safety before enqueuing damage

@@ -196,9 +196,29 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2217108563343973979, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3152286373812035329, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746407986160153801, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.7761
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746407986160153801, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.7001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746407986160153801, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746407986160153801, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -2.38
       objectReference: {fileID: 0}
     - target: {fileID: 7111892353146422905, guid: 07707cb9a335a54468396f2c7a547cef, type: 3}
       propertyPath: m_LocalScale.x
