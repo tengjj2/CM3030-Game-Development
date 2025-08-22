@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 17d1ba56ec8cfab4b94c9e128e19bb7b
+guid: bbd84a80cd6224b15b21498073894295
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -112,12 +112,12 @@ TextureImporter:
       name: enemies_attack_0
       rect:
         serializedVersion: 2
-        x: 91
-        y: 4
-        width: 30
-        height: 79
+        x: 0
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: enemies_attack_1
       rect:
         serializedVersion: 2
-        x: 219
-        y: 4
-        width: 30
-        height: 79
+        x: 128
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -156,12 +156,12 @@ TextureImporter:
       name: enemies_attack_2
       rect:
         serializedVersion: 2
-        x: 347
-        y: 4
-        width: 30
-        height: 79
+        x: 256
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -178,12 +178,12 @@ TextureImporter:
       name: enemies_attack_3
       rect:
         serializedVersion: 2
-        x: 475
-        y: 4
-        width: 30
-        height: 79
+        x: 384
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

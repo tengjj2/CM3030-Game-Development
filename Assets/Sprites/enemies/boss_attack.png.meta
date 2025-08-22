@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 74db4e20b6675364dad31602a495d60a
+guid: 9140d727a4ebc40d0b5bf072b51cbe21
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -112,10 +112,10 @@ TextureImporter:
       name: boss_attack_0
       rect:
         serializedVersion: 2
-        x: 72
-        y: 6
-        width: 55
-        height: 77
+        x: 0
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: boss_attack_1
       rect:
         serializedVersion: 2
-        x: 200
-        y: 6
-        width: 55
-        height: 76
+        x: 128
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,10 +156,10 @@ TextureImporter:
       name: boss_attack_2
       rect:
         serializedVersion: 2
-        x: 328
-        y: 6
-        width: 55
-        height: 76
+        x: 256
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,10 +178,10 @@ TextureImporter:
       name: boss_attack_3
       rect:
         serializedVersion: 2
-        x: 456
-        y: 6
-        width: 55
-        height: 77
+        x: 384
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 31d8656fcee2540ddbbb42c606552e6e
     internalID: 0
     vertices: []
     indices: 

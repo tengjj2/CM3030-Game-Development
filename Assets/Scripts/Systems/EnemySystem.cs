@@ -85,6 +85,8 @@ public class EnemySystem : Singleton<EnemySystem>
         var player = PlayerSystem.Instance != null ? PlayerSystem.Instance.PlayerView : null;
         if (!SafeCombatant.IsAlive(player)) yield break;
 
+        attacker.PlayAttackAnimation();
+
         // Cache start position in case attacker moves/dies mid-flow
         var t = attacker.transform;
         float startX = t.position.x;

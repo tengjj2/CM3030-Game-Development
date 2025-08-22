@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4812403e1c88c944e8868dc83f0cca98
+guid: 477609183283a44189e345d8137fa546
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -112,10 +112,10 @@ TextureImporter:
       name: fire_0
       rect:
         serializedVersion: 2
-        x: 81
-        y: 4
-        width: 46
-        height: 79
+        x: 0
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: fire_1
       rect:
         serializedVersion: 2
-        x: 209
-        y: 4
-        width: 46
-        height: 78
+        x: 128
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,10 +156,10 @@ TextureImporter:
       name: fire_2
       rect:
         serializedVersion: 2
-        x: 337
-        y: 4
-        width: 46
-        height: 78
+        x: 256
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,10 +178,10 @@ TextureImporter:
       name: fire_3
       rect:
         serializedVersion: 2
-        x: 465
-        y: 4
-        width: 46
-        height: 79
+        x: 384
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1f787576994ad4835bbba4386f5db66d
     internalID: 0
     vertices: []
     indices: 

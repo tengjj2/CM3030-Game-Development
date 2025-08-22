@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dee3f36ee87930c4a8286e0d47681436
+guid: 6b35f66b5395043c2be1c63e40bb161f
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -112,10 +112,10 @@ TextureImporter:
       name: scientist_0
       rect:
         serializedVersion: 2
-        x: 86
-        y: 4
-        width: 36
-        height: 79
+        x: 0
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: scientist_1
       rect:
         serializedVersion: 2
-        x: 213
-        y: 4
-        width: 37
-        height: 78
+        x: 128
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,10 +156,10 @@ TextureImporter:
       name: scientist_2
       rect:
         serializedVersion: 2
-        x: 343
-        y: 4
-        width: 35
-        height: 79
+        x: 256
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,10 +178,10 @@ TextureImporter:
       name: scientist_3
       rect:
         serializedVersion: 2
-        x: 470
-        y: 4
-        width: 36
-        height: 79
+        x: 384
+        y: 0
+        width: 128
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ba40ab2220bd84824a5c1d80a29f5b65
     internalID: 0
     vertices: []
     indices: 

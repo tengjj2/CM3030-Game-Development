@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   BackgroundSprite: {fileID: -5889749906266933800, guid: 8e5d069e75706ad4e9df54e863c10a19, type: 3}
-  Enemies: []
+  Enemies:
+  - {fileID: 11400000, guid: fade4ce17808541b7a46fc4b5abbe665, type: 2}
   ShopInventory: {fileID: 0}
   LobbyOffer: {fileID: 0}
   Title: 
