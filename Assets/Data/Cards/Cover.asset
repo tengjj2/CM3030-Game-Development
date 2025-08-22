@@ -23,6 +23,8 @@ MonoBehaviour:
       rid: 1048756250816806992
     <Effect>k__BackingField:
       rid: 1048756250816806993
+  IsBasic: 1
+  exhaustOnPlay: 0
   references:
     version: 2
     RefIds:

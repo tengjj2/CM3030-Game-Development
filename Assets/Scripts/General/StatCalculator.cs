@@ -25,7 +25,7 @@ public static class StatCalculator
         if (target.GetStatusEffectStacks(StatusEffectType.FRAIL) > 0)
             mult *= 1.25f;
 
-        int result = Mathf.FloorToInt(Mathf.Max(0, baseAmount) * mult);
+        int result = Mathf.CeilToInt(Mathf.Max(0, baseAmount) * mult);
         return Mathf.Max(0, result);
     }
 }

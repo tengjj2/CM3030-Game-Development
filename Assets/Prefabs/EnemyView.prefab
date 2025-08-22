@@ -562,7 +562,8 @@ MonoBehaviour:
   intentUI: {fileID: 1560654522325646209}
   intentAnchor: {fileID: 1767702482485763407}
   attackText: {fileID: 7350834659343706479}
-  confuseIntentSprite: {fileID: -2677684263373962601, guid: 1e34bf611c55fc64a83869abdab0e4b5, type: 3}
+  confuseVFXPrefab: {fileID: 0}
+  confuseIntentSprite: {fileID: -440672118457268132, guid: 3a59d38e15fb9c04dbc3a8c9aabfbd63, type: 3}
   showConfuseStacksAsValue: 0
 --- !u!65 &2822588083796566424
 BoxCollider:

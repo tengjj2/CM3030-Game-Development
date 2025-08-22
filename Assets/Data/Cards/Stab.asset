@@ -19,6 +19,8 @@ MonoBehaviour:
   <ManualTargetEffect>k__BackingField:
     rid: 1048756182745612553
   <OtherEffects>k__BackingField: []
+  IsBasic: 1
+  exhaustOnPlay: 0
   references:
     version: 2
     RefIds:
