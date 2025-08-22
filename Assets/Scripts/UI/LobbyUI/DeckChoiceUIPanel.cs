@@ -10,15 +10,15 @@ public class DeckChoicePanelUI : Singleton<DeckChoicePanelUI>
     [SerializeField] private CanvasGroup cg;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text promptText;
-    [SerializeField] private RectTransform content;          // ScrollRect content
-    [SerializeField] private UICardItemButton itemPrefab;    // prefab with UICardView+Button
+    [SerializeField] private RectTransform content;             // ScrollRect content
+    [SerializeField] private RewardCardButton itemPrefab;       // prefab with UICardView in cardHolder
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button cancelButton;
 
     [Header("Behavior")]
     [SerializeField] private bool allowMultiSelect = false;
 
-    private readonly List<UICardItemButton> spawned = new();
+    private readonly List<RewardCardButton> spawned = new();
     private readonly List<CardData> selected = new();
     private System.Action<List<CardData>> onDone;
     private int needCount = 1;
@@ -43,9 +43,9 @@ public class DeckChoicePanelUI : Singleton<DeckChoicePanelUI>
 
     // ---- Public API ----
     public void ShowChooseFromPool(
-        List<CardData> pool, 
-        int countToPick, 
-        string title, 
+        List<CardData> pool,
+        int countToPick,
+        string title,
         string prompt,
         bool multiSelect,
         System.Action<List<CardData>> onPicked
@@ -56,7 +56,7 @@ public class DeckChoicePanelUI : Singleton<DeckChoicePanelUI>
         needCount = Mathf.Max(1, countToPick);
         onDone = onPicked;
 
-        if (titleText)  titleText.text  = title ?? "";
+        if (titleText) titleText.text = title ?? "";
         if (promptText) promptText.text = prompt ?? "";
 
         if (pool != null && pool.Count > 0 && itemPrefab && content)
@@ -80,7 +80,7 @@ public class DeckChoicePanelUI : Singleton<DeckChoicePanelUI>
     }
 
     // ---- Internals ----
-    private void OnItemClicked(UICardItemButton item)
+    private void OnItemClicked(RewardCardButton item)
     {
         if (item == null || item.Data == null) return;
 
@@ -89,7 +89,7 @@ public class DeckChoicePanelUI : Singleton<DeckChoicePanelUI>
             // Single pick: select this and auto-confirm
             selected.Clear();
             selected.Add(item.Data);
-            foreach (var s in spawned) s.SetSelected(s == item);
+            foreach (var s in spawned) s.SetInteractable(s == item); // optional: visually show which is active
             Confirm();
             return;
         }
@@ -98,14 +98,14 @@ public class DeckChoicePanelUI : Singleton<DeckChoicePanelUI>
         if (selected.Contains(item.Data))
         {
             selected.Remove(item.Data);
-            item.SetSelected(false);
+            item.SetInteractable(true); // re-enable
         }
         else
         {
             if (selected.Count < needCount)
             {
                 selected.Add(item.Data);
-                item.SetSelected(true);
+                item.SetInteractable(false); // disable to show it’s chosen
             }
         }
 

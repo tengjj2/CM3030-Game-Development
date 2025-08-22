@@ -1,5 +1,6 @@
 using System.Collections;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RunManager : Singleton<RunManager>
@@ -10,11 +11,13 @@ public class RunManager : Singleton<RunManager>
     [SerializeField] private FloorVisibilityController visibility;
     [SerializeField] private BackgroundController background;
     [SerializeField] private RunConfigSO runConfig;   // <- use this instead of FloorSO[]
+    [SerializeField] private PlayerData playerData;
 
     private int index = 0;
 
     public void StartRun()
     {
+        PlayerSystem.Instance.InitializeRun(playerData);
         index = 0;
         NextFloor();
     }
@@ -35,37 +38,34 @@ public class RunManager : Singleton<RunManager>
 
     public void LoadFloor(FloorSO floor)
     {
-        OnFloorAboutToLoad?.Invoke(floor);
         if (floor.Type == FloorType.Lobby)
         {
             visibility?.ShowOnlyLobby();
             BackgroundController.Instance?.SetBackground(floor.BackgroundSprite);
-
             LobbySystem.Instance.Open(floor.LobbyOffer, () =>
             {
                 NextFloor();
             });
-            OnFloorStarted?.Invoke(floor);
             return;
         }
 
         if (floor.Type == FloorType.Combat)
         {
-            DiscardPromptUI.Instance?.Hide();
-            if (HandView.Instance != null && HandView.Instance.IsSelecting)
-            {
-                // simple: force it to end by selecting nothing
-                // (or add a CancelSelection() API if you prefer)
-                // Here we rely on the HandView cleanup in finally when coroutine finishes.
-            }
-
             visibility?.ShowOnlyCombat();
             BackgroundController.Instance?.SetBackground(floor.BackgroundSprite);
 
+            // NEW: rebuild runtime piles from the persisted run deck
+            var runDeck = PlayerSystem.Instance?.GetRunDeckData();
+            CardSystem.Instance?.RebuildForNewCombatFromRunDeck(runDeck, shuffle: true);
+
             EnemySystem.Instance.Setup(floor.Enemies);
-            TurnSystem.Instance.BeginCombat();
-            //OnFloorStarted?.Invoke(floor);
+
+            // Start combat; use your preferred entry point
+            TurnSystem.Instance.BeginCombat();   // or BeginMatch() if that’s your wrapper
             return;
         }
+
+        Debug.LogWarning($"[RunManager] Unhandled floor type: {floor.Type}");
     }
+
 }

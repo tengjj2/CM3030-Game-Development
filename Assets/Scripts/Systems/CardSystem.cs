@@ -36,34 +36,46 @@ void OnDisable()
     ActionSystem.DetachPerformer<PlayCardGA>();
 }
 
-public void Setup(List<CardData> deckData)
-{
-    foreach (var cardData in deckData)
+    public void Setup(List<CardData> deckData)
     {
-        Card card = new(cardData);
-        drawPile.Add(card);
+        runDeckData = new List<CardData>(deckData ?? new List<CardData>());
+        foreach (var cardData in deckData)
+        {
+            Card card = new(cardData);
+            drawPile.Add(card);
+        }
     }
-}
-
-private IEnumerator DrawCardsPerformer(DrawCardsGA drawCardGA)
-{
-    // Respect combat state so lobby doesn’t draw
-    if (!TurnSystem.Instance || !TurnSystem.Instance.CombatActive) yield break;
-
-    int want      = Mathf.Max(0, drawCardGA.Amount);
-    int canDraw   = Mathf.Min(want, drawPile.Count);
-    int remainder = want - canDraw;
-
-    for (int i = 0; i < canDraw; i++)
-        yield return DrawOne();
-
-    if (remainder > 0)
+    public List<CardData> GetRunDeckData()
     {
-        RefillDeck(); // only from DISCARD (not EXHAUST)
-        for (int i = 0; i < remainder && drawPile.Count > 0; i++)
+        return runDeckData;
+    }
+
+    public void SetupRunDeck(List<CardData> startingDeck)
+    {
+        runDeckData = new List<CardData>(startingDeck ?? new List<CardData>());
+        // you can also seed your in-combat piles here if you want
+    }
+
+
+    private IEnumerator DrawCardsPerformer(DrawCardsGA drawCardGA)
+    {
+        // Respect combat state so lobby doesn’t draw
+        if (!TurnSystem.Instance || !TurnSystem.Instance.CombatActive) yield break;
+
+        int want = Mathf.Max(0, drawCardGA.Amount);
+        int canDraw = Mathf.Min(want, drawPile.Count);
+        int remainder = want - canDraw;
+
+        for (int i = 0; i < canDraw; i++)
             yield return DrawOne();
+
+        if (remainder > 0)
+        {
+            RefillDeck(); // only from DISCARD (not EXHAUST)
+            for (int i = 0; i < remainder && drawPile.Count > 0; i++)
+                yield return DrawOne();
+        }
     }
-}
 
 private IEnumerator DiscardAllCardsPerformer(DiscardAllCardsGA _)
 {
@@ -115,71 +127,131 @@ private IEnumerator PlayCardPerformer(PlayCardGA ga)
 
     // ---------------- Internals ----------------
 
-    public void InitializeRunDeck(List<CardData> startDeck)
-    {
-        runDeckData = startDeck != null ? new List<CardData>(startDeck) : new List<CardData>();
-        RebuildPilesFromRunDeck(); // ensure piles match the run deck if not in combat
-    }
 
-    // Rebuilds piles from runDeckData (use only out of combat)
-    private void RebuildPilesFromRunDeck()
+    public void RebuildFromRunDeck(List<CardData> deckData)
     {
-        // destroy any hand views
-        var handSnapshot = new List<Card>(hand);
-        foreach (var c in handSnapshot)
+        if (deckData == null || deckData.Count == 0)
         {
-            var cv = handView.RemoveCard(c);
-            if (cv != null && !cv.Equals(null)) Destroy(cv.gameObject);
+            Debug.LogError("[CardSystem] RebuildFromRunDeck called with empty/null deck. Aborting rebuild to avoid clearing everything.");
+            return;
         }
+
+        // 1) Destroy any hand views
+        if (handView != null)
+        {
+            var snapshot = new List<Card>(hand);
+            foreach (var c in snapshot)
+            {
+                var cv = handView.RemoveCard(c);
+                if (cv) Destroy(cv.gameObject);
+            }
+        }
+
+        // 2) Clear piles
+        drawPile.Clear();
+        discardPile.Clear();
+        exhaustPile.Clear();
         hand.Clear();
 
-        // clear piles
+        // 3) Rebuild
+        foreach (var cd in deckData)
+            drawPile.Add(new Card(cd));
+
+        // 4) Shuffle
+        Shuffle(drawPile);
+    }
+
+    public void RebuildForNewCombatFromRunDeck(IReadOnlyList<CardData> runDeck, bool shuffle = true)
+    {
+        // 1) Kill any hand views cleanly
+        if (handView != null)
+        {
+            var handSnapshot = new List<Card>(hand);
+            foreach (var c in handSnapshot)
+            {
+                var cv = handView.RemoveCard(c);
+                if (cv != null && !cv.Equals(null)) Destroy(cv.gameObject);
+            }
+        }
+
+        // 2) Clear all runtime piles
+        hand.Clear();
         drawPile.Clear();
         discardPile.Clear();
         exhaustPile.Clear();
 
-        // repopulate draw from the run deck
-        foreach (var cd in runDeckData)
-            drawPile.Add(new Card(cd));
+        // 3) Rebuild draw from run deck
+        if (runDeck != null)
+        {
+            foreach (var cd in runDeck)
+                if (cd != null) drawPile.Add(new Card(cd));
+        }
 
-        Shuffle(drawPile);
+        // 4) Shuffle so the new card can actually appear
+        if (shuffle) Shuffle(drawPile);
     }
 
-public void AddCardDataToRunDeck(CardData data, bool alsoAddToDrawPile = true, bool toTop = false)
-{
-    if (!data) return;
-    runDeckData.Add(data);
 
-    // reflect immediately if we're NOT in combat
-    if (!TurnSystem.Instance || !TurnSystem.Instance.CombatActive)
+    public bool RemoveOneLiveInstanceByName(string cardName)
     {
-        if (alsoAddToDrawPile)
+        if (string.IsNullOrEmpty(cardName)) return false;
+
+        // Hand
+        int hi = hand.FindIndex(c => c != null && c.Name == cardName);
+        if (hi >= 0)
         {
-            var c = new Card(data);
-            if (toTop) drawPile.Insert(0, c);
-            else       drawPile.Add(c);
-            Shuffle(drawPile);
+            var card = hand[hi];
+            hand.RemoveAt(hi);
+            var cv = handView?.RemoveCard(card);
+            if (cv) Destroy(cv.gameObject);
+            return true;
+        }
+
+        // Draw
+        int i = drawPile.FindIndex(c => c != null && c.Name == cardName);
+        if (i >= 0) { drawPile.RemoveAt(i); return true; }
+
+        // Discard
+        i = discardPile.FindIndex(c => c != null && c.Name == cardName);
+        if (i >= 0) { discardPile.RemoveAt(i); return true; }
+
+        // Exhaust
+        i = exhaustPile.FindIndex(c => c != null && c.Name == cardName);
+        if (i >= 0) { exhaustPile.RemoveAt(i); return true; }
+
+        return false;
+    }
+
+    public void AddCardDataToRunDeck(CardData data, bool alsoAddToDrawPile = true, bool toTop = false)
+    {
+        if (!data) return;
+        runDeckData.Add(data);
+
+        // reflect immediately if we're NOT in combat
+        if (!TurnSystem.Instance || !TurnSystem.Instance.CombatActive)
+        {
+            if (alsoAddToDrawPile)
+            {
+                var c = new Card(data);
+                if (toTop) drawPile.Insert(0, c);
+                else drawPile.Add(c);
+                Shuffle(drawPile);
+            }
         }
     }
-}
 
     // Remove ONE copy of a CardData from the run deck (no live-instance work).
     // If not in combat, rebuild piles to reflect the change immediately.
     public bool RemoveOneFromRunDeck(CardData data)
     {
-        if (!data) return false;
-        int idx = runDeckData.FindIndex(d => d == data);
-        if (idx < 0) return false;
-
-        runDeckData.RemoveAt(idx);
-
-        // reflect immediately if not in combat
-        if (!TurnSystem.Instance || !TurnSystem.Instance.CombatActive)
-            RebuildPilesFromRunDeck();
-
-        return true;
+        if (data == null || runDeckData == null) return false;
+        int idx = runDeckData.IndexOf(data);
+        if (idx >= 0) { runDeckData.RemoveAt(idx); return true; }
+        // If instances differ (duplicate by value), fallback to name match:
+        idx = runDeckData.FindIndex(d => d && d.Name == data.Name);
+        if (idx >= 0) { runDeckData.RemoveAt(idx); return true; }
+        return false;
     }
-
 
     private IEnumerator DrawOne()
     {

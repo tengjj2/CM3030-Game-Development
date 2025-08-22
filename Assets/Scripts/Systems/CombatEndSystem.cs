@@ -44,7 +44,7 @@ public class CombatEndSystem : MonoBehaviour
         if (ui == null)
         {
             Debug.LogWarning("[CombatEndSystem] No CombatEndUI in scene — advancing immediately.");
-            RunManager.Instance?.NextFloor();
+            //RunManager.Instance?.NextFloor();
             yield break;
         }
 
