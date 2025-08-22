@@ -9,6 +9,11 @@ public class EnemyData : ScriptableObject
     [field: SerializeField] public int Health { get; private set; } = 30;
     [field: SerializeField] public int AttackPower { get; private set; } = 6;
 
+    [Header("animations")]
+    [SerializeField] private RuntimeAnimatorController enemyAnimatorController;
+
+    public RuntimeAnimatorController AnimatorController => enemyAnimatorController;
+
     [Header("AI / Moveset")]
     [SerializeField] private List<EnemyActionEntryData> moveset = new();
     [Tooltip("Pick next action at spawn and after each turn for intent UI.")]

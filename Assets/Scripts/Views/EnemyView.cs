@@ -91,8 +91,12 @@ public class EnemyView : CombatantView
     private bool _setupDone;
     public void Setup(EnemyData enemyData)
     {
-        if (animator != null)
-            animator.Play("idle");
+        // Set the specific animator controller for this enemy type
+        if (animator != null && enemyData.AnimatorController != null)
+        {
+            animator.runtimeAnimatorController = enemyData.AnimatorController;
+            animator.Play("idle"); // Start with idle animation
+        }
         if (_setupDone) { Debug.LogWarning($"[EnemyView] Setup called twice on {name}"); return; }
         _setupDone = true;
 
@@ -112,10 +116,11 @@ public class EnemyView : CombatantView
             Debug.LogWarning($"[EnemyView] {name} has no EnemyAI component.");
         }
     }
-
     public void PlayAttackAnimation()
     {
         if (animator != null)
+        {
             animator.Play("attack");
+        }
     }
 }

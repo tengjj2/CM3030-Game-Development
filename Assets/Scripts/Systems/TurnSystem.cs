@@ -4,11 +4,30 @@ using UnityEngine;
 [DefaultExecutionOrder(-100)]
 public class TurnSystem : Singleton<TurnSystem>
 {
-    public enum Phase { Transition, Player, Enemy }
-    public Phase CurrentPhase { get; private set; } = Phase.Transition;
+    public enum Phase { Transition, Player, Enemy, Inactive }
+    public Phase CurrentPhase { get; private set; } = Phase.Inactive;
+     public bool CombatActive { get; private set; } = false;
     public bool CanEndTurn => CurrentPhase == Phase.Player;
 
     public event System.Action<Phase> OnPhaseChanged;
+
+    // Guard to skip any Enemy banner before we’ve shown the very first Player banner
+    private bool _firstPlayerBannerShown = false;
+
+    // ---- Called by your floor controller ----
+    public void BeginCombat()
+    {
+        if (CombatActive) return;
+        CombatActive = true;
+        StartPlayerTurn();
+    }
+
+    public void SuspendCombat()
+    {
+        CombatActive = false;
+        SetPhase(Phase.Inactive);
+        // (optional) clear hand, etc., if you want: ActionSystem.Instance.Perform(new DiscardAllCardsGA());
+    }
 
     private void SetPhase(Phase p)
     {
@@ -21,6 +40,7 @@ public class TurnSystem : Singleton<TurnSystem>
     {
         ActionSystem.SubscribePerformer<EnemyTurnGA>(OnEnemyTurnPre,  ReactionTiming.PRE);
         ActionSystem.SubscribePerformer<EnemyTurnGA>(OnEnemyTurnPost, ReactionTiming.POST);
+        OnPhaseChanged += HandlePhaseBanner; 
         StartCoroutine(AutoBeginWhenReady());
     }
 
@@ -28,6 +48,7 @@ public class TurnSystem : Singleton<TurnSystem>
     {
         ActionSystem.UnsubscribePerformer<EnemyTurnGA>(OnEnemyTurnPre,  ReactionTiming.PRE);
         ActionSystem.UnsubscribePerformer<EnemyTurnGA>(OnEnemyTurnPost, ReactionTiming.POST);
+        OnPhaseChanged -= HandlePhaseBanner; // <-- was += before (bug)
     }
 
     private IEnumerator AutoBeginWhenReady()
@@ -40,15 +61,18 @@ public class TurnSystem : Singleton<TurnSystem>
 
     public void BeginMatch()
     {
-        StartPlayerTurn(); // sets Player phase
+        // Start straight into the player's turn (banner will come from SetPhase)
+        StartPlayerTurn();
     }
 
     private void StartPlayerTurn()
     {
+        if (!CombatActive) return;
+
         var pv = PlayerSystem.Instance.PlayerView;
         if (pv == null) { Debug.LogWarning("[TurnSystem] No PlayerView"); return; }
 
-        SetPhase(Phase.Player);
+        SetPhase(Phase.Player); // <- Triggers Player banner (once we’re subscribed)
 
         ActionSystem.Instance.Perform(
             new RefillCostGA(),
@@ -63,14 +87,16 @@ public class TurnSystem : Singleton<TurnSystem>
 
     public void EndPlayerTurn()
     {
-        if (!CanEndTurn)
+        if (!CombatActive || !CanEndTurn) return;
+        if (ActionSystem.Instance != null && ActionSystem.Instance.IsPerforming)
         {
-            Debug.LogWarning($"[TurnSystem] EndPlayerTurn called while phase={CurrentPhase}");
+            // If someone called directly, re-queue safely instead of hard-returning.
+            ActionSystem.Instance.Perform(new EndTurnRequestGA(), () => EndPlayerTurn());
             return;
         }
 
         SetPhase(Phase.Transition);
-        ActionSystem.Instance.Perform(new EnemyTurnGA()); // PRE/POST hooks wrap enemy phase
+        ActionSystem.Instance.Perform(new EnemyTurnGA());
     }
 
     // ---------- Enemy turn envelope ----------
@@ -79,23 +105,45 @@ public class TurnSystem : Singleton<TurnSystem>
     {
         var pv = PlayerSystem.Instance.PlayerView;
 
-        // Player end-of-turn ticks (ensure Confuse decays here)
+        // Flip to Enemy phase (shows “Enemy Turn” banner) — but only after first Player banner is shown
+        if (_firstPlayerBannerShown)
+            SetPhase(Phase.Enemy);
+
+        // Player end-of-turn ticks & cleanup
         if (pv != null)
             ActionSystem.Instance.AddReaction(new TickStatusesGA(pv, TickPhase.EndOfTurn, isOwnersTurn: true));
 
-        // Usual cleanup
         ActionSystem.Instance.AddReaction(new DiscardAllCardsGA());
     }
 
     private void OnEnemyTurnPost(EnemyTurnGA _)
     {
-        // Add a small pause before giving control back
+        // When enemies are done, insert a pacing delay then return to player
         StartCoroutine(DelayedPlayerTurn());
     }
 
     private IEnumerator DelayedPlayerTurn()
     {
+        SetPhase(Phase.Transition);
         yield return new WaitForSeconds(1f);
-        StartPlayerTurn(); // sets phase back to Player
+        StartPlayerTurn(); // sets Phase.Player (banner shows)
+    }
+
+    // ---------- Banner driver (ONLY phase changes call UI) ----------
+
+    private void HandlePhaseBanner(Phase p)
+    {
+        if (TurnBannerUI.Instance == null) return;
+
+        if (p == Phase.Player)
+        {
+            _firstPlayerBannerShown = true;
+            StartCoroutine(TurnBannerUI.Instance.ShowPlayerTurn());
+        }
+        else if (p == Phase.Enemy)
+        {
+            if (!_firstPlayerBannerShown) return; // ignore stray enemy during boot
+            StartCoroutine(TurnBannerUI.Instance.ShowEnemyTurn());
+        }
     }
 }

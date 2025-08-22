@@ -78,44 +78,45 @@ public class EnemySystem : Singleton<EnemySystem>
     }
 
     private IEnumerator AttackPlayerPerformer(AttackPlayerGA ga)
-{
-    var attacker = ga.Attacker;
-    if (SafeCombatant.AbortIfDead(attacker, "Attack(start)")) yield break;
+    {
+        var attacker = ga.Attacker;
+        if (SafeCombatant.AbortIfDead(attacker, "Attack(start)")) yield break;
 
-    var player = PlayerSystem.Instance != null ? PlayerSystem.Instance.PlayerView : null;
-    if (!SafeCombatant.IsAlive(player)) yield break;
+        var player = PlayerSystem.Instance != null ? PlayerSystem.Instance.PlayerView : null;
+        if (!SafeCombatant.IsAlive(player)) yield break;
 
-    attacker.PlayAttackAnimation();
+        attacker.PlayAttackAnimation();
 
-    // Cache start position in case attacker moves/dies mid-flow
-    var t = attacker.transform;
-    float startX = t.position.x;
+        // Cache start position in case attacker moves/dies mid-flow
+        var t = attacker.transform;
+        float startX = t.position.x;
 
-    // Step forward
-    Tween fwd = t.DOMoveX(startX - 1f, 0.15f);
-    yield return fwd.WaitForCompletion();
+        // Step forward
+        Tween fwd = t.DOMoveX(startX - 1f, 0.15f);
+        yield return fwd.WaitForCompletion();
 
-    // Re-check after tween (enemy might have died to a reaction)
-    if (SafeCombatant.AbortIfDead(attacker, "Attack(after fwd)")) yield break;
-    if (!SafeCombatant.IsAlive(player)) yield break;
+        // Re-check after tween (enemy might have died to a reaction)
+        if (SafeCombatant.AbortIfDead(attacker, "Attack(after fwd)")) yield break;
+        if (!SafeCombatant.IsAlive(player)) yield break;
 
-    // Step back (don’t block if you prefer overlap; here we wait for cleanliness)
-    Tween back = t.DOMoveX(startX, 0.25f);
-    yield return back.WaitForCompletion();
+        // Step back (don’t block if you prefer overlap; here we wait for cleanliness)
+        Tween back = t.DOMoveX(startX, 0.25f);
+        yield return back.WaitForCompletion();
 
-    // Final safety before enqueuing damage
-    if (SafeCombatant.AbortIfDead(attacker, "Attack(before damage)")) yield break;
-    if (!SafeCombatant.IsAlive(player)) yield break;
+        // Final safety before enqueuing damage
+        if (SafeCombatant.AbortIfDead(attacker, "Attack(before damage)")) yield break;
+        if (!SafeCombatant.IsAlive(player)) yield break;
 
-    // Enqueue damage
-    var deal = new DealDamageGA(attacker.AttackPower, new() { player }, ga.Caster);
-    ActionSystem.Instance.AddReaction(deal);
-}
+        // Enqueue damage
+        var deal = new DealDamageGA(attacker.AttackPower, new() { player }, ga.Caster);
+        ActionSystem.Instance.AddReaction(deal);
+    }
 
 
     private IEnumerator KillEnemyPerformer(KillEnemyGA killEnemyGA)
     {
         yield return enemyBoardView.RemoveEnemy(killEnemyGA.EnemyView);
+        CheckCombatEnd();
     }
 
     private IEnumerator RemoveDebuffPerformer(EnemyRemoveDebuffGA enemyRemoveDebuffGA)
@@ -136,5 +137,26 @@ public class EnemySystem : Singleton<EnemySystem>
             }
         }
         yield return new WaitForSeconds(1f);
+    }
+    
+    public void CleanBoard()
+    {
+        // Remove any previous enemies (if you reuse the same scene)
+        var snapshot = new List<EnemyView>(enemyBoardView.EnemyViews);
+        foreach (var e in snapshot)
+            StartCoroutine(enemyBoardView.RemoveEnemy(e));
+    }
+
+    private void CheckCombatEnd()
+    {
+        bool anyAlive = false;
+        foreach (var e in enemyBoardView.EnemyViews)
+            if (e != null && e.CurrentHealth > 0) { anyAlive = true; break; }
+
+        if (!anyAlive)
+        {
+            Debug.Log("[EnemySystem] Combat won!");
+            RunManager.Instance.NextFloor();
+        }
     }
 }

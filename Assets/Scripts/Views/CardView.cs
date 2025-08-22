@@ -22,8 +22,8 @@ public class CardView : MonoBehaviour
     private bool selectionEnabled = false;
     private Action<CardView> selectionCallback;
 
-    private void OnDisable()  { transform.KillTweensRecursive(); }
-    private void OnDestroy()  { transform.KillTweensRecursive(); }
+    private void OnDisable() { transform.KillTweensRecursive(); }
+    private void OnDestroy() { transform.KillTweensRecursive(); }
 
     public void SetSelectionEnabled(bool enabled, Action<CardView> onClick)
     {
@@ -114,6 +114,7 @@ public class CardView : MonoBehaviour
 
     void OnMouseEnter()
     {
+        if (previewMode) return;  
         if (!Interactions.Instance.PlayerCanHover()) return;
 
         // Keep wrapper visible during selection so layout doesn't jump
@@ -125,6 +126,7 @@ public class CardView : MonoBehaviour
 
     void OnMouseExit()
     {
+        if (previewMode) return;  
         if (!Interactions.Instance.PlayerCanHover()) return;
 
         CardViewHoverSystem.Instance.Hide();
@@ -134,6 +136,7 @@ public class CardView : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (previewMode) return;  
         // Selection mode takes priority over normal interactions
         if (selectionEnabled)
         {
@@ -163,6 +166,7 @@ public class CardView : MonoBehaviour
 
     void OnMouseDrag()
     {
+        if (previewMode) return;  
         if (selectionEnabled) return; // no dragging during selection
         if (!Interactions.Instance.PlayerCanInteract()) return;
         if (Card.ManualTargetEffect != null) return;
@@ -172,6 +176,7 @@ public class CardView : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (previewMode) return;  
         if (selectionEnabled) return; // click already handled in OnMouseDown
         if (!Interactions.Instance.PlayerCanInteract()) return;
 
@@ -198,4 +203,33 @@ public class CardView : MonoBehaviour
             Interactions.Instance.PlayerIsDragging = false;
         }
     }
+    // Add near the other fields
+    private bool previewMode = false;
+
+    // Add this helper
+    public void SetPreview(bool value)
+    {
+        previewMode = value;
+
+        // Ensure nothing tries to animate/hover/drag
+        transform.KillTweensRecursive();
+
+        // If your Card prefab has a Collider/Collider2D, disable it for previews
+        var col2D = GetComponent<Collider2D>();
+        if (col2D) col2D.enabled = !value;
+        var col3D = GetComponent<Collider>();
+        if (col3D) col3D.enabled = !value;
+
+        // Keep wrapper visible in previews (so layout looks correct)
+        if (wrapper) wrapper.SetActive(true);
+    }
+
+    // Optional convenience so you can feed CardData directly
+    public void SetupFromData(CardData data)
+    {
+        if (data == null) return;
+        var model = new Card(data);    // your runtime Card wrapper
+        Setup(model);
+    }
+    
 }

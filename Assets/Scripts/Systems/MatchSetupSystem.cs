@@ -4,14 +4,16 @@ using UnityEngine;
 public class MatchSetupSystem : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
-    [SerializeField] private List<EnemyData> enemyDatas;
+    [SerializeField] private List<CardData> startingDeck;  // if not in PlayerData
+    [SerializeField] private RunConfigSO runConfig;        // drag your 10-floor asset here
+
     private void Start()
     {
+        // 1) Player & deck are persistent across the run
         PlayerSystem.Instance.Setup(playerData);
-        EnemySystem.Instance.Setup(enemyDatas);
-        CardSystem.Instance.Setup(playerData.Deck);
-        //DrawCardsGA drawCardsGA = new(5);
-        //ActionSystem.Instance.Perform(drawCardsGA);
-        //TurnSystem.Instance.BeginMatch();
+        CardSystem.Instance.Setup(playerData.Deck ?? startingDeck);
+
+        // 2) Hand the run plan to RunManager and start
+        RunManager.Instance.StartRun();
     }
 }

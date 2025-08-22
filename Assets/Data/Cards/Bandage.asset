@@ -15,7 +15,7 @@ MonoBehaviour:
   <Name>k__BackingField: Bandage
   <Cost>k__BackingField: 1
   <Description>k__BackingField: Heal for 5 Health
-  <Image>k__BackingField: {fileID: 622385511510613547, guid: adaabbfee046bf542abfd9d6fe01e7c8, type: 3}
+  <Image>k__BackingField: {fileID: -8268726560687419538, guid: 7fa7c3af5df04994b8a654e38bc72d98, type: 3}
   <ManualTargetEffect>k__BackingField:
     rid: -2
   <OtherEffects>k__BackingField:

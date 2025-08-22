@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04cc6494cd8988945b46133a26848b95, type: 3}
+  m_Name: Floor 6 Lab
+  m_EditorClassIdentifier: 
+  Type: 0
+  BackgroundSprite: {fileID: 9143035366926188387, guid: 109275bd6b16116469144785e34ad5a8, type: 3}
+  Enemies: []
+  ShopInventory: {fileID: 0}
+  LobbyOffer: {fileID: 0}
+  Title: 
+  Description: 

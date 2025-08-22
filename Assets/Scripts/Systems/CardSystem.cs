@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -9,9 +8,12 @@ public class CardSystem : Singleton<CardSystem>
     [SerializeField] private HandView handView;
     [SerializeField] private Transform drawPilePoint;
     [SerializeField] private Transform discardPilePoint;
-    private readonly List<Card> drawPile = new();
+    [SerializeField] private Transform exhaustPilePoint; // optional; falls back to discardPilePoint if null
+
+    private readonly List<Card> drawPile    = new();
     private readonly List<Card> discardPile = new();
-    private readonly List<Card> hand = new();
+    private readonly List<Card> exhaustPile = new(); // keeps Exhausted cards for THIS combat only
+    private readonly List<Card> hand        = new();
 
     void OnEnable()
     {
@@ -38,119 +40,220 @@ public class CardSystem : Singleton<CardSystem>
 
     private IEnumerator DrawCardsPerformer(DrawCardsGA drawCardGA)
     {
-        int actualAmount = Mathf.Min(drawCardGA.Amount, drawPile.Count);
-        int notDrawnAmount = drawCardGA.Amount - actualAmount;
-        for (int i = 0; i < actualAmount; i++)
+        // Respect combat state so lobby doesn’t draw
+        if (!TurnSystem.Instance || !TurnSystem.Instance.CombatActive) yield break;
+
+        int want      = Mathf.Max(0, drawCardGA.Amount);
+        int canDraw   = Mathf.Min(want, drawPile.Count);
+        int remainder = want - canDraw;
+
+        for (int i = 0; i < canDraw; i++)
+            yield return DrawOne();
+
+        if (remainder > 0)
         {
-            yield return DrawCard();
-        }
-        if (notDrawnAmount > 0)
-        {
-            RefillDeck();
-            for (int i = 0; i < notDrawnAmount; i++)
-            {
-                yield return DrawCard();
-            }
+            RefillDeck(); // only from DISCARD (not EXHAUST)
+            for (int i = 0; i < remainder && drawPile.Count > 0; i++)
+                yield return DrawOne();
         }
     }
 
-
-    private IEnumerator DiscardAllCardsPerformer(DiscardAllCardsGA discardAllCardsGA)
+    private IEnumerator DiscardAllCardsPerformer(DiscardAllCardsGA _)
     {
+        if (!TurnSystem.Instance || !TurnSystem.Instance.CombatActive) yield break;
+
+        // End-of-turn discard → to DISCARD pile (not exhaust)
         foreach (var card in hand)
         {
-            CardView cardView = handView.RemoveCard(card);
-            yield return DiscardCard(cardView);
+            CardView cv = handView.RemoveCard(card);
+            yield return SendCardToPile(cv, Pile.Discard);
         }
         hand.Clear();
     }
 
-    private IEnumerator PlayCardPerformer(PlayCardGA playCardGA)
+    private IEnumerator PlayCardPerformer(PlayCardGA ga)
     {
-        hand.Remove(playCardGA.Card);
-        CardView cardView = handView.RemoveCard(playCardGA.Card);
-        yield return DiscardCard(cardView);
-        SpendCostGA spendCostGA = new(playCardGA.Card.Cost);
-        ActionSystem.Instance.AddReaction(spendCostGA);
+        // Remove from hand
+        hand.Remove(ga.Card);
+        CardView cardView = handView.RemoveCard(ga.Card);
+
+        // Route to correct pile (Exhaust or Discard) based on the card’s flag
+        bool toExhaust = ga.Card.ExhaustOnPlay; // assumes Card has this property
+        yield return SendCardToPile(cardView, toExhaust ? Pile.Exhaust : Pile.Discard);
+
+        // Spend energy
+        ActionSystem.Instance.AddReaction(new SpendCostGA(ga.Card.Cost));
+
         // Manual-target effect
-        if (playCardGA.Card.ManualTargetEffect != null)
+        if (ga.Card.ManualTargetEffect != null)
         {
             var caster = PlayerSystem.Instance.PlayerView;
-            var pe = new PerformEffectGA(playCardGA.Card.ManualTargetEffect,
-                                        new() { playCardGA.ManualTarget },
-                                        caster);                        // pass caster
+            var pe = new PerformEffectGA(
+                ga.Card.ManualTargetEffect,
+                new() { ga.ManualTarget },
+                caster
+            );
             ActionSystem.Instance.AddReaction(pe);
         }
 
         // Other effects
-        foreach (var effectWrapper in playCardGA.Card.OtherEffects)
+        foreach (var effectWrapper in ga.Card.OtherEffects)
         {
             var caster = PlayerSystem.Instance.PlayerView;
             List<CombatantView> targets = effectWrapper.TargetMode.GetTargets();
-            var pe = new PerformEffectGA(effectWrapper.Effect, targets, caster); // pass caster
+            var pe = new PerformEffectGA(effectWrapper.Effect, targets, caster);
             ActionSystem.Instance.AddReaction(pe);
         }
     }
 
-    //Reactions
-    private void EnemyTurnPreReaction(EnemyTurnGA enemyTurnGA)
-    {
-        DiscardAllCardsGA discardAllCardsGA = new();
-        ActionSystem.Instance.AddReaction(discardAllCardsGA);
-    }
+    // ---------------- Internals ----------------
 
-    private void EnemyTurnPostReaction(EnemyTurnGA enemyTurnGA)
+    private IEnumerator DrawOne()
     {
-        DrawCardsGA drawCardsGA = new(5);
-        ActionSystem.Instance.AddReaction(drawCardsGA);
-    }
+        if (drawPile.Count == 0) yield break;
 
-    private IEnumerator DrawCard()
-    {
         Card card = drawPile.Draw();
         hand.Add(card);
-        CardView cardView = CardViewCreator.Instance.CreateCardView(card, drawPilePoint.position, drawPilePoint.rotation);
-        yield return handView.AddCard(cardView);
+
+        CardView cv = CardViewCreator.Instance.CreateCardView(card, drawPilePoint.position, drawPilePoint.rotation);
+        yield return handView.AddCard(cv);
     }
 
+    // Only DISCARD refills the draw pile during combat.
     private void RefillDeck()
     {
+        if (discardPile.Count == 0) return;
         drawPile.AddRange(discardPile);
         discardPile.Clear();
+        Shuffle(drawPile);
     }
 
-    private IEnumerator DiscardCard(CardView cardView)
+    private enum Pile { Discard, Exhaust }
+
+    public List<Card> GetFullDeck(
+        bool includeDraw    = true,
+        bool includeDiscard = true,
+        bool includeExhaust = true,
+        bool includeHand    = true)
     {
-        if (cardView == null || cardView.Equals(null)) yield break;
+        var result = new List<Card>(64);
 
-        // Hide hover mirror so it can’t keep a scale tween alive
-        if (CardViewHoverSystem.Instance != null)
-            CardViewHoverSystem.Instance.Hide();
+        if (includeDraw)    result.AddRange(drawPile);
+        if (includeDiscard) result.AddRange(discardPile);
+        if (includeExhaust) result.AddRange(exhaustPile);
+        if (includeHand)    result.AddRange(hand);
 
-        // Kill ALL tweens on this card and children before animating/destroying
-        cardView.transform.KillTweensRecursive();
+        return result;
+    }
 
-        discardPile.Add(cardView.Card);
+    private IEnumerator SendCardToPile(CardView cv, Pile pile)
+    {
+        if (cv == null || cv.Equals(null)) yield break;
 
-        // Animate out (these are new tweens on the same transform)
-        var t = cardView.transform;
+        // Hide hover mirror (prevents lingering scale tweens)
+        CardViewHoverSystem.Instance?.Hide();
+
+        // Kill ALL tweens on this card hierarchy before anim/destroy
+        cv.transform.KillTweensRecursive();
+
+        // Record to logic pile
+        switch (pile)
+        {
+            case Pile.Discard: discardPile.Add(cv.Card); break;
+            case Pile.Exhaust: exhaustPile.Add(cv.Card); break;
+        }
+
+        // Visual drop point (use discard if exhaust target is not set)
+        Transform target = (pile == Pile.Exhaust && exhaustPilePoint != null) ? exhaustPilePoint : discardPilePoint;
+
+        // Animate out & destroy
+        var t = cv.transform;
         t.DOScale(Vector3.zero, 0.15f);
-        var tween = t.DOMove(discardPilePoint.position, 0.15f);
+        var tween = t.DOMove(target.position, 0.15f);
         yield return tween.WaitForCompletion();
 
-        // Kill again just in case any late tweens were started (e.g., selection ping)
         t.KillTweensRecursive();
-        Destroy(cardView.gameObject);
+        Destroy(cv.gameObject);
     }
+
+    // ---------------- Public helpers ----------------
 
     public IReadOnlyList<Card> HandReadOnly => hand;
 
-    // Discard a specific card that is currently in hand.
     public IEnumerator DiscardFromHand(Card card)
     {
         if (!hand.Contains(card)) yield break;
         hand.Remove(card);
-        CardView cardView = handView.RemoveCard(card);
-        yield return DiscardCard(cardView); // you already have this private method
-}
+        CardView cv = handView.RemoveCard(card);
+        yield return SendCardToPile(cv, Pile.Discard);
+    }
+
+    public void RemoveFromDeck(Card card)
+    {
+        drawPile.Remove(card);
+        discardPile.Remove(card);
+        exhaustPile.Remove(card);
+        hand.Remove(card);
+    }
+
+    public void AddCardToDeck(CardData data, bool toTop = false)
+    {
+        if (data == null) return;
+        var newCard = new Card(data);
+        if (toTop) drawPile.Insert(0, newCard);
+        else       drawPile.Add(newCard);
+    }
+
+    public void AddCardsToDeck(List<CardData> datas, bool shuffleAfter = false)
+    {
+        if (datas == null || datas.Count == 0) return;
+        foreach (var cd in datas) AddCardToDeck(cd);
+        if (shuffleAfter) Shuffle(drawPile);
+    }
+
+    private void Shuffle<T>(List<T> list)
+    {
+        if (list == null || list.Count <= 1) return;
+        for (int i = 0; i < list.Count; i++)
+        {
+            int j = Random.Range(i, list.Count);
+            (list[i], list[j]) = (list[j], list[i]);
+        }
+    }
+
+    // ------------- NEW: Hard reset for next combat -------------
+
+    /// <summary>
+    /// Fully reset piles for the NEXT combat:
+    /// - Destroys any lingering CardViews from the hand
+    /// - Moves DISCARD + EXHAUST back into DRAW
+    /// - Clears hand/discard/exhaust
+    /// - Shuffles draw pile
+    /// </summary>
+    public void ResetForNextCombat()
+    {
+        // 1) Destroy any hand CardViews and clear hand list
+        var handSnapshot = new List<Card>(hand);
+        foreach (var c in handSnapshot)
+        {
+            var cv = handView.RemoveCard(c);
+            if (cv != null && !cv.Equals(null)) Destroy(cv.gameObject);
+        }
+        hand.Clear();
+
+        // 2) Move DISCARD and EXHAUST back to DRAW
+        drawPile.AddRange(discardPile);
+        discardPile.Clear();
+
+        drawPile.AddRange(exhaustPile);
+        exhaustPile.Clear();
+
+        // 3) Shuffle draw
+        Shuffle(drawPile);
+
+        // (Optional) Any UI like cost/hand will be updated by TurnSystem at next turn start
+    }
+
+    /// <summary>Legacy alias if you already call this name elsewhere.</summary>
+    public void PrepareNewCombat() => ResetForNextCombat();
 }

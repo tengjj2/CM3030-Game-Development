@@ -46,9 +46,10 @@ public class StatusTickSystem : Singleton<StatusTickSystem>
             int blockStacks = self.GetStatusEffectStacks(StatusEffectType.BLOCK);
             if (blockStacks > 0)
             {
-                ActionSystem.Instance.AddReaction(new ApplyBlockGA(self, self, blockStacks));
                 self.RemoveStatusEffect(StatusEffectType.BLOCK, blockStacks);
+                Debug.Log($"[Tick] {self.name} BLOCK cleared ({blockStacks} → 0)");
             }
+
 
             int thornStacks = self.GetStatusEffectStacks(StatusEffectType.THORNS);
             if (thornStacks > 0)
