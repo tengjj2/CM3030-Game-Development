@@ -23,11 +23,12 @@ public class ShopSystem : Singleton<ShopSystem>
     public bool TryBuy(ShopEntry entry)
     {
         if (entry == null) return false;
+        /*
         if (!CurrencySystem.Instance.CanAfford(entry.price))
         {
             Debug.Log("[Shop] Not enough gold.");
             return false;
-        }
+        }*/
 
         if (!CurrencySystem.Instance.Spend(entry.price)) return false;
 

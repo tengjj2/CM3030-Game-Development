@@ -15,13 +15,23 @@ MonoBehaviour:
   Title: Health
   Description: Increase Max HP
   Options:
-  - Label: Health
+  - Label: HP
     Description: Increase Max HP
     Icon: {fileID: -1049461823314036041, guid: fbb74972d0573784f8ac412d9bb30abd, type: 3}
     Effects:
     - {fileID: 11400000, guid: ded477a4f78373f47be539540216997f, type: 2}
-  - Label: Money
+  - Label: MONEY
     Description: Increase starting Cash
     Icon: {fileID: 5597117985695365778, guid: dc82d1472fc19c842aae57c952c914ba, type: 3}
     Effects:
     - {fileID: 11400000, guid: b8da7bace5df2f742a4b4f22984ae947, type: 2}
+  - Label: ADD CARD
+    Description: Add new card
+    Icon: {fileID: 5597117985695365778, guid: dc82d1472fc19c842aae57c952c914ba, type: 3}
+    Effects:
+    - {fileID: 11400000, guid: daada7b7b550f6f41970e5519891c9a8, type: 2}
+  - Label: REMOVE CARD
+    Description: Add new card
+    Icon: {fileID: 5597117985695365778, guid: dc82d1472fc19c842aae57c952c914ba, type: 3}
+    Effects:
+    - {fileID: 11400000, guid: 9099a3e1d3a61704a9f1e628ec193fac, type: 2}

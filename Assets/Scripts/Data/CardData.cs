@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Card")]
 public class CardData : ScriptableObject
 {
-    [field: SerializeField] public string Name { get; private set; }
-    [field: SerializeField] public int Cost { get; private set; }
-    [field: SerializeField] public string Description { get; private set; }
-    [field: SerializeField] public Sprite Image { get; private set; }
-    [field: SerializeReference, SR] public Effect ManualTargetEffect { get; private set; } = null;
-    [field: SerializeField] public List<AutoTargetEffect> OtherEffects { get; private set; }
+    [field: SerializeField] public string Name { get; set; }
+    [field: SerializeField] public int Cost { get; set; }
+    [field: SerializeField] public string Description { get; set; }
+    [field: SerializeField] public Sprite Image { get; set; }
+    [field: SerializeReference, SR] public Effect ManualTargetEffect { get; set; } = null;
+    [field: SerializeField] public List<AutoTargetEffect> OtherEffects { get; set; }
     [SerializeField] public bool IsBasic = false; 
 
     [Header("Lifecycle")]

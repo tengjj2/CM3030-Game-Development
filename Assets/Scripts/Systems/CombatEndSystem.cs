@@ -19,25 +19,27 @@ public class CombatEndSystem : MonoBehaviour
 
     private IEnumerator VictoryPerformer(CombatVictoryGA ga)
     {
-        // Pause turns (no more Enemy/Player actions)
+        // Pause turns
         TurnSystem.Instance?.SuspendCombat();
-
-        // Optional: small pause for drama
         yield return new WaitForSeconds(0.25f);
 
-        // MONEY
-        if (ga.Gold > 0)
-            PlayerSystem.Instance?.AddGold(ga.Gold);
+        // ---- Fixed rewards ----
+        const int GOLD_REWARD = 50;
+        const int HEAL_REWARD = 10;
+        //const int CARD_CHOICES = 3;
 
-        // HEAL (use your HealSystem/GA if you prefer)
+        // Add gold
+        PlayerSystem.Instance?.AddGold(GOLD_REWARD);
+
+        // Heal
         var pv = PlayerSystem.Instance?.PlayerView;
-        if (pv != null && ga.HealAmount > 0)
+        if (pv != null && HEAL_REWARD > 0)
         {
-            pv.CurrentHealth = Mathf.Min(pv.CurrentHealth + ga.HealAmount, pv.MaxHealth);
-            pv.RefreshHealthUI(); // or pv.UpdateHealthUI() — call your existing refresh
+            pv.CurrentHealth = Mathf.Min(pv.CurrentHealth + HEAL_REWARD, pv.MaxHealth);
+            pv.RefreshHealthUI();
         }
 
-        // SHOW UI (cards, gold, heal summary)
+        // UI
         var ui = CombatEndUI.Instance;
         if (ui == null)
         {
@@ -45,6 +47,13 @@ public class CombatEndSystem : MonoBehaviour
             RunManager.Instance?.NextFloor();
             yield break;
         }
+
+        // Use the GA’s reward pool
+        var pool = ga.CardRewardPool;
+        bool hasChoices = (pool != null && pool.Count > 0);
+
+        // Show summary first
+        ui.ShowVictory(GOLD_REWARD, HEAL_REWARD, pickingCards: hasChoices);
 
         // If there are card picks, run a choose flow then enable the Next button.
         if (ga.PickCardCount > 0 && ga.CardRewardPool != null && ga.CardRewardPool.Count > 0)

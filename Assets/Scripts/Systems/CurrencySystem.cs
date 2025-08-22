@@ -1,26 +1,85 @@
 using UnityEngine;
+using System.Collections;
 
 public class CurrencySystem : Singleton<CurrencySystem>
 {
-    [SerializeField] private int startingGold = 100;
-    public int Gold { get; private set; }
+    [SerializeField] private CurrencyUI ui;
+    [SerializeField] private bool persistAcrossScenes = true;
 
-    private void Start() => Gold = startingGold;
+    public int Gold { get; private set; } = 0;
 
-    public bool CanAfford(int price) => Gold >= Mathf.Max(0, price);
+    public event System.Action<int> OnGoldChanged;
 
-    public bool Spend(int price)
+    protected override void Awake()
     {
-        price = Mathf.Max(0, price);
-        if (Gold < price) return false;
-        Gold -= price;
-        // TODO: update gold UI
+        base.Awake();
+        if (persistAcrossScenes) DontDestroyOnLoad(gameObject);
+        UpdateUI();
+    }
+
+    // --- Public API ---
+
+    /// Set absolute gold (clamped at >= 0)
+    public void Set(int amount)
+    {
+        int clamped = Mathf.Max(0, amount);
+        if (clamped == Gold) return;
+        Gold = clamped;
+        UpdateUI();
+    }
+
+    /// Add delta (positive or negative). Negative will be clamped at 0.
+    public void Add(int delta, string reason = null)
+    {
+        if (delta == 0) return;
+        int before = Gold;
+        Gold = Mathf.Max(0, Gold + delta);
+        UpdateUI();
+        // Optional debug:
+        // Debug.Log($"[Currency] {reason ?? "change"}: {before} -> {Gold} (Δ={delta})");
+    }
+
+    /// Try to spend. Returns true if successful.
+    public bool Spend(int amount, string reason = null)
+    {
+        if (amount <= 0) return true;
+        if (Gold < amount) return false;
+        Gold -= amount;
+        UpdateUI();
+        // Optional debug:
+        // Debug.Log($"[Currency] Spend {amount} for {reason}. Remaining: {Gold}");
         return true;
     }
 
-    public void Add(int amount)
+    public bool Has(int amount) => Gold >= amount;
+
+    private void UpdateUI()
     {
-        Gold += Mathf.Max(0, amount);
-        // TODO: update gold UI
+        if (ui) ui.Set(Gold);
+        OnGoldChanged?.Invoke(Gold);
+    }
+
+    // Optional: performers for GAs (see below)
+    private void OnEnable()
+    {
+        ActionSystem.AttachPerformer<AddGoldGA>(AddGoldPerformer);
+        ActionSystem.AttachPerformer<SpendGoldGA>(SpendGoldPerformer);
+    }
+    private void OnDisable()
+    {
+        ActionSystem.DetachPerformer<AddGoldGA>();
+        ActionSystem.DetachPerformer<SpendGoldGA>();
+    }
+
+    private IEnumerator AddGoldPerformer(AddGoldGA ga)
+    {
+        Add(ga.Amount, ga.Reason);
+        yield return null;
+    }
+
+    private IEnumerator SpendGoldPerformer(SpendGoldGA ga)
+    {
+        ga.Success = Spend(ga.Amount, ga.Reason);
+        yield return null;
     }
 }

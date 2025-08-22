@@ -1,25 +1,43 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Run/Lobby Effects/Remove Card From Deck")]
-public class RemoveCardFromDeckEffect : LobbyEffectSO
+[CreateAssetMenu(menuName = "Run/Lobby Effects/Remove Card(s) From Deck")]
+public class RemoveCardFromRunDeckEffect : LobbyEffectSO
 {
     public int Count = 1;
 
-    public override void Apply(System.Action onComplete)
+    public override void Apply(Action onComplete)
     {
-        var cardSystem = CardSystem.Instance;
-        if (cardSystem != null)
+        var cs = CardSystem.Instance;
+        if (cs == null)
         {
-            // Get the full deck (could be draw + discard + hand, depending on design)
-            var fullDeck = cardSystem.GetFullDeck(); // you'll add this method
-            if (fullDeck.Count > 0)
-            {
-                // TODO: Show UI so player chooses one card to remove
-                var chosen = fullDeck[0]; // placeholder
-                cardSystem.RemoveFromDeck(chosen);
-            }
+            onComplete?.Invoke();
+            return;
         }
-        onComplete?.Invoke();
+
+        // Build pickable pool from current RUN DECK (CardData)
+        var pool = new List<CardData>(cs.RunDeckDataRO);
+        if (pool.Count == 0)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        DeckChoiceSystem.Instance.ChooseCardDatas(
+            pool,
+            Mathf.Clamp(Count, 1, pool.Count),
+            chosen =>
+            {
+                if (chosen != null)
+                {
+                    foreach (var cd in chosen)
+                        cs.RemoveOneFromRunDeck(cd); // updates piles immediately if out of combat
+                }
+                onComplete?.Invoke();
+            },
+            title: "Remove cards",
+            prompt: (Count == 1 ? "Choose a card to remove" : $"Choose {Count} cards to remove")
+        );
     }
 }
