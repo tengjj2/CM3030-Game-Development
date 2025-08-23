@@ -6,14 +6,14 @@ using UnityEngine;
 public class RunManager : Singleton<RunManager>
 {
     // NEW: floor lifecycle events
-    public static event Action<FloorSO> OnFloorAboutToLoad;  // right before we switch UI/setup
-    public static event Action<FloorSO> OnFloorStarted;   
     [SerializeField] private FloorVisibilityController visibility;
     [SerializeField] private BackgroundController background;
     [SerializeField] private RunConfigSO runConfig;   // <- use this instead of FloorSO[]
     [SerializeField] private PlayerData playerData;
 
     private int index = 0;
+
+    public FloorSO CurrentFloor { get; private set; }
 
     public void StartRun()
     {
@@ -38,6 +38,7 @@ public class RunManager : Singleton<RunManager>
 
     public void LoadFloor(FloorSO floor)
     {
+        CurrentFloor = floor; 
         if (floor.Type == FloorType.Lobby)
         {
             visibility?.ShowOnlyLobby();

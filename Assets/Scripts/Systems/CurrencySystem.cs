@@ -6,7 +6,7 @@ public class CurrencySystem : Singleton<CurrencySystem>
     [SerializeField] private CurrencyUI ui;
     [SerializeField] private bool persistAcrossScenes = true;
 
-    public int Gold { get; private set; } = 0;
+    public int Gold { get; private set; }
 
     public event System.Action<int> OnGoldChanged;
 
@@ -49,6 +49,23 @@ public class CurrencySystem : Singleton<CurrencySystem>
         // Optional debug:
         // Debug.Log($"[Currency] Spend {amount} for {reason}. Remaining: {Gold}");
         return true;
+    }
+
+    public bool TrySpend(int amount)
+    {
+        if (Gold < amount) return false;
+        Gold -= amount;
+        OnGoldChanged?.Invoke(Gold);
+        UpdateUI();
+        return true;
+    }
+
+
+    public void AddGold(int amount)
+    {
+        Gold += Mathf.Max(0, amount);
+        OnGoldChanged?.Invoke(Gold);
+        UpdateUI();
     }
 
     public bool Has(int amount) => Gold >= amount;
