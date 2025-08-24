@@ -27,6 +27,8 @@ public class CombatEndUI : Singleton<CombatEndUI>
     [SerializeField] private int optionsCount = 3;
     [SerializeField] private CardLibrarySO cardLibrary;       // <-- assign your CardLibrary asset here
 
+    public CardLibrarySO CardLibrary => cardLibrary;
+    public int RewardOptions => Mathf.Max(1, optionsCount);
     private readonly List<GameObject> spawned = new();
     private System.Action onNext;
     private bool choiceMade;
@@ -235,7 +237,7 @@ public class CombatEndUI : Singleton<CombatEndUI>
         cg.blocksRaycasts = true;
     }
 
-    private void EnableNext(bool enabled, System.Action onClick)
+    public void EnableNext(bool enabled, System.Action onClick)
     {
         if (!nextButton) return;
 

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CombatEndSystem : MonoBehaviour
 {
+    [SerializeField] private CombatEndUI endUI; // if you still use a summary/next UI
+    [SerializeField] private CombatCardRewardPanelUI combatRewardPanel;
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<CombatVictoryGA>(VictoryPerformer);
@@ -19,81 +21,70 @@ public class CombatEndSystem : MonoBehaviour
 
     private IEnumerator VictoryPerformer(CombatVictoryGA ga)
     {
-        // Pause turns
         TurnSystem.Instance?.SuspendCombat();
         yield return new WaitForSeconds(0.25f);
 
-        var rm = RunManager.Instance;
-        Debug.Log($"[Victory] RunManager is {(rm ? "OK" : "NULL")}");
+        // Gold from floor + GA
+        var floor = RunManager.Instance?.CurrentFloor;
+        int totalGold = Mathf.Max(0, floor?.GoldReward ?? 0) + Mathf.Max(0, ga?.Gold ?? 0);
+        if (totalGold > 0) CurrencySystem.Instance?.AddGold(totalGold);
 
-        var floor = rm?.CurrentFloor;
-        Debug.Log($"[Victory] CurrentFloor is {(floor ? floor.name : "NULL")}");
-
-        int floorGold = Mathf.Max(0, floor?.GoldReward ?? 0);
-        int gaGold    = Mathf.Max(0, ga?.Gold ?? 0);
-        int totalGold = floorGold + gaGold;
-
-        Debug.Log($"[Victory] floorGold={floorGold}, gaGold={gaGold}, totalGold={totalGold}");
-
-        // ---- 2) Apply to currency exactly once ----
-        if (totalGold > 0)
+        // Show summary / paid heal if you still use CombatEndUI
+        if (endUI)
         {
-            Debug.Log($"[Currency] Before add: {CurrencySystem.Instance?.Gold}");
-            CurrencySystem.Instance?.AddGold(totalGold);
-            Debug.Log($"[Currency] After add: {CurrencySystem.Instance?.Gold}");
-        }
-        else
-        {
-            Debug.Log($"Total gold 0");
+            // pickingCards shown true if we’re going to open the card picker
+            bool hasPicks = (ga != null && ga.CardRewardPool != null && ga.CardRewardPool.Count > 0 && ga.PickCardCount > 0);
+            endUI.ShowVictory(totalGold, 0, pickingCards: hasPicks);
+            endUI.ShowPaidHeal(); 
+            Debug.Log($"[CombatEnd] pool is {(ga.CardRewardPool == null ? "NULL" : "OK")}");
+            Debug.Log($"[CombatEnd] pool.Count = {(ga.CardRewardPool != null ? ga.CardRewardPool.Count : -1)}");
+            Debug.Log($"[CombatEnd] pickCount = {ga.PickCardCount}");
+            Debug.Log($"[CombatEnd] hasPicks = {hasPicks}");
         }
 
-        // ---- 3) Prepare UI ----
-        var ui = CombatEndUI.Instance;
-        if (ui == null)
-        {
-            Debug.LogWarning("[CombatEndSystem] No CombatEndUI in scene — advancing immediately.");
-            RunManager.Instance?.NextFloor();
-            yield break;
-        }
-
-        // Your “paid heal” flow (10 HP for 100g, multiple purchases)
-        ui.ShowPaidHeal();  // keep this if you already wired it
-
-        // Figure out if we’re doing card picks
-        var pool = ga.CardRewardPool;
-        int pickCount = Mathf.Max(0, ga.PickCardCount);
-        bool hasPicks = (pool != null && pool.Count > 0 && pickCount > 0);
-
-        // ---- 4) Show the summary ONCE with the totalGold we actually awarded ----
-        ui.ShowVictory(gold: totalGold, heal: 0, pickingCards: hasPicks);
-
-        if (hasPicks)
+        // Card choices (use the panel we serialized)
+        if (ga != null && ga.CardRewardPool != null && ga.CardRewardPool.Count > 0 && ga.PickCardCount > 0)
         {
             bool done = false;
-            // Use your existing add flow
-            DeckChoiceSystem.Instance?.ChooseToAdd(pool, pickCount, added =>
-            {
-                PlayerSystem.Instance?.AddCardsToDeckAndDrawPile(added, shuffleDrawPile: true);
-                done = true;
-            });
+            combatRewardPanel.ShowChoices(
+                pool: ga.CardRewardPool,
+                countToPick: ga.PickCardCount,
+                title: "Choose a card",
+                prompt: "Pick one",
+                onPicked: picks =>
+                {
+                    if (picks != null && picks.Count > 0)
+                    {
+                        foreach (var cd in picks)
+                        {
+                            // Use your run-deck add method; fallback to AddCardToDeck if needed
+                            if (CardSystem.Instance)
+                            {
+                                CardSystem.Instance.AddCardDataToRunDeck(cd, alsoAddToDrawPile: true);
+                                Debug.Log($"[Victory] Added to run deck: {cd?.name}");
+                            }
+                            else
+                            {
+                                CardSystem.Instance?.AddCardToDeck(cd);
+                                Debug.Log($"[Victory] Added to run deck: {cd?.name}");
+                            }
+                        }
+                    }
+                    done = true;
+                }
+            );
             yield return new WaitUntil(() => done);
+        }
 
-            // After picks, enable "Next"
-            ui.ShowCardChoices(null, 3, () =>
-            {
-                ui.Hide();
-                RunManager.Instance?.NextFloor();
-            });
-        }
-        else
+        // Advance
+        endUI?.EnableNext(true, () =>
         {
-            // No picks – go straight to Next
-            ui.ShowCardChoices(null, 3, () =>
-            {
-                ui.Hide();
-                RunManager.Instance?.NextFloor();
-            });
-        }
+            endUI.Hide();
+            RunManager.Instance?.NextFloor();
+        });
+
+        // If you don't use CombatEndUI, just go next here instead:
+        // RunManager.Instance?.NextFloor();
     }
 
 
