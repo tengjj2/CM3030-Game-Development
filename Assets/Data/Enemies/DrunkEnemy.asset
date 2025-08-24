@@ -22,4 +22,4 @@ MonoBehaviour:
     cooldownTurns: 0
     maxUses: 99
     conditions: []
-  PlanIntentOnSpawn: 1
+  PlanIntentOnSpawn: 0

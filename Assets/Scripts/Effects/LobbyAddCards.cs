@@ -1,29 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Run/Lobby Effects/Add Cards From Pool")]
-public class AddCardsFromPoolEffect : LobbyEffectSO
+[CreateAssetMenu(menuName = "Run/Lobby Effects/Add Cards (Rewards Panel)")]
+public class LobbyAddCardsEffect : LobbyEffectSO
 {
+    [Tooltip("If set, use this pool. Otherwise CardRewardPanelUI will use CardLibrarySO attached to it.")]
     public List<CardData> Pool;
-    public int Count = 2;
+
+    [Min(1)] public int CountToPick = 1;
 
     public override void Apply(System.Action onComplete)
     {
-        // No pool? Just finish.
-        if (Pool == null || Pool.Count == 0)
-        {
-            onComplete?.Invoke();
-            return;
-        }
-
-        // Let the player choose "Count" cards from Pool, then add them to the deck via CardSystem.
-        DeckChoiceSystem.Instance?.ChooseToAdd(Pool, Count, added =>
-        {
-            if (added != null && added.Count > 0 && CardSystem.Instance != null)
+        // Open the generic picker (UICardView-based)
+        CardRewardPanelUI.Instance?.ShowChoices(
+            pool: Pool,
+            countToPick: CountToPick,
+            title: "Choose a card",
+            prompt: CountToPick > 1 ? $"Pick {CountToPick} cards to add" : "Pick a card to add",
+            onPicked: picked =>
             {
-                CardSystem.Instance.AddCardsToDeck(added, shuffleAfter:true);
+                if (picked != null && picked.Count > 0)
+                {
+                    // Add to the current run deck/draw pile (out of combat is fine)
+                    PlayerSystem.Instance?.AddCardDataToRunDeck(picked[0]);
+                }
+                onComplete?.Invoke();
             }
-            onComplete?.Invoke();
-        });
+        );
     }
 }

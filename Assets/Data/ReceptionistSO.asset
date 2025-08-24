@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: ReceptionistSO
   m_EditorClassIdentifier: 
   DisplayName: Receptionist
-  Portrait: {fileID: -8902044802361073846, guid: aefef0d8f2fff174d965acc3b0e1d949, type: 3}
+  Portrait: {fileID: 1190029619806740755, guid: cd439d2bf3d4fe941bf44d40b1912ec5, type: 3}
+  Greeting: []

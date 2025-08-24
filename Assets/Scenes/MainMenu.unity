@@ -442,7 +442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -100}
+  m_AnchoredPosition: {x: 250, y: -165}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378356218
@@ -466,10 +466,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.8627452, g: 0.1921569, b: 0.1960784, a: 1}
-    m_HighlightedColor: {r: 0.6980392, g: 0.1333333, b: 0.1333333, a: 1}
-    m_PressedColor: {r: 0.5450981, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.9647059, g: 0.972549, b: 0.5921569, a: 1}
+    m_HighlightedColor: {r: 0.8784314, g: 0.4392157, b: 0.2784314, a: 1}
+    m_PressedColor: {r: 0.7372549, g: 0.25490198, b: 0.25490198, a: 1}
+    m_SelectedColor: {r: 0.7372549, g: 0.25490198, b: 0.25490198, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -575,7 +575,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -100}
+  m_AnchoredPosition: {x: -250, y: -165}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &453004029
@@ -599,10 +599,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.5647059, g: 0.9333334, b: 0.5647059, a: 1}
-    m_HighlightedColor: {r: 0.1960784, g: 0.8039216, b: 0.1960784, a: 1}
-    m_PressedColor: {r: 0.1333333, g: 0.5450981, b: 0.1333333, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.9647059, g: 0.972549, b: 0.5921569, a: 1}
+    m_HighlightedColor: {r: 0.6313726, g: 0.81960785, b: 0.2509804, a: 1}
+    m_PressedColor: {r: 0.4509804, g: 0.6117647, b: 0.38431373, a: 1}
+    m_SelectedColor: {r: 0.4509804, g: 0.6117647, b: 0.38431373, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -710,7 +710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 563, y: -266}
   m_SizeDelta: {x: 400, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &606059737
@@ -734,10 +734,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.4292453, b: 0.4292453, a: 1}
-    m_PressedColor: {r: 0.7735849, g: 0.31746176, b: 0.31746176, a: 1}
-    m_SelectedColor: {r: 0.4716981, g: 0.20247419, b: 0.20247419, a: 1}
+    m_NormalColor: {r: 0.96862745, g: 0.972549, b: 0.5921569, a: 1}
+    m_HighlightedColor: {r: 0.8773585, g: 0.44043878, b: 0.27727836, a: 1}
+    m_PressedColor: {r: 0.7372549, g: 0.25490198, b: 0.25490198, a: 1}
+    m_SelectedColor: {r: 0.735849, g: 0.25338197, b: 0.25338197, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -869,7 +869,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 559, y: 171}
   m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &606912521
@@ -894,15 +894,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Office Rumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
+  m_sharedMaterial: {fileID: -5464055823703389796, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291145729
-  m_fontColor: {r: 0.003648994, g: 0.69031394, b: 0.7735849, a: 1}
+    rgba: 4288149751
+  m_fontColor: {r: 0.96862745, g: 0.972549, b: 0.5921569, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -915,7 +915,7 @@ MonoBehaviour:
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
+  m_overrideHtmlColors: 1
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -925,7 +925,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -957,7 +957,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: -108.65568}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1142,8 +1142,8 @@ GameObject:
   - component: {fileID: 818873631}
   - component: {fileID: 818873630}
   - component: {fileID: 818873629}
-  - component: {fileID: 818873632}
   - component: {fileID: 818873633}
+  - component: {fileID: 818873632}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -1168,7 +1168,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchoredPosition: {x: 563, y: -98}
   m_SizeDelta: {x: 400, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &818873629
@@ -1192,10 +1192,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
-    m_HighlightedColor: {r: 0.66770065, g: 1, b: 0.5235849, a: 1}
-    m_PressedColor: {r: 0.41634876, g: 0.6320754, b: 0.32498217, a: 1}
-    m_SelectedColor: {r: 0.27577093, g: 0.41509432, b: 0.2212531, a: 1}
+    m_NormalColor: {r: 0.9662965, g: 0.9716981, b: 0.59126914, a: 1}
+    m_HighlightedColor: {r: 0.63128424, g: 0.8207547, b: 0.2516465, a: 1}
+    m_PressedColor: {r: 0.45208114, g: 0.6132076, b: 0.38470098, a: 1}
+    m_SelectedColor: {r: 0.45490196, g: 0.6156863, b: 0.3882353, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1215,9 +1215,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1758474956}
-        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: OnStartClick
+      - m_Target: {fileID: 818873633}
+        m_TargetAssemblyTypeName: LevelSceneController, Assembly-CSharp
+        m_MethodName: OnLevelClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1286,11 +1286,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 818873627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0deab0ec5ff004b99e2bfcb8f46a09, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d1b10941d3bc3b44a27dba5f1d862a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 1.5
-  startDelay: 0.5
+  sceneName: LevelScene
 --- !u!1 &1105703530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,7 +1418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.16862746, g: 0.4745098, b: 0.6313726, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1531,7 +1530,7 @@ GameObject:
   - component: {fileID: 1501575338}
   - component: {fileID: 1501575337}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ExitConfirmPanelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1578,15 +1577,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Are you sure you want to exit?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
+  m_sharedMaterial: {fileID: -5464055823703389796, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4290502099
+  m_fontColor: {r: 0.8259463, g: 0.8679245, b: 0.7328231, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1641,7 +1640,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -182.7143, y: 0, z: -185.75919, w: -200.45366}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1667,7 +1666,7 @@ GameObject:
   - component: {fileID: 1507873517}
   - component: {fileID: 1507873516}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: StartButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1716,15 +1715,15 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
+  m_sharedMaterial: {fileID: -5464055823703389796, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4284366624
+  m_fontColor: {r: 0.12669098, g: 0.24582106, b: 0.3679245, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2229,7 +2228,7 @@ GameObject:
   - component: {fileID: 2040564579}
   - component: {fileID: 2040564578}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ExitButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2278,15 +2277,15 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
+  m_sharedMaterial: {fileID: -5464055823703389796, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4284366625
+  m_fontColor: {r: 0.12941177, g: 0.24705882, b: 0.36862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2367,7 +2366,7 @@ GameObject:
   - component: {fileID: 2104263643}
   - component: {fileID: 2104263642}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: NoButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2414,8 +2413,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: No
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
+  m_sharedMaterial: {fileID: -5464055823703389796, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2578,7 +2577,7 @@ GameObject:
   - component: {fileID: 2142803877}
   - component: {fileID: 2142803876}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: 'YesButtonText '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2625,8 +2624,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Yes
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
+  m_sharedMaterial: {fileID: -5464055823703389796, guid: 82bcd6683d96e5c45b3d4b459d7d584d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

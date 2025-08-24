@@ -2,110 +2,193 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 
 public class ActionSystem : Singleton<ActionSystem>
 {
-    private List<GameAction> reactions = null;
-    public bool IsPerforming { get; private set; } = false;
-    private static Dictionary<Type, List<Action<GameAction>>> preSubs = new();
-    private static Dictionary<Type, List<Action<GameAction>>> postSubs = new();
-    private static Dictionary<Type, Func<GameAction, IEnumerator>> performers = new();
-    public void Perform(GameAction action, System.Action OnPerformFinished = null)
+    // ---- Subscriptions (pre/post) ----
+    private static readonly Dictionary<Type, List<Action<GameAction>>> preSubs  = new();
+    private static readonly Dictionary<Type, List<Action<GameAction>>> postSubs = new();
+
+    // Keep a mapping so Unsubscribe works (delegate equality on new wrappers won’t match).
+    private static readonly Dictionary<Delegate, Action<GameAction>> preWrapMap  = new();
+    private static readonly Dictionary<Delegate, Action<GameAction>> postWrapMap = new();
+
+    // ---- Performers by action type ----
+    private static readonly Dictionary<Type, Func<GameAction, IEnumerator>> performers = new();
+
+    // ---- Runtime state ----
+    private List<GameAction> reactions = null;           // points at the active reaction list
+    public  bool IsPerforming { get; private set; } = false;
+
+    // ---- Busy / processing event for UI (End Turn gating) ----
+    public event System.Action<bool> OnProcessingChanged;
+    private int _processingDepth = 0;
+    public  bool IsProcessing => _processingDepth > 0;
+
+    private void BeginProcessing()
     {
-        if (IsPerforming) return;
+        if (_processingDepth++ == 0)
+            OnProcessingChanged?.Invoke(true);
+    }
+    private void EndProcessing()
+    {
+        _processingDepth = Mathf.Max(0, _processingDepth - 1);
+        if (_processingDepth == 0)
+            OnProcessingChanged?.Invoke(false);
+    }
+
+    // ------------------------------------------------------------------------
+
+    /// <summary>
+    /// Entry point to execute an action (with its pre/perform/post phases).
+    /// NOTE: During an active flow, you should generally queue more work with AddReaction(...).
+    /// </summary>
+    public void Perform(GameAction action, System.Action onPerformFinished = null)
+    {
+        // Signal "busy" for the whole flow (including nested reactions).
+        BeginProcessing();
+
+        // If you REALLY want to forbid nested Perform calls, keep IsPerforming guard,
+        // but still pair Begin/End so busy flag is correct.
+        if (IsPerforming)
+        {
+            // Already in a flow — just finish the busy window we opened.
+            EndProcessing();
+            return;
+        }
+
         IsPerforming = true;
         StartCoroutine(Flow(action, () =>
         {
             IsPerforming = false;
-            OnPerformFinished?.Invoke();
+            onPerformFinished?.Invoke();
+            EndProcessing();
         }));
     }
+
+    /// <summary>Add a reaction to the CURRENT phase’s reaction list.</summary>
     public void AddReaction(GameAction gameAction)
     {
         reactions?.Add(gameAction);
     }
 
-    private IEnumerator Flow(GameAction action, Action OnFlowFinished = null)
+    // ------------------------------------------------------------------------
+
+    private IEnumerator Flow(GameAction action, Action onFlowFinished = null)
     {
-        reactions = action.PreReactions;
+        // ----- PRE -----
+        reactions = action.PreReactions ?? new List<GameAction>();
         PerformSubscribers(action, preSubs);
         yield return PerformReactions();
 
-        reactions = action.PerformReactions;
+        // ----- PERFORM -----
+        reactions = action.PerformReactions ?? new List<GameAction>();
         yield return PerformPerformer(action);
         yield return PerformReactions();
 
-        reactions = action.PostReactions;
+        // ----- POST -----
+        reactions = action.PostReactions ?? new List<GameAction>();
         PerformSubscribers(action, postSubs);
         yield return PerformReactions();
 
-        OnFlowFinished?.Invoke();
+        reactions = null;
+        onFlowFinished?.Invoke();
     }
 
     private void PerformSubscribers(GameAction action, Dictionary<Type, List<Action<GameAction>>> subs)
     {
-        Type type = action.GetType();
-        if (subs.ContainsKey(type))
-        {
-            foreach (var sub in subs[type])
-            {
-                sub(action);
-            }
-        }
+        var type = action.GetType();
+        if (!subs.TryGetValue(type, out var list)) return;
+
+        // Snapshot to avoid issues if subscribers add/remove during iteration.
+        var snap = new List<Action<GameAction>>(list);
+        foreach (var sub in snap)
+            sub?.Invoke(action);
     }
 
     private IEnumerator PerformPerformer(GameAction action)
     {
-        Type type = action.GetType();
-        if (performers.ContainsKey(type))
-        {
-            yield return performers[type](action);
-        }
+        var type = action.GetType();
+        if (performers.TryGetValue(type, out var perf) && perf != null)
+            yield return perf(action);
     }
+
+    /// <summary>
+    /// Execute the current "reactions" list. Uses index-based loop so that calls to
+    /// AddReaction(...) during iteration are processed in the same phase safely.
+    /// </summary>
     private IEnumerator PerformReactions()
     {
-        foreach (var reaction in reactions)
+        var list = reactions;
+        if (list == null || list.Count == 0) yield break;
+
+        int i = 0;
+        while (i < list.Count)
         {
-            yield return Flow(reaction);
+            var r = list[i];
+            // Run each reaction as a full flow (pre/perform/post)
+            yield return Flow(r);
+            i++;
         }
     }
 
+    // ------------------------------------------------------------------------
+    // Performer registration
+    // ------------------------------------------------------------------------
+
     public static void AttachPerformer<T>(Func<T, IEnumerator> performer) where T : GameAction
     {
-        Type type = typeof(T);
-        IEnumerator wrappedPerformer(GameAction action) => performer((T)action);
-        if (performers.ContainsKey(type)) performers[type] = wrappedPerformer;
-        else performers.Add(type, wrappedPerformer);
+        var type = typeof(T);
+        IEnumerator wrapped(GameAction a) => performer((T)a);
+        performers[type] = wrapped;
     }
 
     public static void DetachPerformer<T>() where T : GameAction
     {
-        Type type = typeof(T);
-        if(performers.ContainsKey(type)) performers.Remove(type);
+        var type = typeof(T);
+        if (performers.ContainsKey(type)) performers.Remove(type);
     }
+
+    // ------------------------------------------------------------------------
+    // Subscriber registration (PRE/POST)
+    // ------------------------------------------------------------------------
+
     public static void SubscribePerformer<T>(Action<T> reaction, ReactionTiming timing) where T : GameAction
     {
-        Dictionary<Type, List<Action<GameAction>>> subs = timing == ReactionTiming.PRE ? preSubs : postSubs;
-        void wrappedReaction(GameAction action) => reaction((T)action);
-        if (subs.ContainsKey(typeof(T)))
+        var subs     = timing == ReactionTiming.PRE ? preSubs     : postSubs;
+        var wrapMap  = timing == ReactionTiming.PRE ? preWrapMap  : postWrapMap;
+
+        if (reaction == null) return;
+
+        Action<GameAction> wrapped = (ga) => reaction((T)ga);
+
+        var key = (Delegate)reaction;
+        wrapMap[key] = wrapped;
+
+        var t = typeof(T);
+        if (!subs.TryGetValue(t, out var list))
         {
-            subs[typeof(T)].Add(wrappedReaction);
+            list = new List<Action<GameAction>>();
+            subs[t] = list;
         }
-        else
-        {
-            subs.Add(typeof(T), new());
-            subs[typeof(T)].Add(wrappedReaction);
-        }
+        list.Add(wrapped);
     }
+
     public static void UnsubscribePerformer<T>(Action<T> reaction, ReactionTiming timing) where T : GameAction
     {
-        Dictionary<Type, List<Action<GameAction>>> subs = timing == ReactionTiming.PRE ? preSubs : postSubs;
-        if (subs.ContainsKey(typeof(T)))
+        var subs     = timing == ReactionTiming.PRE ? preSubs     : postSubs;
+        var wrapMap  = timing == ReactionTiming.PRE ? preWrapMap  : postWrapMap;
+
+        if (reaction == null) return;
+
+        var t = typeof(T);
+        if (!subs.TryGetValue(t, out var list)) return;
+
+        var key = (Delegate)reaction;
+        if (wrapMap.TryGetValue(key, out var wrapped))
         {
-            void wrappedReaction(GameAction action) => reaction((T)action);
-            subs[typeof(T)].Remove(wrappedReaction);
+            list.Remove(wrapped);
+            wrapMap.Remove(key);
         }
     }
 }

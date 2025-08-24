@@ -16,6 +16,7 @@ public class FloorSO : ScriptableObject
 
     [Header("Lobby")]
     public LobbyOfferSO LobbyOffer;
+    public int GoldReward = 50;
 
     [Header("Meta")]
     [TextArea] public string Title;

@@ -8,6 +8,9 @@ public class ScrollBackgroundUI : MonoBehaviour
 
     void Start()
     {
+        // Play the game
+        Time.timeScale = 1f;
+        
         int count = transform.childCount;
         backgrounds = new RectTransform[count];
         for (int i = 0; i < count; i++)
@@ -38,3 +41,4 @@ public class ScrollBackgroundUI : MonoBehaviour
         }
     }
 }
+

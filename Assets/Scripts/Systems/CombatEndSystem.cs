@@ -19,25 +19,35 @@ public class CombatEndSystem : MonoBehaviour
 
     private IEnumerator VictoryPerformer(CombatVictoryGA ga)
     {
-        // Pause turns (no more Enemy/Player actions)
+        // Pause turns
         TurnSystem.Instance?.SuspendCombat();
-
-        // Optional: small pause for drama
         yield return new WaitForSeconds(0.25f);
 
-        // MONEY
-        if (ga.Gold > 0)
-            PlayerSystem.Instance?.AddGold(ga.Gold);
+        var rm = RunManager.Instance;
+        Debug.Log($"[Victory] RunManager is {(rm ? "OK" : "NULL")}");
 
-        // HEAL (use your HealSystem/GA if you prefer)
-        var pv = PlayerSystem.Instance?.PlayerView;
-        if (pv != null && ga.HealAmount > 0)
+        var floor = rm?.CurrentFloor;
+        Debug.Log($"[Victory] CurrentFloor is {(floor ? floor.name : "NULL")}");
+
+        int floorGold = Mathf.Max(0, floor?.GoldReward ?? 0);
+        int gaGold    = Mathf.Max(0, ga?.Gold ?? 0);
+        int totalGold = floorGold + gaGold;
+
+        Debug.Log($"[Victory] floorGold={floorGold}, gaGold={gaGold}, totalGold={totalGold}");
+
+        // ---- 2) Apply to currency exactly once ----
+        if (totalGold > 0)
         {
-            pv.CurrentHealth = Mathf.Min(pv.CurrentHealth + ga.HealAmount, pv.MaxHealth);
-            pv.RefreshHealthUI(); // or pv.UpdateHealthUI() — call your existing refresh
+            Debug.Log($"[Currency] Before add: {CurrencySystem.Instance?.Gold}");
+            CurrencySystem.Instance?.AddGold(totalGold);
+            Debug.Log($"[Currency] After add: {CurrencySystem.Instance?.Gold}");
+        }
+        else
+        {
+            Debug.Log($"Total gold 0");
         }
 
-        // SHOW UI (cards, gold, heal summary)
+        // ---- 3) Prepare UI ----
         var ui = CombatEndUI.Instance;
         if (ui == null)
         {
@@ -46,37 +56,46 @@ public class CombatEndSystem : MonoBehaviour
             yield break;
         }
 
-        // If there are card picks, run a choose flow then enable the Next button.
-        if (ga.PickCardCount > 0 && ga.CardRewardPool != null && ga.CardRewardPool.Count > 0)
-        {
-            // UI: show victory with “Choosing cards…” state
-            ui.ShowVictory(ga.Gold, ga.HealAmount, pickingCards: true);
+        // Your “paid heal” flow (10 HP for 100g, multiple purchases)
+        ui.ShowPaidHeal();  // keep this if you already wired it
 
-            // Let player pick N cards from pool
+        // Figure out if we’re doing card picks
+        var pool = ga.CardRewardPool;
+        int pickCount = Mathf.Max(0, ga.PickCardCount);
+        bool hasPicks = (pool != null && pool.Count > 0 && pickCount > 0);
+
+        // ---- 4) Show the summary ONCE with the totalGold we actually awarded ----
+        ui.ShowVictory(gold: totalGold, heal: 0, pickingCards: hasPicks);
+
+        if (hasPicks)
+        {
             bool done = false;
-            DeckChoiceSystem.Instance?.ChooseToAdd(ga.CardRewardPool, ga.PickCardCount, added =>
+            // Use your existing add flow
+            DeckChoiceSystem.Instance?.ChooseToAdd(pool, pickCount, added =>
             {
                 PlayerSystem.Instance?.AddCardsToDeckAndDrawPile(added, shuffleDrawPile: true);
                 done = true;
             });
             yield return new WaitUntil(() => done);
 
-            // Now enable the Next button
-            ui.ShowCardChoices(null, 3, () => {
+            // After picks, enable "Next"
+            ui.ShowCardChoices(null, 3, () =>
+            {
                 ui.Hide();
                 RunManager.Instance?.NextFloor();
             });
         }
         else
         {
-            // No card picks — just show summary + Next
-            ui.ShowVictory(ga.Gold, ga.HealAmount, pickingCards: false);
-            ui.ShowCardChoices(null, 3, () => {
+            // No picks – go straight to Next
+            ui.ShowCardChoices(null, 3, () =>
+            {
                 ui.Hide();
                 RunManager.Instance?.NextFloor();
             });
         }
     }
+
 
     private IEnumerator DefeatPerformer(CombatDefeatGA _)
     {
