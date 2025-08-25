@@ -1523,52 +1523,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342796231}
   m_CullTransparentMesh: 1
---- !u!1 &347723357
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 347723358}
-  - component: {fileID: 347723359}
-  m_Layer: 0
-  m_Name: DeckChoiceSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &347723358
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347723357}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 828091915}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &347723359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347723357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d87445e385722584e8f4e8dd9596fa3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ui: {fileID: 0}
-  panel: {fileID: 0}
 --- !u!1 &398390916
 GameObject:
   m_ObjectHideFlags: 0
@@ -3008,6 +2962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d3fa7b9f9db0444930462f278a1d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endUI: {fileID: 1791998512}
+  combatRewardPanel: {fileID: 975239710}
 --- !u!1 &733798547
 GameObject:
   m_ObjectHideFlags: 0
@@ -3269,7 +3225,6 @@ Transform:
   - {fileID: 214294337}
   - {fileID: 1880090292}
   - {fileID: 1122049709}
-  - {fileID: 347723358}
   - {fileID: 163218736}
   - {fileID: 679326764}
   - {fileID: 1185632433}
@@ -4974,6 +4929,8 @@ GameObject:
   m_Component:
   - component: {fileID: 975239708}
   - component: {fileID: 975239709}
+  - component: {fileID: 975239711}
+  - component: {fileID: 975239710}
   m_Layer: 5
   m_Name: CardRewardLayout
   m_TagString: Untagged
@@ -5017,7 +4974,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 3
+  m_ChildAlignment: 4
   m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
@@ -5026,6 +4983,39 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &975239710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975239707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b038bbd32a33c4c439abee36a2b14a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cg: {fileID: 975239711}
+  titleText: {fileID: 256782220}
+  promptText: {fileID: 0}
+  content: {fileID: 975239708}
+  optionPrefab: {fileID: 2529851685330861477, guid: cf9091cdf8514464f962d5a208d4c543, type: 3}
+  confirmButton: {fileID: 0}
+  cancelButton: {fileID: 0}
+  cardLibrary: {fileID: 11400000, guid: 0acafdc17f9fe0a4cbf5552276bd1a11, type: 2}
+  optionsToShow: 3
+--- !u!225 &975239711
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975239707}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &979338620
 GameObject:
   m_ObjectHideFlags: 0
@@ -7540,7 +7530,7 @@ Transform:
   m_GameObject: {fileID: 1454305613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4, y: 0, z: 0}
+  m_LocalPosition: {x: -5.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8322,6 +8312,7 @@ MonoBehaviour:
   titleText: {fileID: 1034128317}
   summaryText: {fileID: 2040785327}
   nextButton: {fileID: 1051259791}
+  nextButtonText: {fileID: 1055330167}
   healRoot: {fileID: 1401525989}
   healButton: {fileID: 1291194365}
   healButtonLabel: {fileID: 1908877830}
@@ -9717,7 +9708,7 @@ Transform:
   m_GameObject: {fileID: 2058790261}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.6, y: 0, z: 0}
+  m_LocalPosition: {x: -2.8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

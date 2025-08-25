@@ -53,12 +53,31 @@ public class DamageSystem : Singleton<DamageSystem>
                         }
                         if (!anyAlive)
                         {
-                            ActionSystem.Instance.AddReaction(new CombatVictoryGA());
+                            var floor = RunManager.Instance?.CurrentFloor;
+                            var cardPool = CombatEndUI.Instance.CardLibrary.GetRandomRewards(3); // 3 options
+                            int pickCount = 1; // let player pick 1 card
+
+                            int goldReward = floor != null ? floor.GoldReward : 0;
+                            ActionSystem.Instance.AddReaction(new CombatVictoryGA(
+                            gold: goldReward,
+                            healAmount: 0,
+                            cardRewardPool: cardPool,
+                            pickCardCount: pickCount));
+
+                            if (RunManager.Instance != null && 
+                                RunManager.Instance.CurrentFloor != null &&
+                                RunManager.Instance.CurrentFloor.Type == FloorType.Boss)
+                                {
+                                    Debug.Log("BOss victory");
+                                    // StartCoroutine(BossVictorySequence());
+                                    StartCoroutine(BossVictorySequence());
+                                }
                         }
                     }
                 }
                 else
                 {
+                    
                     // player death logic
                     ActionSystem.Instance.AddReaction(new CombatDefeatGA());
                 }
@@ -91,5 +110,29 @@ public class DamageSystem : Singleton<DamageSystem>
                 }
             }
         }
+    }
+
+    private IEnumerator BossVictorySequence()
+    {
+        // Wait one frame to ensure all reactions are processed
+        yield return new WaitForSeconds(1f);
+        
+        // Show boss victory screen directly
+        if (CombatEndUI.Instance != null)
+        {
+            Debug.Log("Boss victorysequence");
+            CombatEndUI.Instance.ShowBossVictory(ReturnToMainMenu);
+        }
+        // else
+        // {
+        //     // Fallback: log message and return to main menu
+        //     Debug.Log("BOSS DEFEATED! Returning to main menu...");
+        //     UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        // }
+    }
+    
+    private void ReturnToMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }

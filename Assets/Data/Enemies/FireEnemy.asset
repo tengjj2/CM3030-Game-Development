@@ -13,12 +13,22 @@ MonoBehaviour:
   m_Name: FireEnemy
   m_EditorClassIdentifier: 
   <Image>k__BackingField: {fileID: 8334651344603559088, guid: 477609183283a44189e345d8137fa546, type: 3}
-  <Health>k__BackingField: 18
+  <Health>k__BackingField: 20
   <AttackPower>k__BackingField: 6
   enemyAnimatorController: {fileID: 9100000, guid: b0fb26e66449249c480edefba3b4dad1, type: 2}
   moveset:
   - action: {fileID: 11400000, guid: abea8a25fdb950f42909af26bebde56b, type: 2}
-    weight: 4
+    weight: 2
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: bf3b93309672ade49b8f07e670756308, type: 2}
+    weight: 2
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 199f88cd79a7dd048928e8ac7729e2b7, type: 2}
+    weight: 2
     cooldownTurns: 0
     maxUses: 99
     conditions: []

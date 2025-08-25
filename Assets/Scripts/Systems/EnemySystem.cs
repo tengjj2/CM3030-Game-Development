@@ -157,7 +157,9 @@ public class EnemySystem : Singleton<EnemySystem>
         if (!anyAlive)
         {
             Debug.Log("[EnemySystem] Combat won!");
-            //RunManager.Instance.NextFloor();
+
+
         }
     }
+
 }

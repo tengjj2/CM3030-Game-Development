@@ -18,7 +18,32 @@ MonoBehaviour:
   enemyAnimatorController: {fileID: 9100000, guid: 0e4963c42a42a4ea8b68812286df63fc, type: 2}
   moveset:
   - action: {fileID: 11400000, guid: abea8a25fdb950f42909af26bebde56b, type: 2}
-    weight: 4
+    weight: 2
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: cf16bd4b5a2606a408412cc5c7fae58d, type: 2}
+    weight: 3
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 842029e0ad69cd54f83e4dc5aee2d3e7, type: 2}
+    weight: 3
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 8cb7f1450cef0334fbc990fc690d763b, type: 2}
+    weight: 3
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 013ccf6fa1e2ced4d99f17c44aadbce3, type: 2}
+    weight: 3
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 013ccf6fa1e2ced4d99f17c44aadbce3, type: 2}
+    weight: 2
     cooldownTurns: 0
     maxUses: 99
     conditions: []

@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 3
   BackgroundSprite: {fileID: 1621234872923993059, guid: 695e344e3b1bdeb42a89c3178c617971, type: 3}
-  Enemies: []
+  Enemies:
+  - {fileID: 11400000, guid: bf59a0c99ac4946cc94166254948bf0a, type: 2}
+  - {fileID: 11400000, guid: 5cf81a6b96ee5c24a97f4db99a8384bd, type: 2}
+  - {fileID: 11400000, guid: bf59a0c99ac4946cc94166254948bf0a, type: 2}
   ShopInventory: {fileID: 0}
   LobbyOffer: {fileID: 0}
   GoldReward: 100

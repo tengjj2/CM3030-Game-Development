@@ -31,7 +31,10 @@ public class RunManager : Singleton<RunManager>
         }
         TurnSystem.Instance.SuspendCombat();                 // put TurnSystem into Inactive
         DiscardPromptUI.Instance?.Hide();                    // just in case the prompt is up
-        CardSystem.Instance.ResetForNextCombat();            // <-- key line
+        CardSystem.Instance.RebuildForNewCombatFromRunDeck(
+            CardSystem.Instance.RunDeckDataRO,
+            shuffle: true
+        );        
         CostSystem.Instance.Refill(); 
         LoadFloor(runConfig.Floors[index++]);
     }
@@ -50,14 +53,13 @@ public class RunManager : Singleton<RunManager>
             return;
         }
 
-        if (floor.Type == FloorType.Combat)
+        if (floor.Type == FloorType.Combat || floor.Type == FloorType.Boss)
         {
             visibility?.ShowOnlyCombat();
             BackgroundController.Instance?.SetBackground(floor.BackgroundSprite);
 
             // NEW: rebuild runtime piles from the persisted run deck
-            var runDeck = PlayerSystem.Instance?.GetRunDeckData();
-            CardSystem.Instance?.RebuildForNewCombatFromRunDeck(runDeck, shuffle: true);
+            CardSystem.Instance?.RebuildForNewCombatFromRunDeck(CardSystem.Instance.RunDeckDataRO, shuffle: true);
 
             EnemySystem.Instance.Setup(floor.Enemies);
 

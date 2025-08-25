@@ -12,6 +12,7 @@ public class CombatEndUI : Singleton<CombatEndUI>
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text summaryText;
     [SerializeField] private Button nextButton;
+    [SerializeField] private TMP_Text nextButtonText;
 
     [Header("Paid Heal (simple package)")]
     [SerializeField] private RectTransform healRoot; 
@@ -27,6 +28,8 @@ public class CombatEndUI : Singleton<CombatEndUI>
     [SerializeField] private int optionsCount = 3;
     [SerializeField] private CardLibrarySO cardLibrary;       // <-- assign your CardLibrary asset here
 
+    public CardLibrarySO CardLibrary => cardLibrary;
+    public int RewardOptions => Mathf.Max(1, optionsCount);
     private readonly List<GameObject> spawned = new();
     private System.Action onNext;
     private bool choiceMade;
@@ -130,6 +133,21 @@ public class CombatEndUI : Singleton<CombatEndUI>
         cg.interactable = false;
         cg.blocksRaycasts = false;
     }
+        // Show boss victory
+    public void ShowBossVictory(System.Action onContinue)
+    {
+        titleText.text = "BOSS DEFEATED!";
+        summaryText.text = $"You have conquered the final challenge!";
+
+        HideCardArea();
+        // HideHealPanel();
+        ShowImmediate();
+
+        if (nextButtonText != null)
+            nextButtonText.text = "Return to Main Menu";
+
+        EnableNext(true, onContinue);
+    }
 
     public void ShowVictory(int gold, int heal, bool pickingCards)
     {
@@ -140,6 +158,9 @@ public class CombatEndUI : Singleton<CombatEndUI>
             (pickingCards ? "Choose a card:" : "Rewards granted.");
 
         ShowImmediate();
+
+        if (nextButtonText != null)
+            nextButtonText.text = "Next Floor";
 
         if (!pickingCards)
         {
@@ -213,8 +234,11 @@ public class CombatEndUI : Singleton<CombatEndUI>
         summaryText.text = "Better luck next time.";
         HideCardArea();
         ShowImmediate();
+        if (nextButtonText != null)
+            nextButtonText.text = "Back to Main Menu";
         EnableNext(true, onContinue);
     }
+
 
     public void Hide()
     {
@@ -226,6 +250,8 @@ public class CombatEndUI : Singleton<CombatEndUI>
         gameObject.SetActive(false);
     }
 
+
+
     // ------------ Internals ------------
     private void ShowImmediate()
     {
@@ -235,7 +261,7 @@ public class CombatEndUI : Singleton<CombatEndUI>
         cg.blocksRaycasts = true;
     }
 
-    private void EnableNext(bool enabled, System.Action onClick)
+    public void EnableNext(bool enabled, System.Action onClick)
     {
         if (!nextButton) return;
 
