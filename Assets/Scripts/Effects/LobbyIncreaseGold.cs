@@ -5,8 +5,9 @@ public class IncreaseGoldEffect : LobbyEffectSO
 {
     public int Amount = 50;
 
-    void Apply()
+    public override void Apply(System.Action onComplete)
     {
-        CurrencySystem.Instance?.Add(Amount);
+        CurrencySystem.Instance?.Add(Amount, "Lobby boon");
+        onComplete?.Invoke();
     }
 }
