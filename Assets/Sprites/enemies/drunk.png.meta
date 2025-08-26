@@ -112,12 +112,12 @@ TextureImporter:
       name: drunk_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 87
         y: 0
-        width: 128
+        width: 41
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: drunk_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 214
         y: 0
-        width: 128
+        width: 41
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -156,12 +156,12 @@ TextureImporter:
       name: drunk_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 343
         y: 0
-        width: 128
+        width: 41
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -178,12 +178,12 @@ TextureImporter:
       name: drunk_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 471
         y: 0
-        width: 128
+        width: 41
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
