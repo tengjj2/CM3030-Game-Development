@@ -1,62 +1,102 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndTurnButtonUI : Singleton<EndTurnButtonUI>
+public class EndTurnButtonUI : MonoBehaviour
 {
     [SerializeField] private Button button;
 
-    private bool pendingEndTurn = false;
+    private bool _busyQueue   = false; // ActionSystem
+    private bool _choosing    = false; // DiscardChoiceSystem
+    private bool _dragging    = false; // Interactions (optional)
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         if (!button) button = GetComponent<Button>();
     }
 
     private void OnEnable()
     {
+        // Phase
         if (TurnSystem.Instance != null)
         {
             TurnSystem.Instance.OnPhaseChanged += HandlePhaseChanged;
-            Refresh();
+            HandlePhaseChanged(TurnSystem.Instance.CurrentPhase);
         }
+
+        // Action queue busy
+        if (ActionSystem.Instance != null)
+            ActionSystem.Instance.OnProcessingChanged += OnProcessingChanged;
+
+        // If you used the fallback gate instead:
+        // ActionBusyGate.OnChanged += v => { _busyQueue = v; Refresh(); };
+
+        // Discard choosing
+        DiscardChoiceSystem.OnChoosingChanged += OnChoosingChanged;
+
+        // Optional: if you track dragging globally
+        _dragging = Interactions.Instance != null && Interactions.Instance.PlayerIsDragging;
+        // If Interactions has an event, subscribe; otherwise we'll check in Update
+        Refresh();
     }
 
     private void OnDisable()
     {
         if (TurnSystem.Instance != null)
             TurnSystem.Instance.OnPhaseChanged -= HandlePhaseChanged;
+
+        if (ActionSystem.Instance != null)
+            ActionSystem.Instance.OnProcessingChanged -= OnProcessingChanged;
+
+        DiscardChoiceSystem.OnChoosingChanged -= OnChoosingChanged;
+    }
+
+    private void Update()
+    {
+        // If you don't have a dragging event, poll once per frame
+        if (Interactions.Instance != null)
+        {
+            bool drag = Interactions.Instance.PlayerIsDragging;
+            if (drag != _dragging) { _dragging = drag; Refresh(); }
+        }
+    }
+
+    private void OnProcessingChanged(bool busy)
+    {
+        _busyQueue = busy;
+        Refresh();
+    }
+
+    private void OnChoosingChanged(bool choosing)
+    {
+        _choosing = choosing;
+        Refresh();
     }
 
     private void HandlePhaseChanged(TurnSystem.Phase p)
     {
-        // clear debounce when we actually leave the player phase
-        if (p != TurnSystem.Phase.Player) pendingEndTurn = false;
         Refresh();
     }
 
     private void Refresh()
     {
-        bool canEnd = TurnSystem.Instance != null && TurnSystem.Instance.CanEndTurn;
-        bool queueBusy = ActionSystem.Instance != null && ActionSystem.Instance.IsPerforming;
-        if (button) button.interactable = canEnd && !pendingEndTurn && !queueBusy;
+        if (!button) return;
+
+        bool canClick =
+            TurnSystem.Instance != null &&
+            TurnSystem.Instance.CanEndTurn &&
+            !_busyQueue &&
+            !_choosing &&
+            !_dragging;
+
+        button.interactable = canClick;
     }
 
     public void OnClick()
     {
-        // Guard: only during player phase
-        if (TurnSystem.Instance == null || !TurnSystem.Instance.CanEndTurn) return;
-        if (pendingEndTurn) return; // debounce
-        pendingEndTurn = true;
-        Refresh();
+        // Extra hard guard
+        if (button != null && !button.interactable) return;
 
-        // Schedule end-turn to occur AFTER the current action queue drains.
-        // No-op GA ensures this runs in-order with any still-queued reactions from the card play.
-        ActionSystem.Instance.Perform(new EndTurnRequestGA(), () =>
-        {
-            // When we get here, the queue is idle for this frame; do the actual phase swap.
+        if (TurnSystem.Instance != null && TurnSystem.Instance.CanEndTurn)
             TurnSystem.Instance.EndPlayerTurn();
-            // Button will re-enable when phase changes back to Player.
-        });
     }
 }

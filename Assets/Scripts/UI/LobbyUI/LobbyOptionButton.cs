@@ -22,6 +22,7 @@ public class LobbyOptionButton : MonoBehaviour
         if (!button) button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => {
+            AudioManager.Instance.Play("click_button");
             Debug.Log("[LobbyOptionButton] Clicked: " + (choice?.Label ?? "<null>"));
             onClicked?.Invoke();
         });
