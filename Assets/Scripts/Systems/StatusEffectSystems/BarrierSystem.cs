@@ -36,6 +36,10 @@ public class BarrierSystem : MonoBehaviour
 
         if (barrierVFX) Instantiate(barrierVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[Barrier] {target.name} +{add} ({before}→{after})");
+
+        // Play metal sound effect
+        AudioManager.Instance.PlayRandomByPrefix("metal");
+
         yield return null;
     }
 }

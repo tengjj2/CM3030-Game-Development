@@ -28,6 +28,9 @@ public class DamageSystem : Singleton<DamageSystem>
 
             target.Damage(finalDamage);
 
+            // play attack sound
+            AudioManager.Instance.PlayRandomByPrefix("punch");
+
             if (damageVFX != null)
                 Instantiate(damageVFX, target.transform.position, Quaternion.identity);
 
@@ -53,12 +56,22 @@ public class DamageSystem : Singleton<DamageSystem>
                         }
                         if (!anyAlive)
                         {
-                            ActionSystem.Instance.AddReaction(new CombatVictoryGA());
+                            var floor = RunManager.Instance?.CurrentFloor;
+                            var cardPool = CombatEndUI.Instance.CardLibrary.GetRandomRewards(3); // 3 options
+                            int pickCount = 1; // let player pick 1 card
+
+                            int goldReward = floor != null ? floor.GoldReward : 0;
+                            ActionSystem.Instance.AddReaction(new CombatVictoryGA(
+                            gold: goldReward,
+                            healAmount: 0,
+                            cardRewardPool: cardPool,
+                            pickCardCount: pickCount));
                         }
                     }
                 }
                 else
                 {
+                    
                     // player death logic
                     ActionSystem.Instance.AddReaction(new CombatDefeatGA());
                 }

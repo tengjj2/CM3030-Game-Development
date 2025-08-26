@@ -156,8 +156,25 @@ public class EnemySystem : Singleton<EnemySystem>
 
         if (!anyAlive)
         {
+            // Play win sound effect
+            AudioManager.Instance.PlayRandomByPrefix("victory");
+
             Debug.Log("[EnemySystem] Combat won!");
-            RunManager.Instance.NextFloor();
+            /*
+            var floor = RunManager.Instance?.CurrentFloor;
+            var cardPool = CombatEndUI.Instance.CardLibrary.GetRandomRewards(3); // 3 options
+            int pickCount = 1; // let player pick 1 card
+
+            int goldReward = floor != null ? floor.GoldReward : 0;
+            ActionSystem.Instance.Perform(
+            new CombatVictoryGA(
+                gold: goldReward,
+                healAmount: 0,
+                cardRewardPool: cardPool,
+                pickCardCount: pickCount
+            
+
+        );*/
         }
     }
 }

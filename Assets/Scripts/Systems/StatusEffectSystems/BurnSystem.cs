@@ -18,6 +18,7 @@ public class BurnSystem : MonoBehaviour
 
     private IEnumerator ApplyBurnPerformer(ApplyBurnGA ga)
     {
+
         var target = ga.Target;
         int stacksToAdd = ga.BaseAmount; // interpret BaseAmount as stacks
         var caster = ga.Caster;
@@ -32,6 +33,9 @@ public class BurnSystem : MonoBehaviour
 
         if (burnVFX) Instantiate(burnVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[BurnApply] {target.name} BURN +{stacksToAdd} ({before}→{after})");
+
+        // Play metal sound effect
+        AudioManager.Instance.PlayRandomByPrefix("metal");
 
         yield return null;
     }

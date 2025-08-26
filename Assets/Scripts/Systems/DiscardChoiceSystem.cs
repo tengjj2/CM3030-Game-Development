@@ -14,24 +14,33 @@ public class DiscardChoiceSystem : MonoBehaviour
         ActionSystem.DetachPerformer<ForceDiscardGA>();
     }
 
+    public static bool IsChoosing { get; private set; }
+    public static event System.Action<bool> OnChoosingChanged;
+
+    private void SetChoosing(bool v)
+    {
+        if (IsChoosing == v) return;
+        IsChoosing = v;
+        OnChoosingChanged?.Invoke(v);
+    }
+
     private IEnumerator Performer(ForceDiscardGA ga)
     {
-        // Always clear any stale UI before starting
-        DiscardPromptUI.Instance?.HideImmediate();
-
         var hand = CardSystem.Instance.HandReadOnly;
         if (hand.Count == 0) yield break;
 
+        SetChoosing(true);
         int want = Mathf.Min(ga.Count, hand.Count);
-        string msg = want == 1 ? "Choose a card to discard" : $"Choose {want} cards to discard";
-        DiscardPromptUI.Instance?.Show(msg);
 
         var chosen = new List<Card>();
-        yield return HandView.Instance.SelectCardsFromHand(want, chosen, prompt: msg);
+        yield return HandView.Instance.SelectCardsFromHand(
+            want, chosen,
+            prompt: (want == 1 ? "Choose a card to discard" : $"Choose {want} cards to discard")
+        );
 
         foreach (var card in chosen)
             yield return CardSystem.Instance.DiscardFromHand(card);
 
-        DiscardPromptUI.Instance?.Hide();
+        SetChoosing(false);
     }
 }

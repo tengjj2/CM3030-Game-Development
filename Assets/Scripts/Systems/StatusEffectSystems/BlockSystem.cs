@@ -16,6 +16,7 @@ public class BlockSystem : MonoBehaviour
     }
     private IEnumerator ApplyBlockPerformer(ApplyBlockGA ga)
     {
+
         var caster = ga.Caster;
         var target = ga.Target;
         int add = Mathf.Max(0, ga.BaseAmount);
@@ -36,5 +37,8 @@ public class BlockSystem : MonoBehaviour
 
         if (blockVFX) Instantiate(blockVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[BlockSystem] {target.name} BLOCK +{add} ({before}→{after})");
+
+        // Play metal sound effect
+        AudioManager.Instance.PlayRandomByPrefix("metal");
     }
 }
