@@ -260,6 +260,8 @@ private IEnumerator PlayCardPerformer(PlayCardGA ga)
         Card card = drawPile.Draw();
         hand.Add(card);
 
+        AudioManager.Instance.PlayRandomByPrefix("card");
+
         CardView cv = CardViewCreator.Instance.CreateCardView(card, drawPilePoint.position, drawPilePoint.rotation);
         yield return handView.AddCard(cv);
     }
