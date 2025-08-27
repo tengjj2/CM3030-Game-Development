@@ -416,6 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 378356217}
   - component: {fileID: 378356220}
+  - component: {fileID: 378356221}
   - component: {fileID: 378356219}
   - component: {fileID: 378356218}
   m_Layer: 5
@@ -551,6 +552,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378356216}
   m_CullTransparentMesh: 1
+--- !u!114 &378356221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378356216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8727fd3cff6301e48b7dd2528de42fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: click_button
 --- !u!1 &453004027
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +576,7 @@ GameObject:
   - component: {fileID: 453004028}
   - component: {fileID: 453004031}
   - component: {fileID: 453004030}
+  - component: {fileID: 453004032}
   - component: {fileID: 453004029}
   m_Layer: 5
   m_Name: YesButton
@@ -696,6 +711,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 453004027}
   m_CullTransparentMesh: 1
+--- !u!114 &453004032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453004027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8727fd3cff6301e48b7dd2528de42fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: click_button
 --- !u!1 &606059735
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +737,7 @@ GameObject:
   - component: {fileID: 606059738}
   - component: {fileID: 606059737}
   - component: {fileID: 606059740}
+  - component: {fileID: 606059742}
   - component: {fileID: 606059741}
   m_Layer: 5
   m_Name: ExitButton
@@ -869,6 +898,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeDuration: 1.5
   startDelay: 1
+--- !u!114 &606059742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606059735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8727fd3cff6301e48b7dd2528de42fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: click_button
 --- !u!1 &606912519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,6 +1265,7 @@ GameObject:
   - component: {fileID: 818873631}
   - component: {fileID: 818873630}
   - component: {fileID: 818873629}
+  - component: {fileID: 818873634}
   - component: {fileID: 818873633}
   - component: {fileID: 818873632}
   m_Layer: 5
@@ -1383,6 +1426,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: SampleScene
+--- !u!114 &818873634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818873627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8727fd3cff6301e48b7dd2528de42fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: click_button
 --- !u!1 &1105703530
 GameObject:
   m_ObjectHideFlags: 0
