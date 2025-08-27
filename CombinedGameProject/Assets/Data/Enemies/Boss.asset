@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942ad9e515c79c4b8492c9aad8396de, type: 3}
+  m_Name: Boss
+  m_EditorClassIdentifier: 
+  <Image>k__BackingField: {fileID: -2424553518018739129, guid: 5c72cc250c53546b6b6241387ecfaf37, type: 3}
+  <Health>k__BackingField: 30
+  <AttackPower>k__BackingField: 6
+  enemyAnimatorController: {fileID: 9100000, guid: 1e6ffb5f0c5434af79c9df3d680dd754, type: 2}
+  moveset:
+  - action: {fileID: 11400000, guid: abea8a25fdb950f42909af26bebde56b, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: af3e86692b2bf224b8c7673d17d7c9b0, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: bf3b93309672ade49b8f07e670756308, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 199f88cd79a7dd048928e8ac7729e2b7, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 013ccf6fa1e2ced4d99f17c44aadbce3, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: df6cf18a003369b49845a7b93939a420, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: cf16bd4b5a2606a408412cc5c7fae58d, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 7916fe801e447e4448632de09bed9883, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: af1481cb7da58604db1556c0804eef3e, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 842029e0ad69cd54f83e4dc5aee2d3e7, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 7916fe801e447e4448632de09bed9883, type: 2}
+    weight: 4
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  PlanIntentOnSpawn: 1
