@@ -15,6 +15,7 @@ public class DefenceSystem : MonoBehaviour
     }
     private IEnumerator ApplyDefencePerformer(ApplyDefenceGA ga)
     {
+
         var caster = ga.Caster;
         var target = ga.Target;
         int add = Mathf.Max(0, ga.BaseAmount);
@@ -31,5 +32,8 @@ public class DefenceSystem : MonoBehaviour
         target.AddStatusEffect(StatusEffectType.DEFENCE, add);
         int after  = target.GetStatusEffectStacks(StatusEffectType.DEFENCE);
         Debug.Log($"[Defence] {target.name} DEFENCE +{add} ({before}→{after})");
+
+        // Play metal sound effect
+        AudioManager.Instance.PlayRandomByPrefix("metal");
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MachineEnemy
   m_EditorClassIdentifier: 
   <Image>k__BackingField: {fileID: -4627874047666434002, guid: 7aa96f665d48b4d0d9b6f73db7c2676c, type: 3}
-  <Health>k__BackingField: 30
+  <Health>k__BackingField: 25
   <AttackPower>k__BackingField: 6
   enemyAnimatorController: {fileID: 9100000, guid: d1a3b93203094483ca0c08a3c9fe0131, type: 2}
   moveset:
@@ -23,11 +23,6 @@ MonoBehaviour:
     maxUses: 99
     conditions: []
   - action: {fileID: 11400000, guid: bf3b93309672ade49b8f07e670756308, type: 2}
-    weight: 4
-    cooldownTurns: 0
-    maxUses: 99
-    conditions: []
-  - action: {fileID: 11400000, guid: af3e86692b2bf224b8c7673d17d7c9b0, type: 2}
     weight: 4
     cooldownTurns: 0
     maxUses: 99

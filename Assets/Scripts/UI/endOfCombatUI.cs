@@ -144,7 +144,7 @@ public class CombatEndUI : Singleton<CombatEndUI>
         ShowImmediate();
 
         if (nextButtonText != null)
-            nextButtonText.text = "Return to Main Menu";
+            nextButtonText.text = "Back to Main Menu";
 
         EnableNext(true, onContinue);
     }
@@ -323,3 +323,4 @@ public class CombatEndUI : Singleton<CombatEndUI>
         return result;
     }
 }
+

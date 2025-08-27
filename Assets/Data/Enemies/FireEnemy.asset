@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireEnemy
   m_EditorClassIdentifier: 
   <Image>k__BackingField: {fileID: 8334651344603559088, guid: 477609183283a44189e345d8137fa546, type: 3}
-  <Health>k__BackingField: 20
+  <Health>k__BackingField: 18
   <AttackPower>k__BackingField: 6
   enemyAnimatorController: {fileID: 9100000, guid: b0fb26e66449249c480edefba3b4dad1, type: 2}
   moveset:

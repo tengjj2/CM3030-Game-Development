@@ -31,6 +31,9 @@ public class PoisonSystem : MonoBehaviour
         if (poisonVFX) Instantiate(poisonVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[PoisonApply] {target.name} POISON +{stacksToAdd} ({before}→{after}) from {applyPoisonGA.Caster?.name}");
 
+        // Play metal sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         yield return null;
 
         /*

@@ -38,11 +38,6 @@ MonoBehaviour:
     maxUses: 99
     conditions: []
   - action: {fileID: 11400000, guid: 013ccf6fa1e2ced4d99f17c44aadbce3, type: 2}
-    weight: 3
-    cooldownTurns: 0
-    maxUses: 99
-    conditions: []
-  - action: {fileID: 11400000, guid: 013ccf6fa1e2ced4d99f17c44aadbce3, type: 2}
     weight: 2
     cooldownTurns: 0
     maxUses: 99

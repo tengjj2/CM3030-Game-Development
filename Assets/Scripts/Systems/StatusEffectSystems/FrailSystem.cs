@@ -26,6 +26,9 @@ public class FrailSystem : MonoBehaviour
         if (SafeCombatant.AbortIfDead(caster, "Frail(after tween)")) yield break;
         if (SafeCombatant.AbortIfDead(target, "Frail(after tween)")) yield break;
 
+        // Play sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         int before = target.GetStatusEffectStacks(StatusEffectType.FRAIL);
         target.AddStatusEffect(StatusEffectType.FRAIL, add);
         int after  = target.GetStatusEffectStacks(StatusEffectType.FRAIL);

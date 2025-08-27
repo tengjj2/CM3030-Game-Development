@@ -35,6 +35,9 @@ public class ConfuseSystem : MonoBehaviour
         int after  = target.GetStatusEffectStacks(StatusEffectType.CONFUSE);
         if (target is EnemyView ev) ev.RefreshIntentUI();
 
+        // Play sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         if (confuseVFX) Instantiate(confuseVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[Confuse] {target.name} +{add} ({before}→{after})");
         yield return null;

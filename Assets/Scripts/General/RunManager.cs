@@ -53,7 +53,7 @@ public class RunManager : Singleton<RunManager>
             return;
         }
 
-        if (floor.Type == FloorType.Combat || floor.Type == FloorType.Boss)
+        if (floor.Type == FloorType.Combat|| floor.Type == FloorType.Boss)
         {
             visibility?.ShowOnlyCombat();
             BackgroundController.Instance?.SetBackground(floor.BackgroundSprite);

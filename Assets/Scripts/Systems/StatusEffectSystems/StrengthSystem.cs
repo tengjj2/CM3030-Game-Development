@@ -16,6 +16,7 @@ public class StrengthSystem : MonoBehaviour
     }
     private IEnumerator ApplyStrengthPerformer(ApplyStrengthGA ga)
     {
+
         var caster = ga.Caster;
         var target = ga.Target;
         int add = Mathf.Max(0, ga.BaseAmount);
@@ -36,6 +37,9 @@ public class StrengthSystem : MonoBehaviour
         int after  = target.GetStatusEffectStacks(StatusEffectType.STRENGTH);
         if (strengthVFX && SafeCombatant.IsValid(target))
             Instantiate(strengthVFX, target.transform.position, Quaternion.identity);
+
+        // Play metal sound effect
+        AudioManager.Instance.PlayRandomByPrefix("metal");
 
         Debug.Log($"[StrengthSystem] {target.name} STRENGTH +{add} ({before}→{after})");
     }

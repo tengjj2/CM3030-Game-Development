@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DrunkEnemy
   m_EditorClassIdentifier: 
   <Image>k__BackingField: {fileID: 1933435996403738103, guid: 1092ad4a7eb91459ab2a80e0b8680289, type: 3}
-  <Health>k__BackingField: 30
+  <Health>k__BackingField: 25
   <AttackPower>k__BackingField: 6
   enemyAnimatorController: {fileID: 9100000, guid: e6d2fa1a5c87748b7b58486a59ab87dc, type: 2}
   moveset:
@@ -23,13 +23,18 @@ MonoBehaviour:
     maxUses: 99
     conditions: []
   - action: {fileID: 11400000, guid: af1481cb7da58604db1556c0804eef3e, type: 2}
-    weight: 2
-    cooldownTurns: 0
+    weight: 4
+    cooldownTurns: 1
     maxUses: 99
     conditions: []
   - action: {fileID: 11400000, guid: 8cb7f1450cef0334fbc990fc690d763b, type: 2}
-    weight: 2
-    cooldownTurns: 0
+    weight: 4
+    cooldownTurns: 2
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: df6cf18a003369b49845a7b93939a420, type: 2}
+    weight: 5
+    cooldownTurns: 2
     maxUses: 99
     conditions: []
   PlanIntentOnSpawn: 1

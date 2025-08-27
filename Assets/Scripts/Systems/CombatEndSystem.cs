@@ -2,13 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CombatEndSystem : MonoBehaviour
 {
     [SerializeField] private CombatEndUI endUI; // if you still use a summary/next UI
     [SerializeField] private CombatCardRewardPanelUI combatRewardPanel;
-
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<CombatVictoryGA>(VictoryPerformer);
@@ -89,9 +87,11 @@ public class CombatEndSystem : MonoBehaviour
         // RunManager.Instance?.NextFloor();
     }
 
+
     private IEnumerator DefeatPerformer(CombatDefeatGA _)
     {
         TurnSystem.Instance?.SuspendCombat();
+
         yield return new WaitForSeconds(0.25f);
 
         var ui = CombatEndUI.Instance;
@@ -100,13 +100,12 @@ public class CombatEndSystem : MonoBehaviour
             ui.ShowDefeat(() =>
             {
                 ui.Hide();
-                Debug.Log("[CombatEndSystem] Player defeated — returning to Main Menu.");
+                // You can restart run, go to main menu, etc.
                 UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
             });
         }
         else
         {
-            Debug.LogWarning("[CombatEndSystem] No CombatEndUI in scene — going to Main Menu.");
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         }
     }
