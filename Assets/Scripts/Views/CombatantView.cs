@@ -146,7 +146,7 @@ public class CombatantView : MonoBehaviour
         if (healthBarFill != null && MaxHealth > 0)
             healthBarFill.fillAmount = (float)CurrentHealth / MaxHealth;
     }
-    
+
     public void IncreaseMaxHealth(int amount, bool healBySameAmount = true)
     {
         if (amount == 0) { RefreshHealthUI(); return; }
@@ -160,5 +160,17 @@ public class CombatantView : MonoBehaviour
             CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
 
         RefreshHealthUI();
+    }
+    
+    public void ClearAllStatusEffects()
+    {
+        // remove every status that currently has stacks
+        foreach (StatusEffectType t in System.Enum.GetValues(typeof(StatusEffectType)))
+        {
+            int stacks = GetStatusEffectStacks(t);
+            if (stacks > 0)
+                RemoveStatusEffect(t, stacks);
+        }
+
     }
 }

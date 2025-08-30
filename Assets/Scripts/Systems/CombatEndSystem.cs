@@ -22,6 +22,10 @@ public class CombatEndSystem : MonoBehaviour
     private IEnumerator VictoryPerformer(CombatVictoryGA ga)
     {
         TurnSystem.Instance?.SuspendCombat();
+
+        var pv = PlayerSystem.Instance?.PlayerView;
+        if (pv != null) pv.ClearAllStatusEffects();
+
         yield return new WaitForSeconds(0.25f);
 
         // Gold from floor + GA
@@ -91,6 +95,9 @@ public class CombatEndSystem : MonoBehaviour
     private IEnumerator DefeatPerformer(CombatDefeatGA _)
     {
         TurnSystem.Instance?.SuspendCombat();
+
+        var pv = PlayerSystem.Instance?.PlayerView;
+        if (pv != null) pv.ClearAllStatusEffects();
 
         yield return new WaitForSeconds(0.25f);
 
