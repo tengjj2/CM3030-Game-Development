@@ -20,5 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1c9c725097daf2e4dbfa3a17c84f0720, type: 2}
   ShopInventory: {fileID: 0}
   LobbyOffer: {fileID: 0}
+  GoldReward: 50
   Title: 
   Description: 

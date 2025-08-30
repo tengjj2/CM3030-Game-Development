@@ -156,6 +156,9 @@ public class EnemySystem : Singleton<EnemySystem>
 
         if (!anyAlive)
         {
+            // Play win sound effect
+            AudioManager.Instance.PlayRandomByPrefix("victory");
+
             Debug.Log("[EnemySystem] Combat won!");
             /*
             var floor = RunManager.Instance?.CurrentFloor;

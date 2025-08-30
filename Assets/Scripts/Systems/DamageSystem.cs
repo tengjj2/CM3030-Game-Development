@@ -28,6 +28,9 @@ public class DamageSystem : Singleton<DamageSystem>
 
             target.Damage(finalDamage);
 
+            // play attack sound
+            AudioManager.Instance.PlayRandomByPrefix("punch");
+
             if (damageVFX != null)
                 Instantiate(damageVFX, target.transform.position, Quaternion.identity);
 
@@ -63,6 +66,13 @@ public class DamageSystem : Singleton<DamageSystem>
                             healAmount: 0,
                             cardRewardPool: cardPool,
                             pickCardCount: pickCount));
+
+                            if (RunManager.Instance != null && 
+                                RunManager.Instance.CurrentFloor != null &&
+                                RunManager.Instance.CurrentFloor.Type == FloorType.Boss)
+                                {
+                                    StartCoroutine(BossVictorySequence());
+                                }
                         }
                     }
                 }
@@ -101,5 +111,22 @@ public class DamageSystem : Singleton<DamageSystem>
                 }
             }
         }
+    }
+    // to show when player defeats boss
+    private IEnumerator BossVictorySequence()
+    {
+        // Wait one frame to ensure all reactions are processed
+        yield return new WaitForSeconds(1f);
+        
+        // Show boss victory screen directly
+        if (CombatEndUI.Instance != null)
+        {
+            CombatEndUI.Instance.ShowBossVictory(ReturnToMainMenu);
+        }
+    }
+    
+    private void ReturnToMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }

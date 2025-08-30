@@ -26,6 +26,9 @@ public class WeakenSystem : MonoBehaviour
     if (SafeCombatant.AbortIfDead(caster, "Weaken(after tween)")) yield break;
     if (SafeCombatant.AbortIfDead(target, "Weaken(after tween)")) yield break;
 
+    // Play sound effect
+    AudioManager.Instance.PlayRandomByPrefix("energy");
+
     int before = target.GetStatusEffectStacks(StatusEffectType.WEAKEN);
     target.AddStatusEffect(StatusEffectType.WEAKEN, add);
     int after  = target.GetStatusEffectStacks(StatusEffectType.WEAKEN);

@@ -101,14 +101,12 @@ public class CombatEndSystem : MonoBehaviour
             {
                 ui.Hide();
                 // You can restart run, go to main menu, etc.
-                Debug.Log("[CombatEndSystem] Defeat — returning to lobby/start.");
-                RunManager.Instance?.StartRun(); // or a GameOver screen
+                UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
             });
         }
         else
         {
-            Debug.LogWarning("[CombatEndSystem] No CombatEndUI in scene — restarting run.");
-            RunManager.Instance?.StartRun();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         }
     }
 }

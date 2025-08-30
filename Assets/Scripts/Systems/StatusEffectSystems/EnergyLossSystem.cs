@@ -34,6 +34,9 @@ public class EnergyLossSystem : MonoBehaviour
         target.AddStatusEffect(StatusEffectType.ENERGYLOSS, add);
         int after  = target.GetStatusEffectStacks(StatusEffectType.ENERGYLOSS);
 
+        // Play sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         if (energyLossVFX) Instantiate(energyLossVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[EnergyLoss] {target.name} stacks +{add} ({before}→{after})");
         yield return null;

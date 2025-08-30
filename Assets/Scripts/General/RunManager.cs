@@ -53,7 +53,7 @@ public class RunManager : Singleton<RunManager>
             return;
         }
 
-        if (floor.Type == FloorType.Combat)
+        if (floor.Type == FloorType.Combat|| floor.Type == FloorType.Boss)
         {
             visibility?.ShowOnlyCombat();
             BackgroundController.Instance?.SetBackground(floor.BackgroundSprite);
@@ -62,6 +62,10 @@ public class RunManager : Singleton<RunManager>
             CardSystem.Instance?.RebuildForNewCombatFromRunDeck(CardSystem.Instance.RunDeckDataRO, shuffle: true);
 
             EnemySystem.Instance.Setup(floor.Enemies);
+
+            // Play music based on type
+            if (floor.Type == FloorType.Boss)
+                AudioManager.Instance?.PlayBGM("bgm_boss");
 
             // Start combat; use your preferred entry point
             TurnSystem.Instance.BeginCombat();   // or BeginMatch() if that’s your wrapper

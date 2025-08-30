@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 4687517566974158473}
   - component: {fileID: 1607875854082224037}
   - component: {fileID: 3430521525087028210}
+  - component: {fileID: 780138698748596844}
   - component: {fileID: 6193818955892539930}
+  - component: {fileID: 824488532097256010}
   - component: {fileID: 2529851685330861477}
   m_Layer: 5
   m_Name: CardSelectButton
@@ -77,6 +79,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &780138698748596844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211293874153137070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e1c1020b2cd5e4bb9431846d8172fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundPrefix: card
 --- !u!114 &6193818955892539930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +136,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &824488532097256010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211293874153137070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e1c1020b2cd5e4bb9431846d8172fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundPrefix: card
 --- !u!114 &2529851685330861477
 MonoBehaviour:
   m_ObjectHideFlags: 0

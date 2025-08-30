@@ -33,6 +33,9 @@ public class ThornsSystem : MonoBehaviour
         target.AddStatusEffect(StatusEffectType.THORNS, add);
         int after  = target.GetStatusEffectStacks(StatusEffectType.THORNS);
 
+        // Play sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         if (thornsVFX) Instantiate(thornsVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[Thorns] {target.name} +{add} ({before}→{after})");
         yield return null;

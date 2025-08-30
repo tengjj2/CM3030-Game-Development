@@ -12,6 +12,7 @@ public class CombatEndUI : Singleton<CombatEndUI>
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text summaryText;
     [SerializeField] private Button nextButton;
+    [SerializeField] private TMP_Text nextButtonText;
 
     [Header("Paid Heal (simple package)")]
     [SerializeField] private RectTransform healRoot; 
@@ -132,6 +133,21 @@ public class CombatEndUI : Singleton<CombatEndUI>
         cg.interactable = false;
         cg.blocksRaycasts = false;
     }
+        // Show boss victory
+    public void ShowBossVictory(System.Action onContinue)
+    {
+        titleText.text = "BOSS DEFEATED!";
+        summaryText.text = $"You have conquered the final challenge!";
+
+        HideCardArea();
+        // HideHealPanel();
+        ShowImmediate();
+
+        if (nextButtonText != null)
+            nextButtonText.text = "Back to Main Menu";
+
+        EnableNext(true, onContinue);
+    }
 
     public void ShowVictory(int gold, int heal, bool pickingCards)
     {
@@ -142,6 +158,9 @@ public class CombatEndUI : Singleton<CombatEndUI>
             (pickingCards ? "Choose a card:" : "Rewards granted.");
 
         ShowImmediate();
+
+        if (nextButtonText != null)
+            nextButtonText.text = "Next Floor";
 
         if (!pickingCards)
         {
@@ -215,8 +234,11 @@ public class CombatEndUI : Singleton<CombatEndUI>
         summaryText.text = "Better luck next time.";
         HideCardArea();
         ShowImmediate();
+        if (nextButtonText != null)
+            nextButtonText.text = "Back to Main Menu";
         EnableNext(true, onContinue);
     }
+
 
     public void Hide()
     {
@@ -227,6 +249,8 @@ public class CombatEndUI : Singleton<CombatEndUI>
         HideCardArea();
         gameObject.SetActive(false);
     }
+
+
 
     // ------------ Internals ------------
     private void ShowImmediate()
@@ -299,3 +323,4 @@ public class CombatEndUI : Singleton<CombatEndUI>
         return result;
     }
 }
+

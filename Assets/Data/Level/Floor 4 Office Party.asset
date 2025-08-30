@@ -16,6 +16,8 @@ MonoBehaviour:
   BackgroundSprite: {fileID: 1674471638052613610, guid: f4b519dd6adad1343aca0546afec1d9a, type: 3}
   Enemies:
   - {fileID: 11400000, guid: fade4ce17808541b7a46fc4b5abbe665, type: 2}
+  - {fileID: 11400000, guid: fade4ce17808541b7a46fc4b5abbe665, type: 2}
+  - {fileID: 11400000, guid: fade4ce17808541b7a46fc4b5abbe665, type: 2}
   ShopInventory: {fileID: 0}
   LobbyOffer: {fileID: 0}
   GoldReward: 60

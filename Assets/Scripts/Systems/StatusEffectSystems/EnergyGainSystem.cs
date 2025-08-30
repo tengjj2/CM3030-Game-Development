@@ -38,6 +38,9 @@ public class EnergyGainSystem : MonoBehaviour
         if (energyGainVFX) Instantiate(energyGainVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[EnergyGain] {target.name} stacks +{add} ({before}→{after})");
 
+        // Play energy sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         // 🔑 Instant energy: usable right now
         ActionSystem.Instance.AddReaction(new ModifyCostGA(+add));
 

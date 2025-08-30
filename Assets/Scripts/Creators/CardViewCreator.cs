@@ -10,6 +10,9 @@ public class CardViewCreator : Singleton<CardViewCreator>
         cardView.transform.localScale = Vector3.zero;
         cardView.transform.DOScale(Vector3.one, 0.15f);
         cardView.Setup(card);
+
+        AudioManager.Instance.PlayRandomByPrefix("card");
+
         return cardView;
     }
 }
