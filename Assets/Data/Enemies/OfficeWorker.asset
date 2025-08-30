@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Image>k__BackingField: {fileID: -4601446830244466878, guid: d6ecf0a8c23980a44b1f4e16d2ec19b2, type: 3}
   <Health>k__BackingField: 10
-  <AttackPower>k__BackingField: 500
+  <AttackPower>k__BackingField: 5
   enemyAnimatorController: {fileID: 9100000, guid: 0e5a57c1c562c469ebb3ee5606fb4966, type: 2}
   moveset:
   - action: {fileID: 11400000, guid: abea8a25fdb950f42909af26bebde56b, type: 2}
