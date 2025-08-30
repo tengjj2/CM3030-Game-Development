@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2328304aa9a45424a87f6b8bde5d2ae5, type: 3}
+  m_Name: Confuse
+  m_EditorClassIdentifier: 
+  TelegraphText: CONFUSE
+  strengthIcon: {fileID: 0}
+  weakenIcon: {fileID: 0}
+  frailIcon: {fileID: 0}
+  defenceIcon: {fileID: 0}
+  burnIcon: {fileID: 0}
+  poisonIcon: {fileID: 0}
+  energyLossIcon: {fileID: 0}
+  barrierIcon: {fileID: 0}
+  thornsIcon: {fileID: 0}
+  confuseIcon: {fileID: -2677684263373962601, guid: 1e34bf611c55fc64a83869abdab0e4b5, type: 3}
+  BuffType: 10
+  BuffStacks: 1
+  TargetMode: 1
+  SpecificEnemyIndex: 0

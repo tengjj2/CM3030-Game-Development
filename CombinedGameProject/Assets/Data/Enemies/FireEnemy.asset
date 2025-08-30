@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942ad9e515c79c4b8492c9aad8396de, type: 3}
+  m_Name: FireEnemy
+  m_EditorClassIdentifier: 
+  <Image>k__BackingField: {fileID: 8334651344603559088, guid: 477609183283a44189e345d8137fa546, type: 3}
+  <Health>k__BackingField: 20
+  <AttackPower>k__BackingField: 6
+  enemyAnimatorController: {fileID: 9100000, guid: b0fb26e66449249c480edefba3b4dad1, type: 2}
+  moveset:
+  - action: {fileID: 11400000, guid: abea8a25fdb950f42909af26bebde56b, type: 2}
+    weight: 2
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: bf3b93309672ade49b8f07e670756308, type: 2}
+    weight: 2
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  - action: {fileID: 11400000, guid: 199f88cd79a7dd048928e8ac7729e2b7, type: 2}
+    weight: 2
+    cooldownTurns: 0
+    maxUses: 99
+    conditions: []
+  PlanIntentOnSpawn: 1
