@@ -77,9 +77,6 @@ public class HealSystem : MonoBehaviour
             // Play sound effect
             AudioManager.Instance.PlayRandomByPrefix("energy");
 
-            // Play sound effect
-            AudioManager.Instance.PlayRandomByPrefix("energy");
-
             if (healVFX) Instantiate(healVFX, t.transform.position, Quaternion.identity);
             Debug.Log($"[Heal] {t.name} +{(after - before)} ({before}→{after})");
             yield return null;

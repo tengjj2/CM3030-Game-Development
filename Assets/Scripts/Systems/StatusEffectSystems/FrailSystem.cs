@@ -29,9 +29,6 @@ public class FrailSystem : MonoBehaviour
         // Play sound effect
         AudioManager.Instance.PlayRandomByPrefix("energy");
 
-        // Play sound effect
-        AudioManager.Instance.PlayRandomByPrefix("energy");
-
         int before = target.GetStatusEffectStacks(StatusEffectType.FRAIL);
         target.AddStatusEffect(StatusEffectType.FRAIL, add);
         int after  = target.GetStatusEffectStacks(StatusEffectType.FRAIL);
