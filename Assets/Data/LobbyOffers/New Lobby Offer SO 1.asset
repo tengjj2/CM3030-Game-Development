@@ -20,18 +20,18 @@ MonoBehaviour:
     Icon: {fileID: -1049461823314036041, guid: fbb74972d0573784f8ac412d9bb30abd, type: 3}
     Effects:
     - {fileID: 11400000, guid: ded477a4f78373f47be539540216997f, type: 2}
-  - Label: MONEY
-    Description: Increase starting Cash
-    Icon: {fileID: 5597117985695365778, guid: dc82d1472fc19c842aae57c952c914ba, type: 3}
+  - Label: CASH
+    Description: Increase starting Money
+    Icon: {fileID: 4062084067299603899, guid: 3e34ddf63251402408a3c1db43e74e52, type: 3}
     Effects:
     - {fileID: 11400000, guid: b8da7bace5df2f742a4b4f22984ae947, type: 2}
   - Label: ADD CARD
-    Description: Choose 1 card to add
-    Icon: {fileID: 5597117985695365778, guid: dc82d1472fc19c842aae57c952c914ba, type: 3}
+    Description: 'Choose 1 card to add '
+    Icon: {fileID: -2555591554857944400, guid: 77093ec0b1bce6e49a6e8bb917a6489e, type: 3}
     Effects:
     - {fileID: 11400000, guid: daada7b7b550f6f41970e5519891c9a8, type: 2}
   - Label: REMOVE CARD
     Description: Choose 1 card to remove
-    Icon: {fileID: 5597117985695365778, guid: dc82d1472fc19c842aae57c952c914ba, type: 3}
+    Icon: {fileID: 5245479558791592227, guid: a9295549d98f6a54abd5f9b0798ed231, type: 3}
     Effects:
     - {fileID: 11400000, guid: 9099a3e1d3a61704a9f1e628ec193fac, type: 2}

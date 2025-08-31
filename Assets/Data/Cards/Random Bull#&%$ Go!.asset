@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
+  m_Name: Random Bull#&%$ Go!
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Random Bull#&%$ Go!
+  <Cost>k__BackingField: 3
+  <Description>k__BackingField: Inflict 2 of every negative status on every enemy
+  <Image>k__BackingField: {fileID: -1637276438637801344, guid: 00d682665f4938b4a993f197cd6902d8, type: 3}
+  <ManualTargetEffect>k__BackingField:
+    rid: -2
+  <OtherEffects>k__BackingField:
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751619
+    <Effect>k__BackingField:
+      rid: 1048756669330751620
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751621
+    <Effect>k__BackingField:
+      rid: 1048756669330751622
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751625
+    <Effect>k__BackingField:
+      rid: 1048756669330751626
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751627
+    <Effect>k__BackingField:
+      rid: 1048756669330751628
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751629
+    <Effect>k__BackingField:
+      rid: 1048756669330751630
+  IsBasic: 0
+  exhaustOnPlay: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1048756669330751619
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751620
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 4
+        stackCount: 2
+    - rid: 1048756669330751621
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751622
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 5
+        stackCount: 2
+    - rid: 1048756669330751625
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751626
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 10
+        stackCount: 2
+    - rid: 1048756669330751627
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751628
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 9
+        stackCount: 2
+    - rid: 1048756669330751629
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751630
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 8
+        stackCount: 2

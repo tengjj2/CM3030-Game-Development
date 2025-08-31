@@ -10,31 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
-  m_Name: Reinforce
+  m_Name: Rage
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Reinforce
-  <Cost>k__BackingField: 1
-  <Description>k__BackingField: Gain 2 Defence
-  <Image>k__BackingField: {fileID: 1084331682608017117, guid: 0b4501a2c05bdd248a3d50c5e0a32233, type: 3}
+  <Name>k__BackingField: Rage
+  <Cost>k__BackingField: 2
+  <Description>k__BackingField: Gain 1 strength, Deal 5 damage to 1 enemy
+  <Image>k__BackingField: {fileID: -7184733015465207071, guid: ccda73f23043e2e4e99e506da6f8266f, type: 3}
   <ManualTargetEffect>k__BackingField:
-    rid: -2
+    rid: 1048756669330751586
   <OtherEffects>k__BackingField:
   - <TargetMode>k__BackingField:
-      rid: 1048756273093017680
+      rid: 1048756669330751587
     <Effect>k__BackingField:
-      rid: 1048756250816806991
+      rid: 1048756669330751588
   IsBasic: 0
   exhaustOnPlay: 0
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1048756250816806991
-      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+    - rid: 1048756669330751586
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        statusEffectType: 3
-        stackCount: 2
-    - rid: 1048756273093017680
+        damageAmount: 5
+    - rid: 1048756669330751587
       type: {class: PlayerTM, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 1048756669330751588
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 2
+        stackCount: 1

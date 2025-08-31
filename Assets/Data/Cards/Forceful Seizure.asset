@@ -10,31 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
-  m_Name: Reinforce
+  m_Name: Forceful Seizure
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Reinforce
+  <Name>k__BackingField: Forceful Seizure
   <Cost>k__BackingField: 1
-  <Description>k__BackingField: Gain 2 Defence
-  <Image>k__BackingField: {fileID: 1084331682608017117, guid: 0b4501a2c05bdd248a3d50c5e0a32233, type: 3}
+  <Description>k__BackingField: Deal 4 damage to 1 enemy, draw 1 card
+  <Image>k__BackingField: {fileID: -639896338517617049, guid: b343d0a3de9867846b165a9c49e17ebe, type: 3}
   <ManualTargetEffect>k__BackingField:
-    rid: -2
+    rid: 1048756669330751569
   <OtherEffects>k__BackingField:
   - <TargetMode>k__BackingField:
-      rid: 1048756273093017680
+      rid: 1048756669330751570
     <Effect>k__BackingField:
-      rid: 1048756250816806991
+      rid: 1048756669330751571
   IsBasic: 0
   exhaustOnPlay: 0
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1048756250816806991
-      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+    - rid: 1048756669330751569
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        statusEffectType: 3
-        stackCount: 2
-    - rid: 1048756273093017680
+        damageAmount: 4
+    - rid: 1048756669330751570
       type: {class: PlayerTM, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 1048756669330751571
+      type: {class: DrawCardEffect, ns: , asm: Assembly-CSharp}
+      data:
+        drawAmount: 1

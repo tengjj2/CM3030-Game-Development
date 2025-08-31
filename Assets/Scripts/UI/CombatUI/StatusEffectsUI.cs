@@ -23,24 +23,30 @@ public class StatusEffectsUI : MonoBehaviour
     [SerializeField] private Sprite energyLossSprite;
 
     private Dictionary<StatusEffectType, StatusEffectUI> statusEffectUIs = new();
+
     public void UpdateStatusEffecctUI(StatusEffectType statusEffectType, int stackCount)
     {
-        if (stackCount == 0)
+        // --- Clear if 0 stacks ---
+        if (stackCount <= 0)
         {
-            StatusEffectUI statusEffectUI = statusEffectUIs[statusEffectType];
-            statusEffectUIs.Remove(statusEffectType);
-            Destroy(statusEffectUI.gameObject);
-        }
-        else
-        {
-            if (!statusEffectUIs.ContainsKey(statusEffectType))
+            if (statusEffectUIs.TryGetValue(statusEffectType, out var existingUI) && existingUI != null)
             {
-                StatusEffectUI statusEffectUI = Instantiate(statusEffectUIPrefab, transform);
-                statusEffectUIs.Add(statusEffectType, statusEffectUI);
+                statusEffectUIs.Remove(statusEffectType);
+                Destroy(existingUI.gameObject);
             }
-            Sprite sprite = GetSpriteByType(statusEffectType);
-            statusEffectUIs[statusEffectType].Set(sprite, stackCount);
+            return;
         }
+
+        // --- Create if missing ---
+        if (!statusEffectUIs.TryGetValue(statusEffectType, out var statusEffectUI) || statusEffectUI == null)
+        {
+            statusEffectUI = Instantiate(statusEffectUIPrefab, transform);
+            statusEffectUIs[statusEffectType] = statusEffectUI;
+        }
+
+        // --- Update sprite + stack count ---
+        Sprite sprite = GetSpriteByType(statusEffectType);
+        statusEffectUI.Set(sprite, stackCount);
     }
 
     private Sprite GetSpriteByType(StatusEffectType statusEffectType)
@@ -64,5 +70,18 @@ public class StatusEffectsUI : MonoBehaviour
             StatusEffectType.ENERGYLOSS  => energyLossSprite,
             _ => null,
         };
+    }
+
+    /// <summary>
+    /// Utility: Clears all status effect icons safely.
+    /// </summary>
+    public void ClearAll()
+    {
+        foreach (var kvp in statusEffectUIs)
+        {
+            if (kvp.Value != null)
+                Destroy(kvp.Value.gameObject);
+        }
+        statusEffectUIs.Clear();
     }
 }

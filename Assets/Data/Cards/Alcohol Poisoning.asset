@@ -10,19 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
-  m_Name: Ventilation Flood
+  m_Name: Alcohol Poisoning
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Ventilation Flood
-  <Cost>k__BackingField: 2
-  <Description>k__BackingField: Inflict 4 poison on all enemies
-  <Image>k__BackingField: {fileID: -7531368483924519141, guid: 5e8092f4ccb428842bf3433271534816, type: 3}
+  <Name>k__BackingField: Alcohol Poisoning
+  <Cost>k__BackingField: 3
+  <Description>k__BackingField: Inflict 1 confuse and 4 poison to all enemies
+  <Image>k__BackingField: {fileID: -1153942997597423387, guid: 6ad579f86927bcb4a8d1ad313c7364d4, type: 3}
   <ManualTargetEffect>k__BackingField:
     rid: -2
   <OtherEffects>k__BackingField:
   - <TargetMode>k__BackingField:
-      rid: 1048756273093017675
+      rid: 1048756669330751615
     <Effect>k__BackingField:
-      rid: 1048756273093017676
+      rid: 1048756669330751616
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751617
+    <Effect>k__BackingField:
+      rid: 1048756669330751618
   IsBasic: 0
   exhaustOnPlay: 0
   references:
@@ -30,11 +34,19 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1048756273093017675
+    - rid: 1048756669330751615
       type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 1048756273093017676
+    - rid: 1048756669330751616
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 10
+        stackCount: 1
+    - rid: 1048756669330751617
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751618
       type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
         statusEffectType: 9
-        stackCount: 2
+        stackCount: 4

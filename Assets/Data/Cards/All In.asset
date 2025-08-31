@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
-  m_Name: Flask Toss
+  m_Name: All In
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Flask Toss
-  <Cost>k__BackingField: 1
-  <Description>k__BackingField: Inflict 6 Poison on 1 enemy
-  <Image>k__BackingField: {fileID: 6871739105407526601, guid: 8daf6c32ff4186844bdede3750eda74f, type: 3}
+  <Name>k__BackingField: All In
+  <Cost>k__BackingField: 3
+  <Description>k__BackingField: Deal 24 damage to 1 enemy
+  <Image>k__BackingField: {fileID: 622385511510613547, guid: adaabbfee046bf542abfd9d6fe01e7c8, type: 3}
   <ManualTargetEffect>k__BackingField:
-    rid: 1048756273093017673
+    rid: 1048756669330751576
   <OtherEffects>k__BackingField: []
   IsBasic: 0
   exhaustOnPlay: 0
   references:
     version: 2
     RefIds:
-    - rid: 1048756273093017673
-      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+    - rid: 1048756669330751576
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        statusEffectType: 9
-        stackCount: 4
+        damageAmount: 24

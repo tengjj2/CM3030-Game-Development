@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Disarm
   <Cost>k__BackingField: 1
-  <Description>k__BackingField: Inflict 1 Weaken on 1 Enemy
+  <Description>k__BackingField: Inflict 2 Weaken on 1 Enemy
   <Image>k__BackingField: {fileID: 1955997550836171500, guid: 1adb0c8605cd3e24eae7a8d6fe662962, type: 3}
   <ManualTargetEffect>k__BackingField:
     rid: 1048756273093017681
   <OtherEffects>k__BackingField: []
+  IsBasic: 0
+  exhaustOnPlay: 0
   references:
     version: 2
     RefIds:
@@ -26,4 +28,4 @@ MonoBehaviour:
       type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
         statusEffectType: 4
-        stackCount: 1
+        stackCount: 2

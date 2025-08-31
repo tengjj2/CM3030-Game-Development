@@ -13,15 +13,15 @@ public class TypewriterText : MonoBehaviour
     public string[] paragraphs = new string[]
     {
         "You came here for a job interview.But the moment you walk into the building, everything goes wrong.",
-        "The fire alarm won’t stop ringing. Papers are flying everywhere.Someone set the break room on fire. The elevators are broken.",
-        "And now people are fighting in the hallways like it’s part of the job.",
-        "If you want that position on the top floor,you’ll have to climb this office one level at a time,",
+        "The fire alarm wonâ€™t stop ringing. Papers are flying everywhere.Someone set the break room on fire. The elevators are broken.",
+        "And now people are fighting in the hallways like itâ€™s part of the job.",
+        "If you want that position on the top floor,youâ€™ll have to climb this office one level at a time,",
         "deal with the chaos, and somehow still make it to your interview.",
         "",
         "Welcome to Office Rumble."
     };
 
-    public float typingSpeed = 0.1f;
+    public float typingSpeed = 0.01f;
 
     private int currentParagraph = 0;
     private bool isTyping = false;
@@ -81,3 +81,4 @@ public class TypewriterText : MonoBehaviour
         isWaiting = true;
     }
 }
+
