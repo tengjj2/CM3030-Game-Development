@@ -29,13 +29,13 @@ public class BurnSystem : MonoBehaviour
 
         int before = target.GetStatusEffectStacks(StatusEffectType.BURN);
         target.AddStatusEffect(StatusEffectType.BURN, stacksToAdd);
-        int after  = target.GetStatusEffectStacks(StatusEffectType.BURN);
+        int after = target.GetStatusEffectStacks(StatusEffectType.BURN);
 
         if (burnVFX) Instantiate(burnVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[BurnApply] {target.name} BURN +{stacksToAdd} ({before}→{after})");
 
         // Play metal sound effect
-        AudioManager.Instance.PlayRandomByPrefix("metal");
+        AudioManager.Instance.PlayRandomByPrefix("burn");
 
         yield return null;
     }

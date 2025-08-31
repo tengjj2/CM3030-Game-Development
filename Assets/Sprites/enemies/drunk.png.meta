@@ -112,9 +112,9 @@ TextureImporter:
       name: drunk_0
       rect:
         serializedVersion: 2
-        x: 87
+        x: 0
         y: 0
-        width: 41
+        width: 128
         height: 91
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -134,9 +134,9 @@ TextureImporter:
       name: drunk_1
       rect:
         serializedVersion: 2
-        x: 214
+        x: 128
         y: 0
-        width: 41
+        width: 128
         height: 91
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -156,9 +156,9 @@ TextureImporter:
       name: drunk_2
       rect:
         serializedVersion: 2
-        x: 343
+        x: 256
         y: 0
-        width: 41
+        width: 128
         height: 91
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -178,9 +178,9 @@ TextureImporter:
       name: drunk_3
       rect:
         serializedVersion: 2
-        x: 471
+        x: 384
         y: 0
-        width: 41
+        width: 128
         height: 91
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

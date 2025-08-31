@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerSO
   m_EditorClassIdentifier: 
   DisplayName: You
-  Portrait: {fileID: -8902044802361073846, guid: aefef0d8f2fff174d965acc3b0e1d949, type: 3}
+  Portrait: {fileID: -202930504356754545, guid: 6f900d1022423b146b408bf8e1282b29, type: 3}
+  Greeting: []

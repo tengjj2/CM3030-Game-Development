@@ -17,5 +17,6 @@ MonoBehaviour:
   Enemies: []
   ShopInventory: {fileID: 0}
   LobbyOffer: {fileID: 0}
+  GoldReward: 50
   Title: 
   Description: 
