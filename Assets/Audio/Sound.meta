@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Audio/Sound.meta
 guid: e674f955d0dfd1941bacb9c790c40cf0
+========
+guid: f84093255aef96e45bef2657c0f19e6f
+>>>>>>>> main:Assets/Data/LobbyOffers.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

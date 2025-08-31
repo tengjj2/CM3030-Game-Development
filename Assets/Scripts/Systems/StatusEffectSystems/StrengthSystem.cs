@@ -41,6 +41,9 @@ public class StrengthSystem : MonoBehaviour
         // Play metal sound effect
         AudioManager.Instance.PlayRandomByPrefix("metal");
 
+        // Play metal sound effect
+        AudioManager.Instance.PlayRandomByPrefix("metal");
+
         Debug.Log($"[StrengthSystem] {target.name} STRENGTH +{add} ({before}→{after})");
     }
 }

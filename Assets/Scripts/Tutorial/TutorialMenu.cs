@@ -75,6 +75,10 @@ public class TutorialMenu : MonoBehaviour
             displayImage.gameObject.SetActive(false);
         if (displayDescription != null)
             displayDescription.gameObject.SetActive(false);
+        if (descriptionScrollView != null)
+            descriptionScrollView.SetActive(false);
+        if (cardEffectsScrollView != null)
+            cardEffectsScrollView.SetActive(false);  // NEW: hide the whole scrollview
         if (cardEffectsContent != null)
             cardEffectsContent.gameObject.SetActive(false);
 
@@ -86,8 +90,8 @@ public class TutorialMenu : MonoBehaviour
 
         if (isCardEffectsSection)
         {
-            if (descriptionScrollView != null)
-                descriptionScrollView.SetActive(false);
+            if (cardEffectsScrollView != null)
+                cardEffectsScrollView.SetActive(true);  // show only for Card Effects
 
             if (cardEffectsContent != null && cardEffectPrefab != null)
             {
@@ -102,7 +106,7 @@ public class TutorialMenu : MonoBehaviour
                 {
                     GameObject newEffect = Instantiate(cardEffectPrefab, cardEffectsContent);
 
-                    // --- Set card image ---
+                    // card image
                     Image img = newEffect.transform.Find("CardImage")?.GetComponent<Image>();
                     if (img != null)
                     {
@@ -110,7 +114,7 @@ public class TutorialMenu : MonoBehaviour
                         img.preserveAspect = true;
                     }
 
-                    // --- Set card name ---
+                    // card name
                     TMP_Text nameText = newEffect.transform.Find("TextContainer/CardName")?.GetComponent<TMP_Text>();
                     if (nameText != null)
                     {
@@ -122,7 +126,7 @@ public class TutorialMenu : MonoBehaviour
                             nameText.text = $"Card {i + 1}";
                     }
 
-                    // --- Set card description ---
+                    // card description
                     TMP_Text descText = newEffect.transform.Find("TextContainer/CardDescription")?.GetComponent<TMP_Text>();
                     if (descText != null && section.cardDescriptions != null && i < section.cardDescriptions.Count)
                     {
@@ -130,16 +134,9 @@ public class TutorialMenu : MonoBehaviour
                     }
                 }
 
-                // Force LayoutGroup and ContentSizeFitter to recalc immediately
+                // force layout update
                 Canvas.ForceUpdateCanvases();
-
-                LayoutGroup layoutGroup = cardEffectsContent.GetComponent<LayoutGroup>();
-                if (layoutGroup != null)
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(cardEffectsContent.GetComponent<RectTransform>());
-
-                ContentSizeFitter fitter = cardEffectsContent.GetComponent<ContentSizeFitter>();
-                if (fitter != null)
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(cardEffectsContent.GetComponent<RectTransform>());
+                LayoutRebuilder.ForceRebuildLayoutImmediate(cardEffectsContent.GetComponent<RectTransform>());
 
                 // Reset Card Effects ScrollView to top
                 ScrollRect cardScroll = cardEffectsScrollView?.GetComponent<ScrollRect>();
@@ -149,7 +146,7 @@ public class TutorialMenu : MonoBehaviour
         }
         else
         {
-            // Show normal section
+            // Normal section
             if (descriptionScrollView != null)
                 descriptionScrollView.SetActive(true);
 

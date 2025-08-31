@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Audio.meta
 guid: d85c1f4def0f65940a6c40e3640955b7
+========
+guid: 20dc64a904b36c5438374f3a7144048f
+>>>>>>>> main:Assets/Audio/Music.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

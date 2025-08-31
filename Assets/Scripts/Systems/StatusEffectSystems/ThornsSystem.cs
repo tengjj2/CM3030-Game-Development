@@ -36,6 +36,9 @@ public class ThornsSystem : MonoBehaviour
         // Play sound effect
         AudioManager.Instance.PlayRandomByPrefix("energy");
 
+        // Play sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         if (thornsVFX) Instantiate(thornsVFX, target.transform.position, Quaternion.identity);
         Debug.Log($"[Thorns] {target.name} +{add} ({before}→{after})");
         yield return null;

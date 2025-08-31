@@ -41,6 +41,9 @@ public class EnergyGainSystem : MonoBehaviour
         // Play energy sound effect
         AudioManager.Instance.PlayRandomByPrefix("energy");
 
+        // Play energy sound effect
+        AudioManager.Instance.PlayRandomByPrefix("energy");
+
         // 🔑 Instant energy: usable right now
         ActionSystem.Instance.AddReaction(new ModifyCostGA(+add));
 
