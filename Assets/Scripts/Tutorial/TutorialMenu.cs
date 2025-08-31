@@ -25,12 +25,17 @@ public class TutorialMenu : MonoBehaviour
     [Header("UI References")]
     public GameObject buttonPrefab;      // prefab for buttons in the options panel
     public Transform optionsPanel;       // panel where the buttons appear
+    public GameObject descriptionScrollView;
     public Image displayImage;           // single large image for normal sections
     public TMP_Text displayDescription;  // description for normal sections
 
     [Header("Card Effects UI (for last section)")]
     public Transform cardEffectsContent; // parent object where small card images/descriptions will appear
     public GameObject cardEffectPrefab;  // prefab containing small card image + description
+
+    [Header("Card Effects ScrollView")]
+    public GameObject cardEffectsScrollView; // the parent scroll view for card effects
+
 
     [Header("Optional")]
     public int defaultSectionIndex = 0; // index of section to show first
@@ -65,15 +70,19 @@ public class TutorialMenu : MonoBehaviour
 
     void ShowSection(TutorialSection section)
     {
-        // hide everything first
+        // Hide everything first
         if (displayImage != null)
             displayImage.gameObject.SetActive(false);
         if (displayDescription != null)
             displayDescription.gameObject.SetActive(false);
+        if (descriptionScrollView != null)
+            descriptionScrollView.SetActive(false);
+        if (cardEffectsScrollView != null)
+            cardEffectsScrollView.SetActive(false);  // NEW: hide the whole scrollview
         if (cardEffectsContent != null)
             cardEffectsContent.gameObject.SetActive(false);
 
-        // check if Card Effects section
+        // Check if this is the "Card Effects" section
         bool isCardEffectsSection = section.cardSprites != null &&
                                     section.cardSprites.Count > 0 &&
                                     section.cardDescriptions != null &&
@@ -81,20 +90,23 @@ public class TutorialMenu : MonoBehaviour
 
         if (isCardEffectsSection)
         {
-            // show card effects content
+            if (cardEffectsScrollView != null)
+                cardEffectsScrollView.SetActive(true);  // show only for Card Effects
+
             if (cardEffectsContent != null && cardEffectPrefab != null)
             {
-                // clear previous entries
+                // Clear previous entries
                 foreach (Transform child in cardEffectsContent)
                     Destroy(child.gameObject);
 
                 cardEffectsContent.gameObject.SetActive(true);
 
+                // Instantiate new entries
                 for (int i = 0; i < section.cardSprites.Count; i++)
                 {
                     GameObject newEffect = Instantiate(cardEffectPrefab, cardEffectsContent);
 
-                    // set image
+                    // card image
                     Image img = newEffect.transform.Find("CardImage")?.GetComponent<Image>();
                     if (img != null)
                     {
@@ -102,37 +114,60 @@ public class TutorialMenu : MonoBehaviour
                         img.preserveAspect = true;
                     }
 
-                    // set name
+                    // card name
                     TMP_Text nameText = newEffect.transform.Find("TextContainer/CardName")?.GetComponent<TMP_Text>();
                     if (nameText != null)
                     {
                         if (section.cardNames != null && i < section.cardNames.Count && !string.IsNullOrEmpty(section.cardNames[i]))
-                            nameText.text = section.cardNames[i]; // use custom name
+                            nameText.text = section.cardNames[i];
                         else if (section.cardSprites[i] != null)
-                            nameText.text = section.cardSprites[i].name; // fallback to sprite name
+                            nameText.text = section.cardSprites[i].name;
                         else
                             nameText.text = $"Card {i + 1}";
                     }
 
-                    // set description
-                    TMP_Text desc = newEffect.transform.Find("TextContainer/CardDescription")?.GetComponent<TMP_Text>();
-                    if (desc != null)
-                        desc.text = section.cardDescriptions[i];
+                    // card description
+                    TMP_Text descText = newEffect.transform.Find("TextContainer/CardDescription")?.GetComponent<TMP_Text>();
+                    if (descText != null && section.cardDescriptions != null && i < section.cardDescriptions.Count)
+                    {
+                        descText.text = section.cardDescriptions[i];
+                    }
                 }
+
+                // force layout update
+                Canvas.ForceUpdateCanvases();
+                LayoutRebuilder.ForceRebuildLayoutImmediate(cardEffectsContent.GetComponent<RectTransform>());
+
+                // Reset Card Effects ScrollView to top
+                ScrollRect cardScroll = cardEffectsScrollView?.GetComponent<ScrollRect>();
+                if (cardScroll != null)
+                    cardScroll.verticalNormalizedPosition = 1f;
             }
         }
         else
         {
-            // normal section: show main image and description
+            // Normal section
+            if (descriptionScrollView != null)
+                descriptionScrollView.SetActive(true);
+
             if (displayImage != null)
             {
                 displayImage.sprite = section.sectionImage;
                 displayImage.gameObject.SetActive(true);
             }
+
             if (displayDescription != null)
             {
                 displayDescription.text = section.description;
                 displayDescription.gameObject.SetActive(true);
+            }
+
+            // Reset main scroll
+            ScrollRect scrollRect = descriptionScrollView?.GetComponent<ScrollRect>();
+            if (scrollRect != null)
+            {
+                Canvas.ForceUpdateCanvases();
+                scrollRect.verticalNormalizedPosition = 1f;
             }
         }
     }
@@ -140,12 +175,20 @@ public class TutorialMenu : MonoBehaviour
     // toggle the tutorial panel on/off
     public void TogglePanel(bool active)
     {
-        gameObject.SetActive(active);
+        gameObject.SetActive(active); // activate panel first
 
         if (active && tutorialSections.Count > 0)
         {
-            // show first section by default
+            // force layout rebuilds before showing content
+            Canvas.ForceUpdateCanvases();
+
+            // show first section immediately
             ShowSection(tutorialSections[defaultSectionIndex]);
+
+            // if using a ScrollRect, reset scroll to top
+            ScrollRect scrollRect = descriptionScrollView?.GetComponent<ScrollRect>();
+            if (scrollRect != null)
+                scrollRect.verticalNormalizedPosition = 1f;
         }
     }
 }
