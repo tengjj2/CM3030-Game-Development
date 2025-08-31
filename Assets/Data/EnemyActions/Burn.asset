@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2328304aa9a45424a87f6b8bde5d2ae5, type: 3}
+  m_Name: Burn
+  m_EditorClassIdentifier: 
+  TelegraphText: BURN
+  strengthIcon: {fileID: 12085813604639031, guid: d6bf55e839b55cd439f94f8230a5f29e, type: 3}
+  weakenIcon: {fileID: -1916601607385524054, guid: 80efe7f960aabd6498c106fedf221aad, type: 3}
+  frailIcon: {fileID: -417406439916339321, guid: 5874f70fee3a1364ab073976ce26214e, type: 3}
+  defenceIcon: {fileID: 3340684741368923895, guid: fa30e3d4b6d06b441afd0d611ce034e6, type: 3}
+  burnIcon: {fileID: 5597117985695365778, guid: dc82d1472fc19c842aae57c952c914ba, type: 3}
+  poisonIcon: {fileID: -5005990984189769374, guid: 3abe50aaec910c847a1379cd9306ea0e, type: 3}
+  BuffType: 8
+  BuffStacks: 6
+  TargetMode: 1
+  SpecificEnemyIndex: 0
