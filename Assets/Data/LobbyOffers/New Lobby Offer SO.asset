@@ -15,8 +15,8 @@ MonoBehaviour:
   Title: money
   Description: money
   Options:
-  - Label: MONEY
-    Description: Increase starting money
-    Icon: {fileID: 0}
+  - Label: CASH
+    Description: Increase starting Cash
+    Icon: {fileID: 4062084067299603899, guid: 3e34ddf63251402408a3c1db43e74e52, type: 3}
     Effects:
     - {fileID: 11400000, guid: b8da7bace5df2f742a4b4f22984ae947, type: 2}

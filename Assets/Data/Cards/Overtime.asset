@@ -10,19 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
-  m_Name: Bulk Up
+  m_Name: Overtime
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Bulk Up
-  <Cost>k__BackingField: 1
-  <Description>k__BackingField: Gain 2 Strength
-  <Image>k__BackingField: {fileID: -1743151064395263677, guid: 005d4dc25cede8f47a1f202a8ee2be00, type: 3}
+  <Name>k__BackingField: Overtime
+  <Cost>k__BackingField: 0
+  <Description>k__BackingField: Gain 1 energy, Inflict 1 frail on yourself
+  <Image>k__BackingField: {fileID: 3700053758218434374, guid: 472d87901aaa6f84790e461ed4ad6b7c, type: 3}
   <ManualTargetEffect>k__BackingField:
     rid: -2
   <OtherEffects>k__BackingField:
   - <TargetMode>k__BackingField:
-      rid: 1048756273093017678
+      rid: 1048756669330751582
     <Effect>k__BackingField:
-      rid: 1048756273093017679
+      rid: 1048756669330751583
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751584
+    <Effect>k__BackingField:
+      rid: 1048756669330751585
   IsBasic: 0
   exhaustOnPlay: 0
   references:
@@ -30,11 +34,18 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1048756273093017678
+    - rid: 1048756669330751582
       type: {class: PlayerTM, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 1048756273093017679
+    - rid: 1048756669330751583
+      type: {class: EnergyGainEffect, ns: , asm: Assembly-CSharp}
+      data:
+        Amount: 1
+    - rid: 1048756669330751584
+      type: {class: PlayerTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751585
       type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
-        statusEffectType: 2
-        stackCount: 2
+        statusEffectType: 5
+        stackCount: 1

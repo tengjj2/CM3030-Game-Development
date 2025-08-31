@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Expose Weakness
   <Cost>k__BackingField: 1
-  <Description>k__BackingField: Inflict 1 Frail to 1 Enemy
+  <Description>k__BackingField: Inflict 2 Frail to 1 Enemy
   <Image>k__BackingField: {fileID: -7592800439735569447, guid: 1e61c34f34f60b041b14fddc4dfb86f0, type: 3}
   <ManualTargetEffect>k__BackingField:
     rid: 1048756273093017682
   <OtherEffects>k__BackingField: []
+  IsBasic: 0
+  exhaustOnPlay: 0
   references:
     version: 2
     RefIds:
@@ -26,4 +28,4 @@ MonoBehaviour:
       type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
         statusEffectType: 5
-        stackCount: 1
+        stackCount: 2

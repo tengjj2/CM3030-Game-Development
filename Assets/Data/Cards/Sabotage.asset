@@ -10,19 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
-  m_Name: Wildfire
+  m_Name: Sabotage
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Wildfire
+  <Name>k__BackingField: Sabotage
   <Cost>k__BackingField: 2
-  <Description>k__BackingField: Inflict 6 Burn to all enemies
-  <Image>k__BackingField: {fileID: -2695321360094021896, guid: 97595f7bf18be6e4c8ad9b1613c277e5, type: 3}
+  <Description>k__BackingField: Inflict 1 weaken and 1 frail to all enemies
+  <Image>k__BackingField: {fileID: -1844920368449725413, guid: 58820a86cbdf96e4ebcc8ed80ffd968f, type: 3}
   <ManualTargetEffect>k__BackingField:
     rid: -2
   <OtherEffects>k__BackingField:
   - <TargetMode>k__BackingField:
-      rid: 1048756250816806995
+      rid: 1048756669330751594
     <Effect>k__BackingField:
-      rid: 1048756250816806996
+      rid: 1048756669330751596
+  - <TargetMode>k__BackingField:
+      rid: 1048756669330751597
+    <Effect>k__BackingField:
+      rid: 1048756669330751598
   IsBasic: 0
   exhaustOnPlay: 0
   references:
@@ -30,11 +34,19 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1048756250816806995
+    - rid: 1048756669330751594
       type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 1048756250816806996
+    - rid: 1048756669330751596
       type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
-        statusEffectType: 8
-        stackCount: 5
+        statusEffectType: 4
+        stackCount: 1
+    - rid: 1048756669330751597
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1048756669330751598
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 5
+        stackCount: 1

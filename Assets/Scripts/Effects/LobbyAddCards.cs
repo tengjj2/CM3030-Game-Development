@@ -21,8 +21,7 @@ public class LobbyAddCardsEffect : LobbyEffectSO
             {
                 if (picked != null && picked.Count > 0)
                 {
-                    // Add to the current run deck/draw pile (out of combat is fine)
-                    PlayerSystem.Instance?.AddCardDataToRunDeck(picked[0]);
+                    CardSystem.Instance.AddCardDataToRunDeck(picked[0], alsoAddToDrawPile: true);
                 }
                 onComplete?.Invoke();
             }

@@ -10,28 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c7a67b518a23c45a636f0b6795fb0c, type: 3}
-  m_Name: Instakill test
+  m_Name: Bottle Smash
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Instakill
-  <Cost>k__BackingField: 0
-  <Description>k__BackingField: Kill all enemies
-  <Image>k__BackingField: {fileID: -1637276438637801344, guid: 00d682665f4938b4a993f197cd6902d8, type: 3}
+  <Name>k__BackingField: Bottle Smash
+  <Cost>k__BackingField: 2
+  <Description>k__BackingField: Inflict 1 confuse to 1 enemy, deal 3 damage to all
+    enemies
+  <Image>k__BackingField: {fileID: -2176801852485435348, guid: 0fe699dbf38f6604ab9579aa28fa3e45, type: 3}
   <ManualTargetEffect>k__BackingField:
-    rid: -2
+    rid: 1048756669330751612
   <OtherEffects>k__BackingField:
   - <TargetMode>k__BackingField:
-      rid: 1048756182745612546
+      rid: 1048756669330751613
     <Effect>k__BackingField:
-      rid: 1048756182745612547
+      rid: 1048756669330751614
+  IsBasic: 0
+  exhaustOnPlay: 0
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1048756182745612546
+    - rid: 1048756669330751612
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 10
+        stackCount: 1
+    - rid: 1048756669330751613
       type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 1048756182745612547
+    - rid: 1048756669330751614
       type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damageAmount: 99
+        damageAmount: 3
